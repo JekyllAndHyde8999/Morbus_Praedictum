@@ -1,0 +1,73 @@
+body {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 650px;
+}
+
+.login label {
+    font-size: 18px;
+    font-family: "verdana", Sans-Serif;
+    color: aliceblue;
+}
+
+.login {
+    position: relative;
+    max-width: 360px;
+    margin: 0 auto 100px;
+    padding: 5px;
+    text-align: center;
+}
+
+.login input {
+    background: #f2f2f2;
+    width: 75%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.login button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    background: #4CAF50;
+    width: 75%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.login button:hover, .login button:active, .login button:focus {
+    background: #43A047;
+}
+
+.login .message {
+    margin: 15px 0 0;
+    color: floralwhite;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+}
+
+.login .message a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.text {
+    margin: 15px 0 0;
+    color: floralwhite;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+
+}
+
+.text a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
