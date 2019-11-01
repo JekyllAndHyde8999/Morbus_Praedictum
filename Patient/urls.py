@@ -10,6 +10,7 @@ urlpatterns = [
             views.activate, name='P_activate'),
     path('profile/', views.profile_page, name='P_profile'),
     path('ajax/load-areas/', views.load_areas, name='P_ajax_load_areas'),
+    path('symptoms/', views.symptoms, name='P_symptoms'),
     path('logout/', views.user_logout, name='logout'),
 
 ]

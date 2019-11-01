@@ -1,8 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 Patient Index Page
+<a href={% url 'P_symptoms' %}> Condition Checkup </a>
 </head>
 <body>
+Profile is shown here.
+<br>{{ profile.user }}<br>
+{{ profile.Patient_First_Name }}<br>
+{{ profile.Patient_Last_Name }}<br>
+{% if profile.Patient_Gender == 1 %}
+    Male<br>
+{% elif profile.Patient_Gender == 2 %}
+    Diswasher<br>
+{% elif profile.Patient_Gender == 3 %}
+    LGBTQ<br>
+{% elif profile.Patient_Gender == 4 %}
+    Other<br>
+{% endif %}
+{{ profile.Patient_DOB }}<br>
+{{ profile.Patient_Phone_Number }}<br> 
+<img src="{{ profile.Patient_Picture.url }}" height="100" width="100"><br>
+{{ profile.Patient_Picture.url }}
 </body>
 </html>

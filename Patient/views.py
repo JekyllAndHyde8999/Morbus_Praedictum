@@ -19,8 +19,11 @@ from .models import Address, Profile, Area
 # Create your views here.
 @login_required(login_url='P_login')
 def index(request):
-    
-    return render(request, 'Patient/index.html')
+    if Profile.objects.filter(user=request.user).exists():
+        profile = Profile.objects.get(user=request.user)
+        return render(request, 'Patient/index.html', {'profile': profile})
+    else:
+        return redirect('http://127.0.0.1:8000/patient/profile')
 
 def signup(request):
     if request.user.is_authenticated:
@@ -100,6 +103,7 @@ def profile_page(request):
             profile = profile_form.save(commit=False)
             address = address_form.save(commit=False)
             profile.user = request.user
+            profile.Patient_Email = request.user.email
             profile.save()
             address.Patient_ID = Profile.objects.get(user=request.user)
             address.save()
@@ -120,7 +124,8 @@ def load_areas(request):
     areas = Area.objects.filter(city_id=city_id).order_by('name')
     return render(request, 'Patient/area_dropdown_list_options.html', {'areas': areas})
 
-
+def symptoms(request):
+    return render(request, 'Patient/symptoms.html')
 
 @login_required
 def user_logout(request):

@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{% static  "css/main1.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static  "css/util.css" %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'food-logos.jpg' %}">
+    <link rel="stylesheet" type="text/css" href="http://jquery-ui.googlecode.com/svn/tags/latest/themes/base/jquery-ui.css" media="all" />
 </head>
 <body>
 <div class="limiter">
@@ -41,7 +42,7 @@
                 {% endfor %}
                 {% if Profile_form.errors %}
                     <p style="font-size: 12px;color: red">{{ Profile_form.errors.Patient_Phone_Number }}
-                        please make sure to add +91 at the start</p>
+                        Please make sure to add +91 at the start</p>
                 {% endif %}
                 <div class="container-login100-form-btn">
                     <button class="login100-form-btn" type="submit" value="signup">
@@ -80,7 +81,7 @@
             }
         });
     });
-</script>
+  </script>
 
 </html>
 

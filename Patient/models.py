@@ -1,9 +1,34 @@
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
 from phonenumber_field.modelfields import PhoneNumberField
+
+
+GENDER_CHOICES = (
+    (1, 'Male'),
+    (2, 'Female'),
+    (3, 'Transgender'),
+    (4, 'Other')
+)
+
+BLOOD_GROUP_CHOICES = (
+    (1, "A+"),
+    (2, "A-"),
+    (3, "B+"),
+    (4, "B-"),
+    (5, "O+"),
+    (6, "O-"),
+    (7, "AB+"),
+    (8, "AB-"),
+)
+
+BLOOD_DONATION = (
+    (0, "Yes"),
+    (1, "No")
+)
 
 # Create your models here.
 class Profile(models.Model):
@@ -12,10 +37,12 @@ class Profile(models.Model):
     Patient_First_Name = models.CharField(max_length=200)
     Patient_Last_Name = models.CharField(max_length=200)
     Patient_Phone_Number = PhoneNumberField(max_length=13)
-    Patient_Picture = models.ImageField(upload_to='media', null=True)
-    Patient_Gender = models.IntegerField(validators=[MinValueValidator(1),MaxValueValidator(4)])
+    Patient_Picture = models.ImageField(upload_to='media', default='default-user-image.jpg', null=True)
+    Patient_Gender = models.IntegerField(choices=GENDER_CHOICES, validators=[MinValueValidator(1),MaxValueValidator(4)])
     Patient_DOB = models.DateField(max_length=8)
-    Patient_Email = models.EmailField(default="asd@rew.com")
+    Patient_Blood_Group = models.IntegerField(choices=BLOOD_GROUP_CHOICES, validators=[MinValueValidator(1),MaxValueValidator(8)])
+    Patient_Blood_Donation = models.IntegerField(choices=BLOOD_DONATION, validators=[MinValueValidator(1),MaxValueValidator(2)])
+    Patient_Email = models.EmailField()
 
     def __str__(self):
         return self.user.username
