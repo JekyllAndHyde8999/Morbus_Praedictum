@@ -3,7 +3,8 @@
 <head>
 
 Patient Index Page
-<a href={% url 'P_symptoms' %}> Condition Checkup </a>
+<a href={% url 'P_symptoms' %}> Condition Checkup </a><br>
+<a href={% url 'P_edit_profile' %}> Edit Profile </a>
 </head>
 <body>
 Profile is shown here.
@@ -23,5 +24,7 @@ Profile is shown here.
 {{ profile.Patient_Phone_Number }}<br> 
 <img src="{{ profile.Patient_Picture.url }}" height="100" width="100"><br>
 {{ profile.Patient_Picture.url }}
+<br><br>
+<a href={% url 'logout' %}>Logout</a>
 </body>
 </html>

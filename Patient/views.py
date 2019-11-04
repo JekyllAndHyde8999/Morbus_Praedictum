@@ -11,7 +11,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 
-from .forms import SignUpForm, AddressInfoForm, UserProfileInfoForm
+from .forms import SignUpForm, AddressInfoForm, UserProfileInfoForm, CustomUserEditForm
 from .tokens import account_activation_token
 from .models import Address, Profile, Area
 
@@ -124,8 +124,18 @@ def load_areas(request):
     areas = Area.objects.filter(city_id=city_id).order_by('name')
     return render(request, 'Patient/area_dropdown_list_options.html', {'areas': areas})
 
+@login_required(login_url='P_login')
 def symptoms(request):
     return render(request, 'Patient/symptoms.html')
+
+@login_required(login_url='P_login')
+def edit_profile(request):
+    instance = Profile.objects.get(user=request.user)
+    form = CustomUserEditForm(request.POST or None, request.FILES or None,instance=instance)
+    if form.is_valid():
+        form.save()
+        return redirect('P_index')
+    return render(request, 'Patient/edit_profile.html', {'Profile_form': form})
 
 @login_required
 def user_logout(request):

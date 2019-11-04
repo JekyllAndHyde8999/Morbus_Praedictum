@@ -41,7 +41,7 @@ class Profile(models.Model):
     Patient_Gender = models.IntegerField(choices=GENDER_CHOICES, validators=[MinValueValidator(1),MaxValueValidator(4)])
     Patient_DOB = models.DateField(max_length=8)
     Patient_Blood_Group = models.IntegerField(choices=BLOOD_GROUP_CHOICES, validators=[MinValueValidator(1),MaxValueValidator(8)])
-    Patient_Blood_Donation = models.IntegerField(choices=BLOOD_DONATION, validators=[MinValueValidator(1),MaxValueValidator(2)])
+    Patient_Blood_Donation = models.IntegerField(choices=BLOOD_DONATION, validators=[MinValueValidator(0),MaxValueValidator(1)])
     Patient_Email = models.EmailField()
 
     def __str__(self):
