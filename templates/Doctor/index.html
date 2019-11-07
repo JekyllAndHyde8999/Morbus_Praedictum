@@ -2,7 +2,31 @@
 <html>
 <head>
 Doctor Index Page
+<a href={% url 'D_edit_profile' %}> Edit Profile </a>
 </head>
 <body>
+Profile is shown here.
+<br>{{ profile.user }}<br>
+{{ profile.Doctor_First_Name }}<br>
+{{ profile.Doctor_Last_Name }}<br>
+{% if profile.Doctor_Gender == 1 %}
+    Male<br>
+{% elif profile.Doctor_Gender == 2 %}
+    Diswasher<br>
+{% elif profile.Doctor_Gender == 3 %}
+    LGBTQ<br>
+{% elif profile.Doctor_Gender == 4 %}
+    Other<br>
+{% endif %}
+{{ profile.Doctor_DOB }}<br>
+{{ profile.Doctor_Phone_Number }}<br> 
+<img src="{{ profile.Doctor_Picture.url }}" height="100" width="100"><br>
+{{ profile.Doctor_Picture.url }}
+{{ profile.Doctor_Qualifications }}<br>
+{{ profile.Doctor_Specialization }}<br>
+{{ profile.Doctor_Experience }}<br>
+
+<br><br>
+<a href={% url 'logout' %}>Logout</a>
 </body>
 </html>

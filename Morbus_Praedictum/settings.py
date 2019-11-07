@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'tempus_dominus',
     'Main.apps.MainConfig',
     'Corporate.apps.CorporateConfig',
     'Doctor.apps.DoctorConfig',
