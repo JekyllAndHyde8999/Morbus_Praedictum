@@ -3,6 +3,33 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.files.images import get_image_dimensions
 from .models import Address, Area, City, Profile
+from django.core.validators import MinValueValidator, MaxValueValidator
+
+from Patient.models import City
+
+cityChoiceList = City.objects.values_list('name', flat=True).distinct()
+
+temp = [(i, i) for i in cityChoiceList]
+temp.append((None, '--blank--'))
+
+cityChoice = tuple(temp)
+
+
+specializationChoices = (
+    (None, '--Blank--'),
+    (0, '0'),
+    (1, '1'),
+    (2, '2'),
+    (3, '3'),
+    (4, '4'),
+    (5, '5'),
+    (6, '6'),
+    (7, '7'),
+    (8, '8'),
+    (9, '9'),
+    (10, '10')
+)
+
 
 # Form for Signing Up.
 class SignUpForm(UserCreationForm):
@@ -137,3 +164,10 @@ class CustomUserEditForm(forms.ModelForm):
             and do not supply a new avatar
             """
             pass
+
+
+class doctorSearchForm(forms.Form):
+    docName = forms.CharField(max_length=50,required=False)
+    docCity = forms.CharField(widget=forms.Select(choices=cityChoice),required=False, initial='--blank--')
+    docSpecial = forms.IntegerField(widget=forms.Select(choices=specializationChoices),required=False, initial='--blank--')
+

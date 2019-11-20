@@ -28,6 +28,7 @@ BLOOD_DONATION = (
     (1, "No")
 )
 
+
 # Create your models here.
 class Profile(models.Model):
     Patient_ID = models.AutoField(primary_key=True, auto_created=True)
@@ -69,10 +70,3 @@ class Address(models.Model):
     city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
     area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
     Pin = models.CharField(max_length=6, default=000000)
-
-
-
-
-#DOB
-#Age
-#Gender

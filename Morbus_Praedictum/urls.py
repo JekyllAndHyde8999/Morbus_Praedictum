@@ -18,6 +18,7 @@ from django.urls import path, include
 from . import settings
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from miscellaneous import views as miscViews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,6 +26,7 @@ urlpatterns = [
     path('patient/', include('Patient.urls')),
     path('doctor/', include('Doctor.urls')),
     path('corporate/', include('Corporate.urls')),
+    path('feedback/', miscViews.feedbackView, name="Feedback_html"),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

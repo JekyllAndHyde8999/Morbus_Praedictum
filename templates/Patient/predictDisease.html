@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Predict disease</title>
+</head>
+Enter Symptoms(Comma separated):
+<body>
+   <form method="POST" action="{% url 'predictDisease' %}">
+       {% csrf_token %}
+       <label>
+           <input type="text" name="inputs">
+       </label><br>
+       <button type="submit" value="Submit">Submit</button>
+   </form>
+    {% for key, value in predictions %}
+        {{ key }} --> {{ value }}<br>
+    {% endfor %}
+
+</body>
+</html>

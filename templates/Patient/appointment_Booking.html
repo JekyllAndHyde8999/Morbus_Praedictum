@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor's Appointment</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function conf_booking(docID, date, opening_time) {
+        $.ajax({
+            type: 'POST',
+            url: '/patient/confirmbooking/',
+            dataType: "json",
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                docID: docID,
+                date: date,
+                opening_time: opening_time,
+            },
+
+            success: function (json) {
+                alert(json.success)
+                $('.' + str(docID)+str(date)+str(opening_time)).html(json.success);
+            }
+        });
+    }
+</script>
+</head>
+<body>
+
+<fieldset>
+    <table width="50%" align="center">
+        <tr>
+            <td rowspan="2"><img src="{{ context.Doctor_Picture }}" width="100px" height="100px"></td>
+            <td>{{ context.DocName }}</td>
+            <td rowspan="2">Contact: {{ context.Doctor_Phone_Number }}</td>
+        </tr>
+        <tr>
+            <td>{{ context.Doctor_Qualifications }} {{ context.Doctor_Specialization }}</td>
+        </tr>
+        <tr>
+            <td rowspan="2"><pre>{{ context.address}}</pre></td>
+           <td>{{ context.Doctor_Experience }}</td>
+            <td rowspan="2">
+            </td>
+        </tr>
+        <tr>
+            <td>{{ context.Docrating }}</td>
+        </tr>
+    </table>
+</fieldset>
+
+<div>
+    {% for day in context.slots %}
+    <fieldset>
+        <div>
+            <table>
+                <tr>
+                    <td rowspan="2">{{ day.0.date}}</td>
+                    <td rowspan="4">
+                        {% for slot in day %}
+                            <form style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="str({{ slot.Doctor_ID }})+str({{ slot.date}})+str({{slot.opening_Time}})"  onclick="conf_booking('{{ slot.Doctor_ID }}, {{ slot.date|date:"Y-m-d"}}, {{slot.opening_Time|date:"H:i"}}')">{{ slot.opening_Time }}</button>
+                            </form>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td rowspan="2"> {{ day.0.day }}</td>
+                </tr>
+                <tr></tr>
+
+            </table>
+        </div>
+
+    </fieldset>
+    {% endfor %}
+</div>
+{% if message %}
+    {{ message }}
+{% endif %}
+</body>
+</html>

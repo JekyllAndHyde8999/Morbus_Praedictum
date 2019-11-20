@@ -3,9 +3,26 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.files.images import get_image_dimensions
 from tempus_dominus.widgets import TimePicker
+import datetime as dt
+from django.forms import formset_factory
+
+m_HOUR_CHOICES = [(dt.time(hour=x), '{:02d}:00'.format(x)) for x in range(0, 13)]
+e_HOUR_CHOICES = [(dt.time(hour=x), '{:02d}:00'.format(x)) for x in range(12, 24)]
+
+slotTimeChoices = (
+    (10, '10 min'),
+    (15, '15 min'),
+    (20, '20 min'),
+    (30, '30 min'),
+    (60, '60 min')
+)
 
 
-from .models import ClinicAddress, Area, City, Doctor, TimeSlots
+HOURS = []
+
+from .models import ClinicAddress, Area, City, Doctor, doctorSchedule
+from .models import ClinicAddress, Area, City, Doctor, doctorSchedule
+
 
 # Form for Signing Up.
 class SignUpForm(UserCreationForm):
@@ -20,8 +37,8 @@ class SignUpForm(UserCreationForm):
 class DateInput(forms.DateInput):
     input_type = 'date'
 
-class UserProfileInfoForm(forms.ModelForm):
 
+class UserProfileInfoForm(forms.ModelForm):
     class Meta:
         model = Doctor
         widgets = {
@@ -93,18 +110,18 @@ class AddressInfoForm(forms.ModelForm):
                 'name')
 
 
-class TimeSlotForm(forms.ModelForm):
-    class Meta:
-        widgets = {
-            'Opening_Time':TimePicker(
-            attrs={
-                'input_toggle': True,
-                'input_group': True,
-            },),
-            'Closing_Time':forms.TimeInput(format='%I:%M %p')
-        }
-        model = TimeSlots
-        fields = {'Day', 'Opening_Time', 'Closing_Time', 'Interval'}
+# class TimeSlotForm(forms.ModelForm):
+#     class Meta:
+#         widgets = {
+#             'Opening_Time':TimePicker(
+#             attrs={
+#                 'input_toggle': True,
+#                 'input_group': True,
+#             },),
+#             'Closing_Time':forms.TimeInput(format='%I:%M %p')
+#         }
+#         model = TimeSlots
+#         fields = {'Day', 'openingTime', 'Closing_Time', 'Interval'}
 
 
 class CustomUserEditForm(forms.ModelForm):
@@ -116,16 +133,18 @@ class CustomUserEditForm(forms.ModelForm):
             'Doctor_DOB': DateInput()
         }
         model = Doctor
-        fields = ('Doctor_First_Name', 'Doctor_Last_Name', 'Doctor_Gender', 'Doctor_Picture', 'Doctor_DOB', 'Doctor_Phone_Number','Doctor_Qualifications', 'Doctor_Specialization', 'Doctor_Experience')
-        labels = {'Doctor_First_Name':"First Name",
-        'Doctor_Last_Name':"Last Name",
-        'Doctor_Gender':"Gender",
-        'Doctor_DOB':'Date of Birth',
-        'Doctor_Phone_Number':'Phone Number',
-        'Doctor_Picture':'Picture',
-        'Doctor_Qualifications':'Qualifications',
-        'Doctor_Specialization':'Specialization',
-        'Doctor_Experience':'Years of Experience',
+        fields = ('Doctor_First_Name', 'Doctor_Last_Name', 'Doctor_Gender', 'Doctor_Picture', 'Doctor_DOB',
+                  'Doctor_Phone_Number','Doctor_Qualifications', 'Doctor_Specialization', 'Doctor_Experience')
+
+        labels = {'Doctor_First_Name': "First Name",
+                  'Doctor_Last_Name': "Last Name",
+                  'Doctor_Gender': "Gender",
+                  'Doctor_DOB': 'Date of Birth',
+                  'Doctor_Phone_Number': 'Phone Number',
+                  'Doctor_Picture': 'Picture',
+                  'Doctor_Qualifications': 'Qualifications',
+                  'Doctor_Specialization': 'Specialization',
+                  'Doctor_Experience': 'Years of Experience',
         }
 
     def clean_avatar(self):
@@ -158,4 +177,35 @@ class CustomUserEditForm(forms.ModelForm):
             and do not supply a new avatar
             """
             pass
+
+
+weekDay = ['Monday', 'Tuesday', 'Wednesday', 'Thuraday', 'Friday', 'Saturday', 'Sunday']
+
+
+class doctorScheduleForm(forms.ModelForm):
+
+    m_interval = forms.IntegerField(widget=forms.Select(choices=slotTimeChoices), initial='10')
+    m_openTime = forms.TimeField(widget=forms.Select(choices=m_HOUR_CHOICES), label="opening time")
+    m_closeTime = forms.TimeField(widget=forms.Select(choices=m_HOUR_CHOICES), label="closing time")
+
+    e_interval = forms.IntegerField(widget=forms.Select(choices=slotTimeChoices), initial='10')
+    e_openTime = forms.TimeField(widget=forms.Select(choices=e_HOUR_CHOICES), label="opening time")
+    e_closeTime = forms.TimeField(widget=forms.Select(choices=e_HOUR_CHOICES), label="closing time")
+
+    def __init__(self, *args, **kwargs):
+        super(doctorScheduleForm, self).__init__(*args, **kwargs)
+        instance = getattr(self, 'instance', None)
+        if instance:
+            self.fields['day'].widget.attrs['readonly'] = True
+
+    class Meta:
+        model = doctorSchedule
+        fields = ('day',)
+        readonly_fields = ('day',)
+
+
+scheduleFormset = formset_factory(doctorScheduleForm, extra=0)
+
+
+
 
