@@ -19,9 +19,7 @@
             <div class="login100-pic js-tilt" data-tilt>
                 <img src="{% static "img-01.png" %}" alt="IMG">
             </div>
-
-            <form class="login100-form validate-form" method="POST" id="AddressForm"
-                  data-areas-url="{% url 'D_ajax_load_areas' %}" action="{% url "D_profile" %}">
+            <form class="login100-form validate-form" method="POST" id="EditProfileForm" action="{% url "C_edit_profile" %}"  enctype="multipart/form-data">
                 {% csrf_token %}
                 <span class="login100-form-title">
                     User Profile
@@ -33,16 +31,9 @@
                         <span class="focus-input100"></span>
                     </div>
                 {% endfor %}
-                {% for field in address_form %}
-                    {{ field.label_tag }}<br>
-                    <div class="wrap-input100 validate-input input100">
-                        {{ field }}
-                        <span class="focus-input100"></span>
-                    </div>
-                {% endfor %}
                 {% if Profile_form.errors %}
                     <p style="font-size: 12px;color: red">{{ Profile_form.errors.Patient_Phone_Number }}
-                        Please make sure to add +91 at the start</p>
+                        Please make sure to add +91 at the start.</p>
                 {% endif %}
                 <div class="container-login100-form-btn">
                     <button class="login100-form-btn" type="submit" value="signup">
@@ -65,7 +56,7 @@
     </div>
 </div>
 </body>
-
+{% comment %} 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     $("#id_city").change(function () {
@@ -81,7 +72,7 @@
             }
         });
     });
-  </script>
+  </script> {% endcomment %}
 
 </html>
 
