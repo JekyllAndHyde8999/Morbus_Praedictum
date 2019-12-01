@@ -7,6 +7,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 from Patient.models import City
 
+
 cityChoiceList = City.objects.values_list('name', flat=True).distinct()
 
 temp = [(i, i) for i in cityChoiceList]

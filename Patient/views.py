@@ -121,10 +121,11 @@ def profile_page(request):
             profile = profile_form.save(commit=False)
             address = address_form.save(commit=False)
             profile.user = request.user
+            address.user = request.user
             profile.Patient_Email = request.user.email
-            profile.save()
-            address.Patient_ID = Profile.objects.get(user=request.user)
             address.save()
+            profile.Patient_Address = Address.objects.get(user=request.user)
+            profile.save()
             return redirect('http://127.0.0.1:8000/patient')
         elif not profile_form.is_valid():
             print(profile_form.errors)
@@ -358,4 +359,5 @@ class DiseasePredictor(views.APIView):
         print(result_dict)
         results = [[x[0], str(round(x[1] * 100, 2)) + '%'] for x in
                    sorted(list(result_dict.items()), key=lambda x: -x[1])]
+        return Response(result_dict, status=status.HTTP_200_OK)
         return Response(result_dict, status=status.HTTP_200_OK)

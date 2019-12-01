@@ -136,10 +136,11 @@ def profile_page(request):
             profile = profile_form.save(commit=False)
             address = address_form.save(commit=False)
             profile.user = request.user
+            address.user = request.user
             profile.Doctor_Email = request.user.email
-            profile.save()
-            address.Doctor_ID = Doctor.objects.get(user=request.user)
             address.save()
+            profile.Doctor_Address = Doctor.objects.get(user=request.user)
+            profile.save()
             return redirect('http://127.0.0.1:8000/doctor')
         elif not profile_form.is_valid():
             print(profile_form.errors)

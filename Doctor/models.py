@@ -58,8 +58,17 @@ TimeChoices = (
     ('10:00:00', '10:00'),
     ('11:00:00', '11:00'),
     ('12:00:00', '12:00'),
-
 )
+
+
+class ClinicAddress(models.Model):
+    ClinicAddress_ID =  models.AutoField(primary_key=True, auto_created=True, default=1)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    Home = models.CharField(max_length=250)
+    Street = models.CharField(max_length=250)
+    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
+    area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
+    Pin = models.CharField(max_length=6, default=000000)
 
 
 class Doctor(models.Model):
@@ -74,24 +83,14 @@ class Doctor(models.Model):
     Doctor_Qualifications = models.CharField(max_length=350)
     Doctor_Specialization = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     Doctor_Experience = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(80)])
-# Doctor_License =
+    Doctor_License = models.CharField(default='1234567890', max_length=25, null=True)
     Doctor_Picture = models.ImageField(upload_to='media', default='default-user-image.jpg', null=True)
     Doctor_Corporate = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, default=None, blank=True)
     Doctor_Activate = models.BooleanField(default=False)
-    # Doctor_Address = models.ForeignKey()
+    Doctor_Address = models.ForeignKey(ClinicAddress, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.user.username
-
-
-class ClinicAddress(models.Model):
-    Address_ID = models.AutoField(primary_key=True)
-    Doctor_ID = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    Home = models.CharField(max_length=250)
-    Street = models.CharField(max_length=250)
-    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
-    area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
-    Pin = models.CharField(max_length=6, default=000000)
 
 
 class DoctorRating (models.Model):
