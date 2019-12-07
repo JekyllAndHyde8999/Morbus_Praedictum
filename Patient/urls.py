@@ -4,6 +4,9 @@ from . import views
 from rest_framework.urlpatterns import format_suffix_patterns
 
 
+
+
+
 urlpatterns = [
     path('', views.index, name='P_index'),
     path('signup/', views.signup, name='P_signup'),
@@ -16,9 +19,8 @@ urlpatterns = [
     path('edit-profile/', views.edit_profile, name='P_edit_profile'),
     path('logout/', views.user_logout, name='logout'),
     path('searchdoctor/', views.doctorSearchView, name='searchDoctor'),
-    path('patientapi/', views.DonorList.as_view(), name="donor-all"),
+
     path('bookappointment/<docID>/', views.AppointmentBooking, name="bookAppointment"),
     path('confirmbooking/', views.confirmBooking, name="confirmBooking"),
     path('predict/', views.input_symptoms, name="predictDisease"),
-    path('predictapi/', views.DiseasePredictor.as_view(), name = "predictAPI")
 ]

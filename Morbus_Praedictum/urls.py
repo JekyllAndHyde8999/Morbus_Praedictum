@@ -26,6 +26,7 @@ urlpatterns = [
     path('patient/', include('Patient.urls')),
     path('doctor/', include('Doctor.urls')),
     path('corporate/', include('Corporate.urls')),
+    path('api/', include('apis.urls')),
     path('feedback/', miscViews.feedbackView, name="Feedback_html"),
 ]
 

@@ -9,18 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.db.models import Q
 from django.db.models.functions import Concat
-from django.db.models import F
-from django.forms.models import model_to_dict
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from django_filters import rest_framework as filter
-
-from rest_framework import filters, generics, status, views
-
-from .serializer import BloodDonorSerializer, BdSerializer
 
 from .forms import SignUpForm, AddressInfoForm, UserProfileInfoForm, CustomUserEditForm, doctorSearchForm
 from .tokens import account_activation_token
@@ -32,7 +21,6 @@ from .utils import *
 import datetime
 import json
 
-from .utils import *
 
 # Create your views here.
 @login_required(login_url='P_login')
@@ -229,10 +217,7 @@ def doctorSearchView(request):
 #     def post(self):
 #         pass
 
-class DynamicSearchFilter(filters.SearchFilter):
-    def get_search_fields(self, view, request):
-        print(request.GET.getlist('search_fields', []))
-        return request.GET.getlist('search_fields', [])
+
 #
 #
 # class DonorList(generics.ListCreateAPIView):
@@ -261,11 +246,6 @@ class DynamicSearchFilter(filters.SearchFilter):
 # http://127.0.0.1:8000/patient/patientapi/?search=4&search_fields=Patient_Blood_Group
 
 
-class DonorList(generics.ListCreateAPIView):
-    search_fields = ['Patient_Blood_Group']
-    filter_backends = (DynamicSearchFilter,)
-    queryset = Profile.objects.filter(Patient_Blood_Donation=0)
-    serializer_class = BdSerializer
 
 
 @login_required(login_url='P_login')
@@ -337,7 +317,6 @@ def confirmBooking(request):
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
-
 def input_symptoms(request):
     if request.method == 'POST':
         raw_data = request.POST['inputs']
@@ -350,14 +329,3 @@ def input_symptoms(request):
     return render(request, 'Patient/predictDisease.html')
 
 
-class DiseasePredictor(views.APIView):
-    def post(self, request):
-        raw_data = request.data
-        data = raw_data['data'].split(",")
-        data = [x.strip() for x in data]
-        result_dict = predict(data)
-        print(result_dict)
-        results = [[x[0], str(round(x[1] * 100, 2)) + '%'] for x in
-                   sorted(list(result_dict.items()), key=lambda x: -x[1])]
-        return Response(result_dict, status=status.HTTP_200_OK)
-        return Response(result_dict, status=status.HTTP_200_OK)

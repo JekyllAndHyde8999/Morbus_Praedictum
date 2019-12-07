@@ -1,0 +1,11 @@
+from django.urls import path, re_path, include
+
+from . import views
+
+urlpatterns = [
+    path('schedule/', views.scheduleApiView.as_view(), name="scheduleAPI"),
+    path('doctors/', views.DoctorApi.as_view(), name="doctorList"),
+    path('patients/', views.DonorList.as_view(), name="donor-all"),
+    path('predict/', views.DiseasePredictor.as_view(), name="predictAPI"),
+    path('timeslots/', views.timeSlotsApiView.as_view(), name="TimeSlotsAPI"),
+    ]
