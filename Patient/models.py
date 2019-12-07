@@ -54,6 +54,9 @@ class Address(models.Model):
     area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
     Pin = models.CharField(max_length=6, default=000000)
 
+    def __str__(self):
+        return self.user.username
+
 
 class Profile(models.Model):
     Patient_ID = models.AutoField(primary_key=True, auto_created=True)

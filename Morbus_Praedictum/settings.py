@@ -47,8 +47,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'miscellaneous',
     'rest_framework',
+#    'rest_framework.authtoken',
     'django_extensions',
+    'crispy_forms',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -112,8 +116,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# THIS MIGHT BE USEFUL`
 # REST_FRAMEWORK = {
-#     "TIME_INPUT_FORMATS": ,
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.IsAuthenticated',
+#     ],
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.BasicAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework.authentication.TokenAuthentication',
+#     ),
 # }
 
 
@@ -142,7 +154,7 @@ STATICFILES_DIRS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'aseproject321@gmail.com'
-EMAIL_HOST_PASSWORD = 'ucandoit456'
+EMAIL_HOST_USER = 'narainmukul98@gmail.com'
+EMAIL_HOST_PASSWORD = 'mukul8003869665'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

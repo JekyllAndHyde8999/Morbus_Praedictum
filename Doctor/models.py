@@ -29,12 +29,14 @@ DAYS = (
 )
 
 INTERVALS = (
+    (0, None),
     (1, '15 Minutes'),
     (2, '30 Minutes'),
     (3, '45 Minutes'),
 )
 
 slotTimeChoices = (
+    (None, 'None'),
     (10, '10 min'),
     (15, '15 min'),
     (20, '20 min'),
@@ -43,6 +45,7 @@ slotTimeChoices = (
 )
 
 TimeChoices = (
+    (None, "Closed"),
     ('00:00:00', '00:00'),
     ('00:30:00', '00:30'),
     ('01:00:00', '01:00'),
@@ -62,13 +65,16 @@ TimeChoices = (
 
 
 class ClinicAddress(models.Model):
-    ClinicAddress_ID =  models.AutoField(primary_key=True, auto_created=True, default=1)
+    ClinicAddress_ID = models.AutoField(primary_key=True, auto_created=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     Home = models.CharField(max_length=250)
     Street = models.CharField(max_length=250)
     city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
     area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
     Pin = models.CharField(max_length=6, default=000000)
+
+    def __str__(self):
+        return self.user.username
 
 
 class Doctor(models.Model):
@@ -87,7 +93,7 @@ class Doctor(models.Model):
     Doctor_Picture = models.ImageField(upload_to='media', default='default-user-image.jpg', null=True)
     Doctor_Corporate = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, default=None, blank=True)
     Doctor_Activate = models.BooleanField(default=False)
-    Doctor_Address = models.ForeignKey(ClinicAddress, on_delete=models.CASCADE, null=True)
+    Doctor_Address = models.ForeignKey(ClinicAddress, on_delete=models.DO_NOTHING, null=True)
 
     def __str__(self):
         return self.user.username

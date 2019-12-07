@@ -10,9 +10,8 @@ urlpatterns = [
             views.activate, name='D_activate'),
     path('profile/', views.profile_page, name='D_profile'),
     path('schedule/', views.doctorScheduleView, name='doctorSchedule'),
+    path('editschedule/', views.editDoctorSchedule, name='editDoctorSchedule'),
     path('ajax/load-areas/', views.load_areas, name='D_ajax_load_areas'),
     path('edit-profile/', views.edit_profile, name='D_edit_profile'),
     path('logout/', views.user_logout, name='logout'),
-    path('scheduleapi/', views.scheduleApiView.as_view(), name="scheduleAPI"),
-    path('doctorapi/',views.DoctorApi.as_view(), name="doctorList")
 ]
