@@ -147,7 +147,7 @@ def profile_page(request):
     else:
         profile_form = UserProfileInfoForm()
         address_form = AddressInfoForm()
-    return render(request, 'doctor/profile.html', {'Profile_form': profile_form, 'address_form': address_form})
+    return render(request, 'Doctor/profile.html', {'Profile_form': profile_form, 'address_form': address_form})
 
 
 def load_areas(request):

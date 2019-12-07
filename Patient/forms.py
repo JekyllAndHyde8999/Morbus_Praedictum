@@ -11,6 +11,7 @@ from Patient.models import City
 cityChoiceList = City.objects.values_list('name', flat=True).distinct()
 
 temp = [(i, i) for i in cityChoiceList]
+# temp = []
 temp.append((None, '--blank--'))
 
 cityChoice = tuple(temp)
@@ -99,10 +100,12 @@ class AddressInfoForm(forms.ModelForm):
         model = Address
         fields = ('Home', 'Street', 'city', 'area', 'Pin')
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):    
         super().__init__(*args, **kwargs)
         self.fields['area'].queryset = Area.objects.none()
         print(self.fields['area'].queryset)
+
+        print(self.instance.pk)
 
         if 'city' in self.data:
             try:

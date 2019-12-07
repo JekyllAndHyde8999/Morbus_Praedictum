@@ -2,10 +2,11 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.files.images import get_image_dimensions
-from django.core.validators import MinValueValidator, MaxValueValidator
+from tempus_dominus.widgets import TimePicker
+import datetime as dt
+from django.forms import formset_factory
 
-from Patient.models import City, Area
-from .models import Company, HospitalAddress
+from .models import Company, HospitalAddress, Area, City
 
 # Form for Signing Up.
 class SignUpForm(UserCreationForm):
@@ -66,7 +67,7 @@ class AddressInfoForm(forms.ModelForm):
     class Meta:
         model = HospitalAddress
         fields = ('Home', 'Street', 'city', 'area', 'Pin')
-
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['area'].queryset = Area.objects.none()
@@ -79,9 +80,9 @@ class AddressInfoForm(forms.ModelForm):
                     city_id=city_id).order_by('name')
             except (ValueError, TypeError):
                 pass  # invalid input from the client; ignore and fallback to empty city queryset
-        elif self.instance.pk:
-            self.fields['area'].queryset = self.instance.city.area_set.order_by(
-                'name')
+        # elif self.instance.pk:
+        #     self.fields['area'].queryset = self.instance.city.area_set.order_by(
+        #         'name')
 
 
 class CustomUserEditForm(forms.ModelForm):

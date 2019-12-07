@@ -84,7 +84,7 @@ class Doctor(models.Model):
     Doctor_Last_Name = models.CharField(max_length=200)
     Doctor_DOB = models.DateField(max_length=8)
     Doctor_Phone_Number = PhoneNumberField(max_length=13)
-    Doctor_Email = models.EmailField()
+    Doctor_Email = models.EmailField(default="asd@rew.com")
     Doctor_Gender = models.IntegerField(choices=GENDER_CHOICES, validators=[MinValueValidator(1), MaxValueValidator(4)])
     Doctor_Qualifications = models.CharField(max_length=350)
     Doctor_Specialization = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])

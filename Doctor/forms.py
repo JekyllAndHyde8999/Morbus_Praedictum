@@ -92,7 +92,7 @@ class AddressInfoForm(forms.ModelForm):
         model = ClinicAddress
         fields = ('Home', 'Street', 'city', 'area', 'Pin')
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):    
         super().__init__(*args, **kwargs)
         self.fields['area'].queryset = Area.objects.none()
         print(self.fields['area'].queryset)
@@ -104,9 +104,10 @@ class AddressInfoForm(forms.ModelForm):
                     city_id=city_id).order_by('name')
             except (ValueError, TypeError):
                 pass  # invalid input from the client; ignore and fallback to empty city queryset
-        elif self.instance.pk:
-            self.fields['area'].queryset = self.instance.city.area_set.order_by(
-                'name')
+        # elif self.instance.pk:
+        #     print(self.instance.pk)
+        #     self.fields['area'].queryset = self.instance.city.area_set.order_by(
+        #         'name')
 
 
 # class TimeSlotForm(forms.ModelForm):
