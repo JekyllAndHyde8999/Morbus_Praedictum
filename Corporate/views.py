@@ -16,7 +16,7 @@ from django.forms.models import model_to_dict
 
 from .forms import SignUpForm, AddressInfoForm, UserProfileInfoForm, CustomUserEditForm
 from .tokens import account_activation_token
-from .models import HospitalAddress, Company
+from .models import Company, HospitalAddress
 from Patient.models import Area, City
 
 # Create your views here.
@@ -52,14 +52,14 @@ def signup(request):
                 mail_subject, message, to=[to_email]
             )
             email.send()
-            return render(request, 'Company/checkemail.html')
+            return render(request, 'Corporate/checkemail.html')
         else:
             context = {'form': form, }
-            return render(request, 'Company/signup.html', context=context)
+            return render(request, 'Corporate/signup.html', context=context)
     else:
         form = SignUpForm()
         context = {'form': form, }
-        return render(request, 'Company/signup.html', context=context)
+        return render(request, 'Corporate/signup.html', context=context)
 
 
 def loginform(request):
@@ -75,11 +75,11 @@ def loginform(request):
         else:
             print(form.errors)
             contexts = {'form': form}
-            return render(request, 'Company/login.html', context=contexts)
+            return render(request, 'Corporate/login.html', context=contexts)
     else:
         form = AuthenticationForm()
         context = {'form': form}
-        return render(request, 'Company/login.html', context=context)
+        return render(request, 'Corporate/login.html', context=context)
 
 
 def activate(request, uidb64, token):
@@ -91,7 +91,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return render(request, 'Company/after_activation.html')
+        return render(request, 'Corporate/after_activation.html')
     else:
         return HttpResponse('Activation link is invalid!')
 
@@ -115,18 +115,18 @@ def profile_page(request):
         elif not profile_form.is_valid():
             print(profile_form.errors)
         else:
-            return render(request, 'company/profile.html',
+            return render(request, 'Corporate/profile.html',
                           {'Profile_form': profile_form, 'address_form': address_form})
     else:
         profile_form = UserProfileInfoForm()
         address_form = AddressInfoForm()
-    return render(request, 'company/profile.html', {'Profile_form': profile_form, 'address_form': address_form})
+    return render(request, 'Corporate/profile.html', {'Profile_form': profile_form, 'address_form': address_form})
 
 
 def load_areas(request):
     city_id = request.GET.get('city')
     areas = Area.objects.filter(city_id=city_id).order_by('name')
-    return render(request, 'company/area_dropdown_list_options.html', {'areas': areas})
+    return render(request, 'Corporate/area_dropdown_list_options.html', {'areas': areas})
 
 
 @login_required(login_url='D_login')
@@ -136,7 +136,7 @@ def edit_profile(request):
     if form.is_valid():
         form.save()
         return redirect('C_index')
-    return render(request, 'Company/edit_profile.html', {'Profile_form': form})
+    return render(request, 'Corporate/edit_profile.html', {'Profile_form': form})
 
 
 @login_required
