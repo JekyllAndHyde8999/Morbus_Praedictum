@@ -5,17 +5,17 @@ from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.db.models.functions import Concat
 
-from .forms import SignUpForm, AddressInfoForm, UserProfileInfoForm, CustomUserEditForm, doctorSearchForm
+from .forms import *
 from .tokens import account_activation_token
-from .models import Address, Profile, Area
-from Doctor.models import Doctor, ClinicAddress,TimeSlots
-from Patient.models import City
+from .models import Address, Profile
+from Doctor.models import Doctor, ClinicAddress, TimeSlots
+from Corporate.models import *
 from .utils import *
 
 import datetime
@@ -29,7 +29,7 @@ def index(request):
         profile = Profile.objects.get(user=request.user)
         return render(request, 'Patient/index.html', {'profile': profile})
     else:
-        return redirect('http://127.0.0.1:8000/patient/profile')
+        return redirect('/patient/profile/')
 
 
 def signup(request):
@@ -104,7 +104,6 @@ def profile_page(request):
     if request.method == 'POST':
         profile_form = UserProfileInfoForm(data=request.POST)
         address_form = AddressInfoForm(data=request.POST)
-        # print(form)
         if profile_form.is_valid() and address_form.is_valid():
             profile = profile_form.save(commit=False)
             address = address_form.save(commit=False)
@@ -156,14 +155,6 @@ def user_logout(request):
 
 @login_required
 def doctorSearchView(request):
-    # # result = Doctor.objects.get(Doctor_First_Name='John').clinicaddress_set.all()
-    # #result = ClinicAddress.objects.filter(city=City.objects.get(name="Chennai"))
-    # main_result = []
-    # for i in result:
-    #     print(i.Doctor_ID)
-    #     # Doctor.objects.get(Doctor_ID=i.Doctor_ID)
-    # print(main_result)
-
     form = doctorSearchForm()
     if request.method == "POST":
         form = doctorSearchForm(request.POST)
@@ -172,16 +163,17 @@ def doctorSearchView(request):
             city = form.cleaned_data['docCity']
             specialization = form.cleaned_data['docSpecial']
             query = name.lower().replace(" ", "")
-            result=[]
+            result = []
             if len(name) > 0:
                 result = Doctor.objects.annotate(full_name=Concat('Doctor_First_Name', 'Doctor_Last_Name')
                                                  ).filter(full_name__icontains=query)
             if city:
                 filtered_obj = ClinicAddress.objects.filter(city__name=city)
+                r = []
                 if result:
-                    result = result.filter(Doctor_ID__in=filtered_obj)
+                    result = result.filter(Doctor_Address__in=filtered_obj)
                 else:
-                    result = Doctor.objects.filter(Doctor_ID__in=filtered_obj)
+                    result = Doctor.objects.filter(Doctor_Address__in=filtered_obj)
             if specialization:
                 if result:
                     result = result.filter(Doctor_Specialization=specialization)
@@ -191,61 +183,20 @@ def doctorSearchView(request):
 
             if result:
                 for obj in result:
-                    addrs = ClinicAddress.objects.get(Doctor_ID=obj.Doctor_ID)
+                    print(obj)
+                    addrs = ClinicAddress.objects.get(user=obj.user)
                     searchResult.append({"DocName": obj.Doctor_First_Name+" "+obj.Doctor_Last_Name,
                                          "Doctor_ID": obj.Doctor_ID,
-                                         'Doctor_Picture': "../../media/"+str( obj.Doctor_Picture),
+                                         'Doctor_Picture': "../../media/"+str(obj.Doctor_Picture),
                                          'Doctor_Phone_Number': obj.Doctor_Phone_Number,
                                          'Doctor_Qualifications': obj.Doctor_Qualifications,
                                          'Doctor_Specialization': obj.Doctor_Specialization,
                                          'Doctor_Experience': str(obj.Doctor_Experience)+"years",
-                                         'address':addrs.Home + " " + addrs.Street + "\n" + str(addrs.area) + "\n" + str(addrs.city)})
-                return render(request, 'Patient/searchDoctor.html', {'searchResult': searchResult,'form':form})
+                                         'address': addrs.Home + " " + addrs.Street + "\n" + str(addrs.area) + "\n"
+                                                    +str(addrs.city)})
+                return render(request, 'Patient/searchDoctor.html', {'searchResult': searchResult, 'form': form})
             return render(request, 'Patient/searchDoctor.html', {'message': 'No Results Found', 'form': form})
     return render(request, 'Patient/searchDoctor.html', {'form': form})
-
-
-# class DonorList(APIView):
-#
-#     def get(self, request):
-#         search_fields = ['Patient_First_Name']
-#         filter_backends = (filters.SearchFilter,)
-#         queryset = Profile.objects.all()
-#         serializer = BloodDonorSerializer(queryset, many=True)
-#         return Response(serializer.data)
-#
-#     def post(self):
-#         pass
-
-
-#
-#
-# class DonorList(generics.ListCreateAPIView):
-#     search_fields = ['Patient_ID__Patient_Blood_Group', 'Patient_ID__Patient_First_Name', 'Patient_ID__Patient_Last_Name', 'Patient_ID__Patient_Phone_Number', 'Patient_ID__Patient_Gender', 'Patient_ID__Patient_DOB', 'Patient_ID__Patient_Email', 'city']
-#     filter_backends = (DynamicSearchFilter,)
-#     # queryset = model_to_dict(Address.objects.select_related('Patient_ID').all().values('Patient_ID__Patient_Blood_Group','Patient_ID__Patient_First_Name', 'Patient_ID__Patient_Last_Name', 'Patient_ID__Patient_Phone_Number', 'Patient_ID__Patient_Gender','Patient_ID__Patient_DOB', 'Patient_ID__Patient_Email'))
-#     # queryset = Address.objects.raw('SELECT * FROM Patient_Address INNER JOIN Patient_Profile on Patient_Address.Patient_ID_id=Patient_Profile.Patient_ID')
-#     data = Address.objects.select_related('Patient_ID').all().values('Patient_ID__Patient_Blood_Group','Patient_ID__Patient_First_Name', 'Patient_ID__Patient_Last_Name', 'Patient_ID__Patient_Phone_Number', 'Patient_ID__Patient_Gender', 'Patient_ID__Patient_DOB', 'Patient_ID__Patient_Email', 'city').annotate(city=Address.objects.get(city=city))
-#     print(data)
-#     queryset = []
-#     for query in data:
-#         queryset.append({
-#
-#             'Patient_ID__Patient_Blood_Group':query['Patient_ID__Patient_Blood_Group'],
-#             'Patient_ID__Patient_First_Name': query['Patient_ID__Patient_First_Name'],
-#             'Patient_ID__Patient_Last_Name': query['Patient_ID__Patient_Last_Name'],
-#             'Patient_ID__Patient_Phone_Number': query['Patient_ID__Patient_Phone_Number'],
-#             'Patient_ID__Patient_Gender': query['Patient_ID__Patient_Gender'],
-#             'Patient_ID__Patient_DOB': query['Patient_ID__Patient_DOB'],
-#             'Patient_ID__Patient_Email': query['Patient_ID__Patient_Email'],
-#             'city': City.objects.get(id=query['city']).name,
-#         })
-#     serializer_class = BloodDonorSerializer
-
-# How to make above api work
-# http://127.0.0.1:8000/patient/patientapi/?search=4&search_fields=Patient_Blood_Group
-
-
 
 
 @login_required(login_url='P_login')
@@ -260,41 +211,42 @@ def AppointmentBooking(request, docID):
             date = date + datetime.timedelta(days=1)
 
         context = {"DocName": obj.Doctor_First_Name + " " + obj.Doctor_Last_Name,
-                         "Doctor_ID": obj.Doctor_ID,
-                         'Doctor_Picture': "../../media/" + str(obj.Doctor_Picture),
-                         'Doctor_Phone_Number': obj.Doctor_Phone_Number,
-                         'Doctor_Qualifications': obj.Doctor_Qualifications,
-                         'Doctor_Specialization': obj.Doctor_Specialization,
-                         'Doctor_Experience': str(obj.Doctor_Experience) + "years",
-                         'address': addrs.Home + " " + addrs.Street + "\n" + str(addrs.area) + "\n" + str(addrs.city),
-                         'slots':res_list}
+                   "Doctor_ID": obj.Doctor_ID,
+                   'Doctor_Picture': "../../media/" + str(obj.Doctor_Picture),
+                   'Doctor_Phone_Number': obj.Doctor_Phone_Number,
+                   'Doctor_Qualifications': obj.Doctor_Qualifications,
+                   'Doctor_Specialization': obj.Doctor_Specialization,
+                   'Doctor_Experience': str(obj.Doctor_Experience) + "years",
+                   'address': addrs.Home + " " + addrs.Street + "\n" + str(addrs.area) + "\n" + str(addrs.city),
+                   'slots': res_list}
         return render(request, 'Patient/appointment_Booking.html', {'context': context})
 
 
-# @login_required(login_url='P_login')
-# def confirmBooking(request):
-#     response_data = {}
-#     if request.method == "POST":
-#         username=request.POST['docID']
-#         user = User.objects.get(username=username)
-#         docID = Doctor.objects.get(user=user)
-#         print(request.user)
-#         date = request.POST['date']
-#         x = date.split(" ")
-#         print(date)
-#         opening_time = request.POST['opening_time']
-#         monthMap = {'Jan.': 1, 'Feb.': 2, 'Mar.': 3, 'Apr.': 4, 'May.': 5, 'Jun.': 6, 'Jul.': 7, 'Aug.': 8, 'Sep.': 9,
-#                     'Oct.': 10, 'Nov.': 11, 'Dec.': 12}
-#         str_date = (str(x[1][:-1]) + '-' + str(monthMap[x[0]]) + '-' + str(x[2]))
-#         corrected_date = datetime.datetime.strptime(str_date, '%d-%m-%Y')
-#         patient_id = Profile.objects.get(user=request.user)
-#         slot = TimeSlots.objects.filter(Doctor_ID=docID, date=corrected_date, Patient_ID=patient_id)
-#         if not slot:
-#             TimeSlots.objects.filter(Doctor_ID=docID, date=corrected_date, opening_Time=opening_time).update(Patient_ID=patient_id)
-#             response_data['success']='Booking Confirmed!'
-#         else:
-#             response_data['success'] = 'Cannot book more than 1 slot per day'
-#     return HttpResponse(json.dumps(response_data), content_type="application/json")
+@login_required(login_url='P_login')
+def confirmBooking(request):
+    response_data = {}
+    if request.method == "POST":
+        username=request.POST['docID']
+        user = User.objects.get(username=username)
+        docID = Doctor.objects.get(user=user)
+        print(request.user)
+        date = request.POST['date']
+        x = date.split(" ")
+        print(date)
+        opening_time = request.POST['opening_time']
+        monthMap = {'Jan.': 1, 'Feb.': 2, 'Mar.': 3, 'Apr.': 4, 'May.': 5, 'Jun.': 6, 'Jul.': 7, 'Aug.': 8, 'Sep.': 9,
+                    'Oct.': 10, 'Nov.': 11, 'Dec.': 12}
+        str_date = (str(x[1][:-1]) + '-' + str(monthMap[x[0]]) + '-' + str(x[2]))
+        corrected_date = datetime.datetime.strptime(str_date, '%d-%m-%Y')
+        patient_id = Profile.objects.get(user=request.user)
+        slot = TimeSlots.objects.filter(Doctor_ID=docID, date=corrected_date, Patient_ID=patient_id)
+        if not slot:
+            TimeSlots.objects.filter(Doctor_ID=docID, date=corrected_date,
+                                     opening_Time=opening_time).update(Patient_ID=patient_id)
+            response_data['success']='Booking Confirmed!'
+        else:
+            response_data['success'] = 'Cannot book more than 1 slot per day'
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
 @login_required(login_url='P_login')
@@ -310,7 +262,8 @@ def confirmBooking(request):
         patient_id = Profile.objects.get(user=request.user)
         slot = TimeSlots.objects.filter(Doctor_ID=docID, date=res_list[1], Patient_ID=patient_id)
         if not slot:
-            TimeSlots.objects.filter(Doctor_ID=docID, date=res_list[1], opening_Time=res_list[2]).update(Patient_ID=patient_id)
+            TimeSlots.objects.filter(Doctor_ID=docID, date=res_list[1], opening_Time=res_list[2])\
+                .update(Patient_ID=patient_id)
             response_data['success'] = 'Booking Confirmed!'
         else:
             response_data['success'] = 'Cannot book more than 1 slot per day'
@@ -318,14 +271,71 @@ def confirmBooking(request):
 
 
 def input_symptoms(request):
-    if request.method == 'POST':
-        raw_data = request.POST['inputs']
-        data = raw_data.split(",")
-        data = [x.strip() for x in data]
-        result_dict = predict(data)
-        print(result_dict)
-        results = [[x[0], str(round(x[1] * 100, 2)) + '%'] for x in sorted(list(result_dict.items()), key=lambda x: -x[1])]
-        return render(request, 'Patient/predictDisease.html', {'predictions': results})
-    return render(request, 'Patient/predictDisease.html')
+    heading_message = 'Formset Demo'
+    if request.method == 'GET':
+        formset = PredictFormset(request.GET or None)
+    elif request.method == 'POST':
+        formset = PredictFormset(request.POST)
+        print("POST REQUEST GENERATED")
+        data = []
+        if formset.is_valid():
+            for form in formset:
+                symptom = form.cleaned_data.get('name')
+                data.append(symptom)
+            print(data)
+            # data = [x.strip() for x in data]
+            # result_dict = predict(data)
+            # results = [[x[0], str(round(x[1] * 100, 2)) + '%'] for x in sorted(list(result_dict.items()),
+            #                                                                    key=lambda x: -x[1])]
+            # return render(request, 'Patient/predictDisease.html', {'predictions': results})
+        else:
+            heading_message = "Please fill form correctly"
+    else:
+        formset = PredictFormset(request.GET)
+    return render(request, 'Patient/predictDisease.html', {
+        'formset': formset,
+        'heading': heading_message,
+    })
 
 
+# def create_book_normal(request):
+#     template_name = 'Patient/create_normal.html'
+#     heading_message = 'Formset Demo'
+#     if request.method == 'GET':
+#         formset = BookFormset(request.GET or None)
+#     elif request.method == 'POST':
+#         formset = BookFormset(request.POST)
+#         if formset.is_valid():
+#             for form in formset:
+#                 # extract name from each form and save
+#                 name = form.cleaned_data.get('name')
+#                 # save book instance
+#                 if name:
+#                     print(name)
+#             # once all books are saved, redirect to book list view
+#             return redirect('book_list')
+#     return render(request, template_name, {
+#         'formset': formset,
+#         'heading': heading_message,
+#     })
+#
+
+def DiseasePredict(request):
+    template_name = 'Patient/predictDisease.html'
+    heading_message = 'Disease based on symptom'
+    if request.method == 'GET':
+        formset = PredictFormset(request.GET or None)
+    elif request.method == 'POST':
+        formset = PredictFormset(request.POST)
+        if formset.is_valid():
+            for form in formset:
+                name = form.cleaned_data.get('name')
+                # save book instance
+                if name:
+                    print(name)
+            return redirect(request.path_info)
+
+    return render(request, template_name, {
+        'formset': formset,
+        'heading': heading_message,
+    })

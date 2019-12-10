@@ -1,10 +1,12 @@
-
-{% block container %}
-{% if heading %}
-<h3>{{heading}}</h3>
-{% endif %}
-<form class="form-horizontal" method="POST" action="{% url 'predict' %}">
-    {% csrf_token %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form class="form-horizontal" method="POST" action="{% url 'book_list' %}">
+{% csrf_token %}
 {{ formset.management_form }}
 {% for form in formset %}
 <div class="row form-row spacer">
@@ -27,11 +29,8 @@
     </div>
 </div>
 </form>
-{% endblock %}
 
-{% block custom_js %}
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script type="text/javascript">
+<script type='text/javascript'>
 function updateElementIndex(el, prefix, ndx) {
     var id_regex = new RegExp('(' + prefix + '-\\d+)');
     var replacement = prefix + '-' + ndx;
@@ -43,12 +42,9 @@ function cloneMore(selector, prefix) {
     var newElement = $(selector).clone(true);
     var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
     newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
-        var name = $(this).attr('name')
-        if(name) {
-            name = name.replace('-' + (total-1) + '-', '-' + total + '-');
-            var id = 'id_' + name;
-            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
-        }
+        var name = $(this).attr('name').replace('-' + (total-1) + '-', '-' + total + '-');
+        var id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
     });
     newElement.find('label').each(function() {
         var forValue = $(this).attr('for');
@@ -64,7 +60,7 @@ function cloneMore(selector, prefix) {
     conditionRow.find('.btn.add-form-row')
     .removeClass('btn-success').addClass('btn-danger')
     .removeClass('add-form-row').addClass('remove-form-row')
-    .html('-');
+    .html('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
     return false;
 }
 function deleteForm(prefix, btn) {
@@ -92,4 +88,7 @@ $(document).on('click', '.remove-form-row', function(e){
     return false;
 });
 </script>
-{% endblock %}
+
+
+</body>
+</html>

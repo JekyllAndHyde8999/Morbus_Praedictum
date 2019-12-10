@@ -1,24 +1,29 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <title>Schedule</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Schedule</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
 
 <body>
 
-{% load crispy_forms_tags %}
-<form class="form-horizontal" method="POST" onsubmit="return myValidation(this)" action="{% url 'doctorSchedule' %}" >
-    {% csrf_token %}
-    {{ formset.management_form }}
 
+{% load crispy_forms_tags %}
+
+<form class="form-horizontal" method="POST" onsubmit="return myValidation(this)" action="{% url 'editSchedule' %}" >
+    {% csrf_token %}
+    {% for fields in DoctorListForm %}
+        {{ fields }}
+    {% endfor %}
+    {{ formset.management_form }}
     <fieldset id="fieldset">
         {% for form in formset %}
             <div id="placeholder">
                 <fieldset id="fieldsets">
                     <div id="template">
-                         {{ form.day|as_crispy_field}}
+                        {{ form.day|as_crispy_field}}
                         <div class="form-row">
                             <div class="form-group col-md-4 mb-0">
                                 {{ form.m_interval|as_crispy_field}}<br>
