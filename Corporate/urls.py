@@ -11,7 +11,9 @@ urlpatterns = [
     path('profile/', views.profile_page, name='C_profile'),
     path('ajax/load-areas/', views.load_areas, name='C_ajax_load_areas'),
     path('edit-profile/', views.edit_profile, name='C_edit_profile'),
-    
     path('logout/', views.user_logout, name='logout'),
+    path('adddoctor', views.addDoctor, name='C_addDoctor'),
+    path('schedule', views.CorpDoctorScheduleView, name="addSchedule"),
+    path('editschedule', views.editCorpDoctorSchedule, name="editSchedule"),
     
 ]

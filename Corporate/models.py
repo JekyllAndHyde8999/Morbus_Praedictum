@@ -10,7 +10,7 @@ import sys
 from Patient.models import Area, City
 
 class HospitalAddress(models.Model):
-    HospitalAddress_ID = models.AutoField(primary_key=True, auto_created=True, default=1)
+    HospitalAddress_ID = models.AutoField(primary_key=True, auto_created=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     Home = models.CharField(max_length=250)
     Street = models.CharField(max_length=250)

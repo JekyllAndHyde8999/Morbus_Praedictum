@@ -4,18 +4,35 @@ from django.contrib.auth.models import User
 from django.core.files.images import get_image_dimensions
 from .models import Address, Area, City, Profile
 from django.core.validators import MinValueValidator, MaxValueValidator
+import os
+import pickle
 
 from Patient.models import City
+from django.forms import formset_factory
 
 
 cityChoiceList = City.objects.values_list('name', flat=True).distinct()
-
+#
 temp = [(i, i) for i in cityChoiceList]
 # temp = []
 temp.append((None, '--blank--'))
 
 cityChoice = tuple(temp)
 
+SYMPTOMS_FILE_PATH = os.path.join("Pickles", "symptom_labels.pkl")
+with open(SYMPTOMS_FILE_PATH, mode="rb") as f:
+    symptoms_list = pickle.load(f).tolist()
+
+temp2 = [(str(i), str(i)) for i in symptoms_list]
+print("*************************")
+print(symptoms_list)
+print("*************************")
+print(temp2)
+print("*************************")
+temp2.append((None, '--blank--'))
+
+symptomChoice = tuple(temp2)
+print(symptomChoice)
 
 specializationChoices = (
     (None, '--Blank--'),
@@ -46,6 +63,7 @@ class SignUpForm(UserCreationForm):
 class DateInput(forms.DateInput):
     input_type = 'date'
 
+
 class UserProfileInfoForm(forms.ModelForm):
 
     class Meta:
@@ -53,15 +71,16 @@ class UserProfileInfoForm(forms.ModelForm):
         widgets = {
             'Patient_DOB': DateInput()
         }
-        fields = ('Patient_First_Name', 'Patient_Last_Name', 'Patient_Gender', 'Patient_Picture', 'Patient_DOB', 'Patient_Blood_Group', 'Patient_Blood_Donation', 'Patient_Phone_Number')
-        labels = {'Patient_First_Name':"First Name",
-        'Patient_Last_Name':"Last Name",
-        'Patient_Gender':"Gender",
-        'Patient_DOB':'Date of Birth',
-        'Patient_Blood_Group':'Blood Group',
-        'Patient_Blood_Donation':'Would you like to donate blood when required?',
-        'Patient_Phone_Number':'Phone Number',
-        'Patient_Picture':'Picture'} 
+        fields = ('Patient_First_Name', 'Patient_Last_Name', 'Patient_Gender', 'Patient_Picture', 'Patient_DOB',
+                  'Patient_Blood_Group', 'Patient_Blood_Donation', 'Patient_Phone_Number')
+        labels = {'Patient_First_Name': "First Name",
+                  'Patient_Last_Name': "Last Name",
+                  'Patient_Gender': "Gender",
+                  'Patient_DOB': 'Date of Birth',
+                  'Patient_Blood_Group': 'Blood Group',
+                  'Patient_Blood_Donation': 'Would you like to donate blood when required?',
+                  'Patient_Phone_Number': 'Phone Number',
+                  'Patient_Picture': 'Picture'}
 
     def clean_avatar(self):
         avatar = self.cleaned_data['Patient_Picture']
@@ -69,20 +88,20 @@ class UserProfileInfoForm(forms.ModelForm):
         try:
             w, h = get_image_dimensions(avatar)
 
-            #validate dimensions
+            # validate dimensions
             max_width = max_height = 100
             if w > max_width or h > max_height:
                 raise forms.ValidationError(
                     u'Please use an image that is '
-                     '%s x %s pixels or smaller.' % (max_width, max_height))
+                    '%s x %s pixels or smaller.' % (max_width, max_height))
 
-            #validate content type
+            # validate content type
             main, sub = avatar.content_type.split('/')
             if not (main == 'image' and sub in ['jpeg', 'pjpeg', 'gif', 'png']):
                 raise forms.ValidationError(u'Please use a JPEG, '
-                    'GIF or PNG image.')
+                                            'GIF or PNG image.')
 
-            #validate file size
+            # validate file size
             if len(avatar) > (20 * 1024):
                 raise forms.ValidationError(
                     u'Avatar file size may not exceed 20k.')
@@ -93,6 +112,7 @@ class UserProfileInfoForm(forms.ModelForm):
             and do not supply a new avatar
             """
             pass
+
 
 # Form to get user's address.
 class AddressInfoForm(forms.ModelForm):
@@ -120,23 +140,24 @@ class AddressInfoForm(forms.ModelForm):
 
 
 class CustomUserEditForm(forms.ModelForm):
-    Patient_Picture = forms.ImageField(label=('Picture'), required=False, error_messages = {'invalid':("Image files only.")}, 
-    widget=forms.FileInput)
+    Patient_Picture = forms.ImageField(label='Picture', required=False, error_messages={'invalid': "Image files only."},
+                                       widget=forms.FileInput)
     
     class Meta:
         widgets = {
             'Patient_DOB': DateInput()
         }
         model = Profile
-        fields = ('Patient_First_Name', 'Patient_Last_Name', 'Patient_Gender', 'Patient_Picture', 'Patient_DOB', 'Patient_Blood_Group', 'Patient_Blood_Donation', 'Patient_Phone_Number')
-        labels = {'Patient_First_Name':"First Name",
-        'Patient_Last_Name':"Last Name",
-        'Patient_Gender':"Gender",
-        'Patient_DOB':'Date of Birth',
-        'Patient_Blood_Group':'Blood Group',
-        'Patient_Blood_Donation':'Would you like to donate blood when required?',
-        'Patient_Phone_Number':'Phone Number',
-        'Patient_Picture':'Picture'}
+        fields = ('Patient_First_Name', 'Patient_Last_Name', 'Patient_Gender', 'Patient_Picture', 'Patient_DOB',
+                  'Patient_Blood_Group', 'Patient_Blood_Donation', 'Patient_Phone_Number')
+        labels = {'Patient_First_Name': "First Name",
+                  'Patient_Last_Name': "Last Name",
+                  'Patient_Gender': "Gender",
+                  'Patient_DOB': 'Date of Birth',
+                  'Patient_Blood_Group': 'Blood Group',
+                  'Patient_Blood_Donation': 'Would you like to donate blood when required?',
+                  'Patient_Phone_Number': 'Phone Number',
+                  'Patient_Picture': 'Picture'}
 
     def clean_avatar(self):
         avatar = self.cleaned_data['Patient_Picture']
@@ -144,20 +165,20 @@ class CustomUserEditForm(forms.ModelForm):
         try:
             w, h = get_image_dimensions(avatar)
 
-            #validate dimensions
+            # validate dimensions
             max_width = max_height = 100
             if w > max_width or h > max_height:
                 raise forms.ValidationError(
                     u'Please use an image that is '
                      '%s x %s pixels or smaller.' % (max_width, max_height))
 
-            #validate content type
+            # validate content type
             main, sub = avatar.content_type.split('/')
             if not (main == 'image' and sub in ['jpeg', 'pjpeg', 'gif', 'png']):
                 raise forms.ValidationError(u'Please use a JPEG, '
-                    'GIF or PNG image.')
+                                            'GIF or PNG image.')
 
-            #validate file size
+            # validate file size
             if len(avatar) > (20 * 1024):
                 raise forms.ValidationError(
                     u'Avatar file size may not exceed 20k.')
@@ -172,6 +193,22 @@ class CustomUserEditForm(forms.ModelForm):
 
 class doctorSearchForm(forms.Form):
     docName = forms.CharField(max_length=50,required=False)
-    docCity = forms.CharField(widget=forms.Select(choices=cityChoice),required=False, initial='--blank--')
-    docSpecial = forms.IntegerField(widget=forms.Select(choices=specializationChoices),required=False, initial='--blank--')
+    docCity = forms.CharField(widget=forms.Select(choices=cityChoice), required=False, initial='--blank--')
+    docSpecial = forms.IntegerField(widget=forms.Select(choices=specializationChoices),
+                                    required=False, initial='--blank--')
+
+
+class PredictForm(forms.Form):
+    # xwz = forms.ChoiceField(choices=symptomChoice)
+    name = forms.ChoiceField(label='Symptom',
+                             widget=forms.Select(choices=symptomChoice)
+                             # widget=forms.TextInput(attrs={'class': 'form-control'}),
+                             # choices=symptomChoice
+                             )
+
+    def __init__(self, *args, **kwargs):
+        super(PredictForm, self).__init__(*args, **kwargs)
+
+PredictFormset = formset_factory(PredictForm)
+
 

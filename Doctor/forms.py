@@ -43,7 +43,7 @@ class UserProfileInfoForm(forms.ModelForm):
         widgets = {
             'Doctor_DOB': DateInput()
         }
-        fields = ('Doctor_First_Name', 'Doctor_Last_Name', 'Doctor_Gender', 'Doctor_Picture', 'Doctor_DOB', 'Doctor_Phone_Number', 'Doctor_Qualifications', 'Doctor_Specialization', 'Doctor_Experience')
+        fields = ('Doctor_First_Name', 'Doctor_Last_Name', 'Doctor_Gender', 'Doctor_Picture', 'Doctor_DOB', 'Doctor_Phone_Number', 'Doctor_Qualifications', 'Doctor_Specialization', 'Doctor_Experience', 'Doctor_License')
         labels = {'Doctor_First_Name': "First Name",
                   'Doctor_Last_Name': "Last Name",
                   'Doctor_Gender': "Gender",
@@ -53,6 +53,7 @@ class UserProfileInfoForm(forms.ModelForm):
                   'Doctor_Qualifications': 'Qualifications',
                   'Doctor_Specialization': 'Specialization',
                   'Doctor_Experience': 'Years of Experience',
+                  'Doctor_License': 'License Number',
         }
 
     def clean_avatar(self):

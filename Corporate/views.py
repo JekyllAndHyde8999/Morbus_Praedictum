@@ -4,27 +4,51 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
-from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.db.models import Q
-from django.db.models.functions import Concat
-from django.db.models import F
-from django.forms.models import model_to_dict
+import datetime
 
-from .forms import SignUpForm, AddressInfoForm, UserProfileInfoForm, CustomUserEditForm
+from .forms import *
 from .tokens import account_activation_token
-from .models import Company, HospitalAddress
-from Patient.models import Area, City
-
+from .models import *
+from Patient.models import *
+from Doctor.forms import UserProfileInfoForm as DoctorProfileForm
 # Create your views here.
+
+
+def get_date(date, day):
+    dayMap = {'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4, 'Saturday': 5, 'Sunday': 6}
+    currday = date.weekday()
+    x = (dayMap[day] - currday) % 7
+    return date + datetime.timedelta(days=x)
+
+
+# Function to create time slots and save them in a model
+def CreateTimeSlots(docID):
+    print('DOC ID:'+ str(docID))
+    schedule = doctorSchedule.objects.filter(Doctor_ID=docID)
+    for i in schedule:
+        start_time = str(i.openTime)
+        end_time = str(i.closeTime)
+        slot_time = i.interval
+        day = i.day
+        time = datetime.datetime.strptime(start_time, '%H:%M:%S')
+        end = datetime.datetime.strptime(end_time, '%H:%M:%S')
+        while time <= end:
+            op_time = time.time()
+            date = get_date(datetime.datetime.today(), day)
+            TimeSlots(Doctor_ID=docID, day=day, date=date, opening_Time=op_time).save()
+            time += datetime.timedelta(minutes=slot_time)
+
+
 @login_required(login_url='C_login')
 def index(request):
     if Company.objects.filter(user=request.user).exists():
         profile = Company.objects.get(user=request.user)
-        return render(request, 'Company/index.html', {'profile': profile})
+        return render(request, 'Corporate/index.html', {'profile': profile})
     else:
         return redirect('http://127.0.0.1:8000/company/profile')
 
@@ -41,7 +65,7 @@ def signup(request):
             user.save()
             current_site = get_current_site(request)
             mail_subject = 'Activate your account.'
-            message = render_to_string('Company/emailver.html', {
+            message = render_to_string('Corporate/emailver.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -129,10 +153,10 @@ def load_areas(request):
     return render(request, 'Corporate/area_dropdown_list_options.html', {'areas': areas})
 
 
-@login_required(login_url='D_login')
+@login_required(login_url='C_login')
 def edit_profile(request):
     instance = Company.objects.get(user=request.user)
-    form = CustomUserEditForm(request.POST or None, request.FILES or None,instance=instance)
+    form = CustomUserEditForm(request.POST or None, request.FILES or None, instance=instance)
     if form.is_valid():
         form.save()
         return redirect('C_index')
@@ -144,3 +168,144 @@ def user_logout(request):
     # Log out the user.
     logout(request)
     return redirect('http://127.0.0.1:8000/')
+
+
+@login_required(login_url='C_login')
+def addDoctor(request):
+    if request.method == 'POST':
+        profile_form = DoctorProfileForm(data=request.POST)
+        user_form = SignUpForm(data=request.POST)
+
+        if profile_form.is_valid() and user_form.is_valid():
+            profile = profile_form.save(commit=False)
+            user = user_form.save()
+            profile.user = User.objects.get(username=request.POST.get("username"))
+            profile.Doctor_Email = request.POST.get("email")
+            profile.Doctor_Corporate = Company.objects.get(user=request.user)
+            address = HospitalAddress.objects.get(user=request.user)
+            c = ClinicAddress(user=User.objects.get(username=request.POST.get("username")), Home=address.Home,
+                          Street=address.Street, city=address.city, area=address.area, Pin=address.Pin)
+            c.save()
+            profile.Doctor_Address = c
+            profile.Doctor_Activate = True
+            profile.save()
+            return redirect('http://127.0.0.1:8000/company/adddoctor')
+        elif not profile_form.is_valid():
+            print(profile_form.errors)
+        else:
+            return render(request, 'Corporate/addDoctor.html',
+                          {'Profile_form': profile_form, 'address_form': user_form})
+    else:
+        profile_form = DoctorProfileForm()
+        user_form = SignUpForm()
+    return render(request, 'Corporate/addDoctor.html', {'Profile_form': profile_form, 'address_form': user_form})
+
+
+@login_required(login_url='C_login')
+def CorpDoctorScheduleView(request):
+    form = CorpDoctorScheduleForm()
+    weekDay = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    heading_message = 'Formset'
+    if request.method == 'GET':
+        formset = scheduleFormset(request.GET or None, initial=[{'day': weekDay[i]} for i in range(7)])
+    elif request.method == 'POST':
+        formset = scheduleFormset(request.POST)
+        if formset.is_valid():
+            Doctor_ID = request.POST.get('Doctor_ID')
+            doctor_obj = Doctor.objects.get(Doctor_ID=Doctor_ID)
+            for form in formset:
+                print("inside for loop")
+                # extract name from each form and save
+
+                print("****************************")
+                print(Doctor_ID)
+                print("****************************")
+                day = form.cleaned_data.get('day')
+                m_openTime = form.cleaned_data.get('m_openTime')
+                m_closeTime = form.cleaned_data.get('m_closeTime')
+                m_interval = form.cleaned_data.get('m_interval')
+                e_openTime = form.cleaned_data.get('e_openTime')
+                e_closeTime = form.cleaned_data.get('e_closeTime')
+                e_interval = form.cleaned_data.get('e_interval')
+                print("@@@@@"+str(m_openTime)+" "+str(m_closeTime)+"@@@@@")
+                if m_openTime and m_closeTime and e_openTime and e_closeTime:
+                    if m_openTime<m_closeTime and e_openTime<e_closeTime:
+                        print("&&&&&&&&&  ALL GOOD &&&&&&&&&")
+                        # save book instance
+                        print("$$$$$$$$$$$$$$$$$$$$$")
+                        print(doctor_obj)
+                        print("$$$$$$$$$$$$$$$$$$$$$")
+                        if day and doctor_obj:
+                            print(request.user)
+                            if m_openTime and m_closeTime and m_interval:
+                                doctorSchedule(Doctor_ID=doctor_obj, day=day, openTime=m_openTime, closeTime=m_closeTime,
+                                               interval=m_interval).save()
+
+                            if e_openTime and e_closeTime and e_interval:
+                                doctorSchedule(Doctor_ID=doctor_obj, day=day, openTime=e_openTime, closeTime=e_closeTime,
+                                               interval=e_interval).save()
+            CreateTimeSlots(doctor_obj)
+            return HttpResponseRedirect(request.path_info)
+    return render(request, 'Corporate/addSchedule.html', {
+        'formset': formset,
+        'heading': heading_message,
+        'DoctorListForm': corpDoctorListForm(user=request.user),
+    })
+
+
+@login_required(login_url='C_login')
+def editCorpDoctorSchedule(request):
+    form = CorpEditDoctorScheduleForm()
+    weekDay = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    heading_message = 'Formset'
+    if request.method == 'GET':
+        formset = editScheduleFormset(request.GET or None, initial=[{'day': weekDay[i]} for i in range(7)])
+    elif request.method == 'POST':
+        formset = editScheduleFormset(request.POST)
+        if formset.is_valid():
+            Doctor_ID = request.POST.get('Doctor_ID')
+            doctor_obj = Doctor.objects.get(Doctor_ID=Doctor_ID)
+            i = 0
+            for form in formset:
+
+                print("inside for loop")
+                # extract name from each form and save
+                print("****************************")
+                print(Doctor_ID)
+                day = form.cleaned_data.get('day')
+                m_openTime = form.cleaned_data.get('m_openTime')
+                m_closeTime = form.cleaned_data.get('m_closeTime')
+                m_interval = form.cleaned_data.get('m_interval')
+                e_openTime = form.cleaned_data.get('e_openTime')
+                e_closeTime = form.cleaned_data.get('e_closeTime')
+                e_interval = form.cleaned_data.get('e_interval')
+                print("*****"+str(m_openTime)+" "+str(m_closeTime)+"*****")
+                if (m_openTime and m_closeTime) or (e_openTime and e_closeTime):
+                    if m_openTime < m_closeTime and e_openTime < e_closeTime:
+                        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
+                        # save book instance
+                        if day and doctor_obj:
+                            print(request.user)
+
+                            if ((m_openTime and m_closeTime and m_interval) or (e_openTime and e_closeTime and e_interval)) and i == 0:
+                                doctorSchedule.objects.filter(Doctor_ID=doctor_obj).delete()
+                                i = 1
+                            if m_openTime and m_closeTime and m_interval:
+                                print("Doin the thing")
+                                doctorSchedule(Doctor_ID=doctor_obj, day=day, openTime=m_openTime,
+                                               closeTime=m_closeTime,
+                                               interval=m_interval).save()
+
+                            if e_openTime and e_closeTime and e_interval:
+                                doctorSchedule(Doctor_ID=doctor_obj, day=day, openTime=e_openTime,
+                                               closeTime=e_closeTime,
+                                               interval=e_interval).save()
+            TimeSlots.objects.filter(Doctor_ID=doctor_obj).delete()
+            CreateTimeSlots(doctor_obj)
+            return HttpResponseRedirect(request.path_info)
+    return render(request, 'Corporate/CorpEditSchedule.html', {
+        'formset': formset,
+        'heading': heading_message,
+        'DoctorListForm': corpDoctorListForm(user=request.user),
+    })

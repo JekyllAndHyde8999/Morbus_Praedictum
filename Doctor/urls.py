@@ -1,7 +1,6 @@
 from django.urls import path, re_path, include
 
 from . import views
-
 urlpatterns = [
     path('', views.index, name='D_index'),
     path('signup/', views.signup, name='D_signup'),
@@ -14,4 +13,6 @@ urlpatterns = [
     path('ajax/load-areas/', views.load_areas, name='D_ajax_load_areas'),
     path('edit-profile/', views.edit_profile, name='D_edit_profile'),
     path('logout/', views.user_logout, name='logout'),
+
 ]
+

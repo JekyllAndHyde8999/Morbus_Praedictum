@@ -22,5 +22,6 @@ urlpatterns = [
 
     path('bookappointment/<docID>/', views.AppointmentBooking, name="bookAppointment"),
     path('confirmbooking/', views.confirmBooking, name="confirmBooking"),
-    path('predict/', views.input_symptoms, name="predictDisease"),
+    # path('predict/', views.input_symptoms, name="predictDisease"),
+    path('predict/', views.DiseasePredict, name="predict")
 ]
