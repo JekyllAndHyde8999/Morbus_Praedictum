@@ -53,7 +53,7 @@ def index(request):
     if Doctor.objects.filter(user=request.user).exists():
         if Doctor.objects.get(user=request.user).Doctor_Activate:
             profile = Doctor.objects.get(user=request.user)
-            return render(request, 'Doctor/index.html', {'profile': profile})
+            return render(request, 'Doctor/index_new.html', {'profile': profile})
         else:
             return render(request, 'Doctor/not_activated.html')
     else:
@@ -266,13 +266,14 @@ def editDoctorSchedule(request):
 
 
 def sendFeedback(request):
+    doc_ID = 1
     current_site = get_current_site(request)
     mail_subject = 'Please give your feedback for Dr.'
     user = request.user
     message = render_to_string('Patient/feedback_email.html', {
         'user': user,
         'domain': current_site.domain,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'uid': urlsafe_base64_encode(force_bytes(doc_ID)),
         'token': feedback_token.make_token(user),
     })
     to_email = Profile.objects.get(user=request.user).Patient_Email

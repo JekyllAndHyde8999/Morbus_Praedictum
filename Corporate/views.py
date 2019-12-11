@@ -225,8 +225,8 @@ def addDoctors(request):
                           Street=address.Street, city=address.city, area=address.area, Pin=address.Pin)
             c.save()
             doctor=Doctor(Doctor_First_Name=str(i[3]), Doctor_Last_Name=str(i[4]), Doctor_Gender=int(i[5]), Doctor_Phone_Number=str(i[6]), 
-                            Doctor_Qualifications=str(i[7]), Doctor_Specialization=int(i[8]), Doctor_Experience=int(i[9]), Doctor_License=str(i[10]), user=user, Doctor_Corporate=Company.objects.get(user=request.user), Doctor_Address=c)
-
+                            Doctor_Qualifications=str(i[7]), Doctor_Specialization=int(i[8]), Doctor_Experience=int(i[9]), Doctor_License=str(i[10]), user=user, Doctor_Corporate=Company.objects.get(user=request.user), Doctor_Address=c, Doctor_Activate=True)
+            doctor.save()
 
 
         print(nlist)

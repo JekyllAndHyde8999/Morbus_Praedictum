@@ -27,7 +27,7 @@ import json
 def index(request):
     if Profile.objects.filter(user=request.user).exists():
         profile = Profile.objects.get(user=request.user)
-        return render(request, 'Patient/index.html', {'profile': profile})
+        return render(request, 'Patient/new_index.html', {'profile': profile})
     else:
         return redirect('/patient/profile/')
 
