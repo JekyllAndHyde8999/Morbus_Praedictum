@@ -13,6 +13,6 @@ urlpatterns = [
     path('ajax/load-areas/', views.load_areas, name='D_ajax_load_areas'),
     path('edit-profile/', views.edit_profile, name='D_edit_profile'),
     path('logout/', views.user_logout, name='logout'),
-
+    path('createblog/', views.createBlog, name='create-blog'),
+    path('blogs/@<str:username>', views.allBlogs, name='all-blogs')
 ]
-

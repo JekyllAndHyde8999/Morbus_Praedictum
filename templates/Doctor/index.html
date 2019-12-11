@@ -19,7 +19,7 @@ Profile is shown here.
     Other<br>
 {% endif %}
 {{ profile.Doctor_DOB }}<br>
-{{ profile.Doctor_Phone_Number }}<br> 
+{{ profile.Doctor_Phone_Number }}<br>
 <img src="{{ profile.Doctor_Picture.url }}" height="100" width="100"><br>
 {{ profile.Doctor_Picture.url }}
 {{ profile.Doctor_Qualifications }}<br>
@@ -27,6 +27,7 @@ Profile is shown here.
 {{ profile.Doctor_Experience }}<br>
 
 <br><br>
+<a href="{% url 'create-blog' %}"><button>Create Blog</button></a>
 <a href={% url 'logout' %}>Logout</a>
 </body>
 </html>

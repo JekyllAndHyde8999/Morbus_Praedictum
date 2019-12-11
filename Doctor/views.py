@@ -57,6 +57,25 @@ def index(request):
     else:
         return redirect('/doctor/profile/')
 
+@login_required(login_url='D_login')
+def createBlog(request):
+    if request.method == "POST":
+        if Doctor.objects.filter(user=request.user).exists():
+            doc = Doctor.objects.get(user=request.user)
+            blog_obj = Blog(**request.POST, user=request.user, doctor=doc)
+            blog_obj.save()
+            # redirect to doctor/blogs
+            return redirect(f'/doctor/blogs/@{doc.user.username}')
+    return render(request, 'Doctor/createblog.html')
+
+
+def allBlogs(request, username):
+    if Doctor.objects.filter(user=User.objects.get(username=username)).exists():
+        doc = Doctor.objects.get(user=User.objects.get(username=username))
+        blogs = Blog.objects.filter(doctor=doc)
+        return render(request, 'Doctor/allblogs.html', context={'blogs': blogs, 'name': username})
+    else:
+        return render(request, 'Doctor/allblogs.html', context={'err': 'That doctor does not exist.', 'name': username})
 
 def signup(request):
     if request.user.is_authenticated:

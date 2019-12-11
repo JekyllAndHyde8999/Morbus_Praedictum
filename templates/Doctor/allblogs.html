@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>@{{ name }}&apos;s Blogs</title>
+    </head>
+    <body>
+        {% if blogs %}
+        {% for blog in blog %}
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <h2><a class="mr-2" href="{% url 'note-detail' note.id %}">{{ note.title }}</a></h2>
+                    <small class="text-muted">Last modified: {{ note.last_modified }}</small>
+                </div>
+                <p class="article-content">{{ note.note_text }}</p><br>
+                <small>Tags: {% for tag in note.tags_list %}<a href="/home/{{tag}}">{{ tag }}</a>, {% endfor %}</small>
+            </div>
+        </article>
+        {% endfor %}
+        {% endif %}
+    </body>
+</html>
