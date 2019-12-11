@@ -11,3 +11,5 @@ Doctor/migrations/__pycache__/
 Patient/migrations/__pycache__/
 Main/migrations/__pycache__/
 Corporate/migrations/__pycache__/
+miscellaneous/__pycache__/
+miscellaneous/migrations/__pycache__/
