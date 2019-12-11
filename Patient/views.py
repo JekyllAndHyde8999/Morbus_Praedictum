@@ -194,21 +194,22 @@ def doctorSearchView(request):
                                          'Doctor_Experience': str(obj.Doctor_Experience)+"years",
                                          'address': addrs.Home + " " + addrs.Street + "\n" + str(addrs.area) + "\n"
                                                     +str(addrs.city)})
-                return render(request, 'Patient/searchDoctor.html', {'searchResult': searchResult, 'form': form})
-            return render(request, 'Patient/searchDoctor.html', {'message': 'No Results Found', 'form': form})
-    return render(request, 'Patient/searchDoctor.html', {'form': form})
+                return render(request, 'Patient/doctorSearch.html', {'searchResult': searchResult, 'form': form})
+            return render(request, 'Patient/doctorSearch.html', {'message': 'No Results Found', 'form': form})
+    return render(request, 'Patient/doctorSearch.html', {'form': form})
 
 
 @login_required(login_url='P_login')
 def AppointmentBooking(request, docID):
     obj = Doctor.objects.get(Doctor_ID=docID)
     if obj:
-        addrs = ClinicAddress.objects.get(Doctor_ID=docID)
+        addrs = ClinicAddress.objects.get(user = obj.user)
         res_list = []
         date = datetime.datetime.today()
         for i in range (7):
             res_list.append(TimeSlots.objects.filter(Doctor_ID=docID, Patient_ID__isnull=True, date=date))
             date = date + datetime.timedelta(days=1)
+        res_list = [i for i in res_list if i] 
 
         context = {"DocName": obj.Doctor_First_Name + " " + obj.Doctor_Last_Name,
                    "Doctor_ID": obj.Doctor_ID,
@@ -219,7 +220,7 @@ def AppointmentBooking(request, docID):
                    'Doctor_Experience': str(obj.Doctor_Experience) + "years",
                    'address': addrs.Home + " " + addrs.Street + "\n" + str(addrs.area) + "\n" + str(addrs.city),
                    'slots': res_list}
-        return render(request, 'Patient/appointment_Booking.html', {'context': context})
+        return render(request, 'Patient/appointment.html', {'context': context})
 
 
 @login_required(login_url='P_login')

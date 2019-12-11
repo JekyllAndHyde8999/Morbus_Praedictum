@@ -1,0 +1,105 @@
+
+<!DOCTYPE HTML>
+{% load static %}
+{% load widget_tweaks %}
+
+<html>
+<head>
+<title>Edit Schedule</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Medical Appointment Form template Responsive, Login form web template,Flat Pricing tables,Flat Drop downs Sign up Web Templates, 
+ Flat Web Templates, Login sign up Responsive web template, SmartPhone Compatible web template, free web designs for Nokia, Samsung, LG, SonyEricsson, Motorola web design">
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!-- Custom Theme files -->
+<link href="{%static 'css/wickedpicker.css' %}" rel="stylesheet" type='text/css' media="all" />
+<link href="{%static 'css/style.css' %}" rel='stylesheet' type='text/css' />
+<!--fonts--> 
+<link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet">
+<!--//fonts--> 
+</head>
+<body>
+<!--background-->
+<h1> Doctor Scheduling Form </h1>
+    <div class="bg-agile">
+	<div class="book-appointment">
+            <form method="POST" action="{% url 'editDoctorSchedule' %}" >
+                    {% csrf_token %}
+                    {{ formset.management_form }}
+            {% for form in formset %}
+            
+	<h1>{{ form.day }}</h1>
+			
+                
+			<div class="left-agileits-w3layouts same">
+                <h4>Morning slot</h4>
+			<div class="gaps">
+				    <p>Interval</p>	
+                       
+                    {{ form.m_interval|append_attr:"class:form-control select" }}
+			</div>	
+				<div class="gaps">	
+                        <p>Opening Time</p>	
+                        {{ form.m_openTime|append_attr:"class:form-control select" }}
+				</div>
+                
+                <div class="gaps">	
+                        <p>Close Time</p>	
+                        {{ form.m_closeTime|append_attr:"class:form-control select" }}
+				</div>
+            </div>
+            
+			<div class="right-agileinfo same">
+                    <h4>evening slot</h4>
+
+                    <div class="gaps">
+                            <p>Interval</p>	
+                               
+                            {{ form.e_interval|append_attr:"class:form-control select" }}
+                    </div>	
+                        <div class="gaps">	
+                                <p>Opening Time</p>	
+                                {{ form.e_openTime|append_attr:"class:form-control select" }}
+                        </div>
+                        
+                        <div class="gaps">	
+                                <p>Close Time</p>	
+                                {{ form.e_closeTime|append_attr:"class:form-control select" }}
+                        </div>
+			
+            
+
+            </div>
+            <br>
+            <h4>------------------------------------------------------------------------</h4>
+            <br>
+            {% endfor %}
+
+
+
+			<div class="clear"></div>
+						<button type="submit">Edit Schedule</button>
+			</form>
+		</div>
+   </div>
+
+ 
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/wickedpicker.js"></script>
+			<script type="text/javascript">
+				$('.timepicker').wickedpicker({twentyFour: false});
+			</script>
+		<!-- Calendar -->
+				<link rel="stylesheet" href="css/jquery-ui.css" />
+				<script src="js/jquery-ui.js"></script>
+				  <script>
+						  $(function() {
+							$( "#datepicker,#datepicker1,#datepicker2,#datepicker3" ).datepicker();
+						  });
+				  </script>
+			<!-- //Calendar -->
+
+</body>
+</html>
