@@ -21,6 +21,7 @@
     src: url('../fonts/montserrat/Montserrat-Bold.ttf');
 }
 
+
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 
@@ -30,12 +31,15 @@
     box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
     height: 100%;
     font-family: Poppins-Regular, sans-serif;
 }
 
+
 /*---------------------------------------------*/
+
 a {
     font-family: Poppins-Regular;
     font-size: 14px;
@@ -57,8 +61,15 @@ a:hover {
     color: #57b846;
 }
 
+
 /*---------------------------------------------*/
-h1, h2, h3, h4, h5, h6 {
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin: 0px;
 }
 
@@ -70,13 +81,15 @@ p {
     margin: 0px;
 }
 
-ul, li {
+ul,
+li {
     margin: 0px;
     list-style-type: none;
 }
 
 
 /*---------------------------------------------*/
+
 input {
     outline: none;
     border: none;
@@ -87,7 +100,8 @@ textarea {
     border: none;
 }
 
-textarea:focus, input:focus {
+textarea:focus,
+input:focus {
     border-color: transparent !important;
 }
 
@@ -155,7 +169,9 @@ textarea:-ms-input-placeholder {
     color: #999999;
 }
 
+
 /*---------------------------------------------*/
+
 button {
     outline: none !important;
     border: none;
@@ -173,6 +189,7 @@ iframe {
 
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
+
 .txt1 {
     font-family: Poppins-Regular;
     font-size: 13px;
@@ -209,10 +226,10 @@ iframe {
     align-items: center;
     padding: 25px;
     background: #42ffcf;
-    background: -webkit-linear-gradient(-135deg, #92fe9d, #00c9ff);
-    background: -o-linear-gradient(-135deg, #92fe9d, #00c9ff);
-    background: -moz-linear-gradient(-135deg,, #00c9ff);
-    background: linear-gradient(-135deg, white, #00c9ff);
+    background: -webkit-linear-gradient(-135deg, #92fe9d, #056fcc);
+    background: -o-linear-gradient(-135deg, #92fe9d, #056fcc);
+    background: -moz-linear-gradient(-135deg, white, #056fcc);
+    background: linear-gradient(-135deg, white, #056fcc);
 }
 
 .wrap-login100 {
@@ -220,7 +237,6 @@ iframe {
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
-
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -231,8 +247,10 @@ iframe {
     padding: 77px 130px 77px 95px;
 }
 
+
 /*------------------------------------------------------------------
 [  ]*/
+
 .login100-pic {
     width: 316px;
     padding-top: 110px;
@@ -245,6 +263,7 @@ iframe {
 
 /*------------------------------------------------------------------
 [  ]*/
+
 .login100-form {
     width: 300px;
 }
@@ -255,7 +274,6 @@ iframe {
     color: #333333;
     line-height: 1.2;
     text-align: center;
-
     width: 100%;
     display: block;
     padding-bottom: 50px;
@@ -263,6 +281,7 @@ iframe {
 
 
 /*---------------------------------------------*/
+
 .wrap-input100 {
     position: relative;
     width: 100%;
@@ -275,7 +294,6 @@ iframe {
     font-size: 15px;
     line-height: 1.5;
     color: #666666;
-
     display: block;
     width: 100%;
     background: #e6e6e6;
@@ -289,7 +307,6 @@ iframe {
     font-size: 15px;
     line-height: 1.5;
     color: #666666;
-
     display: block;
     width: 100%;
     background: #e6e6e6;
@@ -303,7 +320,6 @@ iframe {
     font-size: 15px;
     line-height: 1.5;
     color: #666666;
-
     display: block;
     width: 100%;
     background: #f8f9fa;
@@ -315,6 +331,7 @@ iframe {
 
 /*------------------------------------------------------------------
 [ Focus ]*/
+
 .focus-input100 {
     display: block;
     position: absolute;
@@ -328,7 +345,7 @@ iframe {
     color: rgba(87, 184, 70, 0.8);
 }
 
-.input100 + .focus-input100 {
+.input100+.focus-input100 {
     -webkit-animation: anim-shadow 0.5s ease-in-out forwards;
     animation: anim-shadow 0.5s ease-in-out forwards;
 }
@@ -349,7 +366,6 @@ iframe {
 
 .symbol-input100 {
     font-size: 15px;
-
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -365,20 +381,21 @@ iframe {
     padding-left: 35px;
     pointer-events: none;
     color: #666666;
-
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
     transition: all 0.4s;
 }
 
-.input100:focus + .focus-input100 + .symbol-input100 {
+.input100:focus+.focus-input100+.symbol-input100 {
     color: #57b846;
     padding-left: 28px;
 }
 
+
 /*------------------------------------------------------------------
 [ Button ]*/
+
 .container-login100-form-btn {
     width: 100%;
     display: -webkit-box;
@@ -397,7 +414,6 @@ iframe {
     line-height: 1.5;
     color: #fff;
     text-transform: uppercase;
-
     width: 100%;
     height: 50px;
     border-radius: 25px;
@@ -410,7 +426,6 @@ iframe {
     justify-content: center;
     align-items: center;
     padding: 0 25px;
-
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
@@ -425,16 +440,13 @@ iframe {
 /*------------------------------------------------------------------
 [ Responsive ]*/
 
-
 @media (max-width: 992px) {
     .wrap-login100 {
         padding: 177px 90px 33px 85px;
     }
-
     .login100-pic {
         width: 35%;
     }
-
     .login100-form {
         width: 50%;
     }
@@ -444,11 +456,9 @@ iframe {
     .wrap-login100 {
         padding: 10px 80px 33px 80px;
     }
-
     .login100-pic {
         display: none;
     }
-
     .login100-form {
         width: 100%;
     }
@@ -484,16 +494,13 @@ iframe {
     transform: translateY(-50%);
     right: 8px;
     pointer-events: none;
-
     font-family: Poppins-Medium;
     color: #c80000;
     font-size: 13px;
     line-height: 1.4;
     text-align: left;
-
     visibility: hidden;
     opacity: 0;
-
     -webkit-transition: opacity 0.4s;
     -o-transition: opacity 0.4s;
     -moz-transition: opacity 0.4s;

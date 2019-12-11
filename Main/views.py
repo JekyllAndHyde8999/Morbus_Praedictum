@@ -35,4 +35,10 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-    return render(request, 'Main/index.html')
+    return render(request, 'Main/index copy.html')
+
+def index1(request):
+    return render(request, 'Main/login.html')
+
+def index2(request):
+    return render(request, 'Main/signup.html')

@@ -211,7 +211,7 @@ def doctorScheduleView(request):
                                                closeTime=e_closeTime, interval=e_interval).save()
             CreateTimeSlots(doctor_obj)
             return HttpResponseRedirect(request.path_info)
-    return render(request, 'Doctor/scheduleing.html', {
+    return render(request, 'Doctor/scheduling.html', {
         'formset': formset,
         'heading': heading_message,
     })

@@ -1,0 +1,66 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+.butn {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+}
+
+.btn {
+  box-sizing: border-box;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: transparent;
+  border: 2px solid #e74c3c;
+  border-radius: 0.6em;
+  color: #e74c3c;
+  cursor: pointer;
+  display: flex;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  margin: 20px;
+  padding: 1.2em 2.8em;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+.btn:hover, .btn:focus {
+  color: #056fcc;
+  outline: 0;
+}
+
+.third {
+  border-color: #056fcc;
+  color: #fff;
+  box-shadow: 0 0 40px 40px #056fcc inset, 0 0 0 0 #056fcc;
+  transition: all 150ms ease-in-out;
+}
+.third:hover {
+  box-shadow: 0 0 10px 0 #056fcc inset, 0 0 10px 4px #056fcc;
+}
+
+</style>
+<div class="butn" style="min-height: 500px;">
+  <a href="{% url 'P_login' %}">
+<button class="btn third" style="margin-left: 300px;">login As patient</button>
+</a>
+<a href="{% url 'D_login' %}">
+<button class="btn third">Login as Doctor</button>
+</a>
+<a href="{% url 'P_login' %}">
+<button class="btn third" style="margin-right: 320px;">Login as Corporate</button>
+</a>
+</div>
+{% endblock %}
