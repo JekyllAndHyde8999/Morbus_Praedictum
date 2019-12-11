@@ -24,15 +24,9 @@ with open(SYMPTOMS_FILE_PATH, mode="rb") as f:
     symptoms_list = pickle.load(f).tolist()
 
 temp2 = [(str(i), str(i)) for i in symptoms_list]
-print("*************************")
-print(symptoms_list)
-print("*************************")
-print(temp2)
-print("*************************")
 temp2.append((None, '--blank--'))
 
 symptomChoice = tuple(temp2)
-print(symptomChoice)
 
 specializationChoices = (
     (None, 'Choose Specialization'),
@@ -201,14 +195,14 @@ class doctorSearchForm(forms.Form):
 class PredictForm(forms.Form):
     # xwz = forms.ChoiceField(choices=symptomChoice)
     name = forms.ChoiceField(label='Symptom',
-                             widget=forms.Select(choices=symptomChoice)
-                             # widget=forms.TextInput(attrs={'class': 'form-control'}),
-                             # choices=symptomChoice
+                             # widget=forms.Select(choices=symptomChoice)
+                             widget=forms.TextInput(attrs={'class': 'form-control'}),
+                             choices=symptomChoice
                              )
 
-    def __init__(self, *args, **kwargs):
-        super(PredictForm, self).__init__(*args, **kwargs)
+    # def __init__(self, *args, **kwargs):
+    #     super(PredictForm, self).__init__(*args, **kwargs)
 
 PredictFormset = formset_factory(PredictForm)
-
+PredictFormset.form.base_fields['name'] = forms.ChoiceField(choices=symptomChoice)
 

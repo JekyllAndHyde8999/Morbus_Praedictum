@@ -283,11 +283,10 @@ def input_symptoms(request):
             for form in formset:
                 symptom = form.cleaned_data.get('name')
                 data.append(symptom)
-            print(data)
-            # data = [x.strip() for x in data]
-            # result_dict = predict(data)
-            # results = [[x[0], str(round(x[1] * 100, 2)) + '%'] for x in sorted(list(result_dict.items()),
-            #                                                                    key=lambda x: -x[1])]
+            data = [x.strip() for x in data]
+            result_dict = predict(data)
+            results = [[x[0], str(round(x[1] * 100, 2)) + '%'] for x in sorted(list(result_dict.items()),
+                                                                               key=lambda x: -x[1])]
             # return render(request, 'Patient/predictDisease.html', {'predictions': results})
         else:
             heading_message = "Please fill form correctly"
@@ -299,28 +298,6 @@ def input_symptoms(request):
     })
 
 
-# def create_book_normal(request):
-#     template_name = 'Patient/create_normal.html'
-#     heading_message = 'Formset Demo'
-#     if request.method == 'GET':
-#         formset = BookFormset(request.GET or None)
-#     elif request.method == 'POST':
-#         formset = BookFormset(request.POST)
-#         if formset.is_valid():
-#             for form in formset:
-#                 # extract name from each form and save
-#                 name = form.cleaned_data.get('name')
-#                 # save book instance
-#                 if name:
-#                     print(name)
-#             # once all books are saved, redirect to book list view
-#             return redirect('book_list')
-#     return render(request, template_name, {
-#         'formset': formset,
-#         'heading': heading_message,
-#     })
-#
-
 def DiseasePredict(request):
     template_name = 'Patient/predictDisease.html'
     heading_message = 'Disease based on symptom'
@@ -329,12 +306,19 @@ def DiseasePredict(request):
     elif request.method == 'POST':
         formset = PredictFormset(request.POST)
         if formset.is_valid():
+            data = []
             for form in formset:
                 name = form.cleaned_data.get('name')
                 # save book instance
                 if name:
-                    print(name)
-            return redirect(request.path_info)
+                    data.append(name)
+            data = [x.strip() for x in data]
+            result_dict = predict(data)
+            results = [[x[0], str(round(x[1] * 100, 2)) + '%'] for x in sorted(list(result_dict.items()),
+                                                                               key=lambda x: -x[1])]
+            return render(request, 'Patient/predictDisease.html', {'predictions': results, 'formset': formset})
+        else:
+            heading_message = "Please fill form correctly"
 
     return render(request, template_name, {
         'formset': formset,

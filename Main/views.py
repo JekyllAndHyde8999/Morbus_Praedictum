@@ -7,6 +7,10 @@ from django.shortcuts import render
 # from django.utils import timezone
 # from Doctor.views import get_date
 #
+from datetime import datetime, timedelta
+from threading import Timer
+
+
 # def trigger_updatedoctorslots():
 #     doctors = doctorSchedule.objects.filter(day=timezone.now().day)
 #     print("deleting previous day slots");

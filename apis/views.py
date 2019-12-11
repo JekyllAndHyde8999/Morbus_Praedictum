@@ -6,6 +6,8 @@ from .serializer import *
 
 from rest_framework import filters, generics, status, views
 from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 # Create your views here.
@@ -46,6 +48,8 @@ class DoctorApi(generics.ListCreateAPIView):
     filter_backends = (DynamicSearchFilter,)
     queryset = Doctor.objects.filter()
     serializer_class = DoctorSerializer
+    authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
 
 # #PATIENT APIS
@@ -54,6 +58,7 @@ class DonorList(generics.ListCreateAPIView):
     filter_backends = (DynamicSearchFilter,)
     queryset = Profile.objects.filter(Patient_Blood_Donation=0)
     serializer_class = BdSerializer
+
 
 
 class DiseasePredictor(views.APIView):

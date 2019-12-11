@@ -27,6 +27,9 @@
     </div>
 </div>
 </form>
+{% for key, value in predictions %}
+    {{ key }} --> {{ value }}<br>
+{% endfor %}
 {% endblock %}
 
 {% block custom_js %}
@@ -81,6 +84,8 @@ function deleteForm(prefix, btn) {
     }
     return false;
 }
+
+
 $(document).on('click', '.add-form-row', function(e){
     e.preventDefault();
     cloneMore('.form-row:last', 'form');
