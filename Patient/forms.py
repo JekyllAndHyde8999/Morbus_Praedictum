@@ -15,7 +15,7 @@ cityChoiceList = City.objects.values_list('name', flat=True).distinct()
 #
 temp = [(i, i) for i in cityChoiceList]
 # temp = []
-temp.append((None, '--blank--'))
+temp.append((None, 'Choose City'))
 
 cityChoice = tuple(temp)
 
@@ -29,7 +29,7 @@ temp2.append((None, '--blank--'))
 symptomChoice = tuple(temp2)
 
 specializationChoices = (
-    (None, '--Blank--'),
+    (None, 'Choose Specialization'),
     (0, '0'),
     (1, '1'),
     (2, '2'),

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+<title>Appointment Booking</title>
+<!-- custom-theme -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Personal Card Widget Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //custom-theme -->
+<link href="{% static 'Patient/css/style1.css' %}" rel="stylesheet" type="text/css" media="all" />
+<!-- js -->
+<script type="text/javascript" src="{% static 'Patient/js/jquery-2.1.4.min.js' %}"></script>
+<!-- //js -->
+<link rel="stylesheet" href="{% static 'Patient/css/flexslider.css' %}" type="text/css" media="screen" property="" />
+<link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+</head>
+<body>
+	<div class="main">
+		<h1>Book Appointment</h1>
+		<div class="w3_agile_main_grids">
+			<div class="agile_main_grid_left">
+				<div class="w3_agileits_personal_card_grid">
+					<div class="wthree_personal_card_gridl">
+						<img src="{{ context.Doctor_Picture.url }}" height="100" width="100">
+					</div>
+					<div class="wthree_personal_card_gridr">
+						<h2 style="text-transform: uppercase;">{{ context.DocName }}</h2>
+						
+					</div>
+					<div class="clear"> </div>
+					<div class="agileinfo_personal_text">
+						<p>{{ context.address}} </p>
+					</div>
+					<div class="agileits_plans">
+						<h3>Doctor details</h3>
+						<ul>
+							<li>Contact: {{ context.Doctor_Phone_Number }}</li>
+							<li>Qualifications: {{ context.Doctor_Qualifications }}</li>
+                            <li>Specialization: {{ context.Doctor_Specialization }}</li>
+                            <li>Experience: {{ context.Doctor_Experience }}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<div class="agileits_w3layouts_main_grid_right">
+				<section class="slider">
+					<div class="flexslider">
+						<ul class="slides">
+								{% for day in context.slots %}
+							<li>
+									
+								<div class="w3ls_main_grid_right_grid">
+									<div class="w3l_net_worth">
+										<h2 style="color:white"> {{ day.1.date }}</h2>
+										<p>{{ day.0.day }}</p>
+									</div>
+									
+									<div class="w3_main_grid_right_grid">
+										<div class="w3layouts_main_grid_right_grid">
+											
+												{% for slot in day %}
+												<form style="display:inline;">
+													
+												{% csrf_token %}
+												<button type="submit" class="str({{ slot.Doctor_ID }})+str({{ slot.date}})+str({{slot.opening_Time}}) btn btn-success btn-sm"  onclick="conf_booking('{{ slot.Doctor_ID }}, {{ slot.date|date:"Y-m-d"}}, {{slot.opening_Time|date:"H:i"}}')">{{ slot.opening_Time }}</button>
+												&nbsp;	
+											</form>
+												
+											{% endfor %}
+									</div>
+									
+								</div>
+								
+								
+							</li>
+							
+							{% endfor %}
+							
+						</ul>
+					</div>
+				</section>
+			</div>
+			
+			<div class="clear"> </div>
+		</div>
+		
+	</div>
+	<!-- flexSlider -->
+		<script defer src="{% static 'Patient/js/jquery.flexslider.js' %}"></script>
+		<script type="text/javascript">
+			$(window).load(function(){
+			  $('.flexslider').flexslider({
+				animation: "slide",
+				start: function(slider){
+				  $('body').removeClass('loading');
+				}
+			  });
+			});
+		</script>
+	<!-- //flexSlider -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function conf_booking(docID, date, opening_time) {
+            $.ajax({
+                type: 'POST',
+                url: '/patient/confirmbooking/',
+                dataType: "json",
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    docID: docID,
+                    date: date,
+                    opening_time: opening_time,
+                },
+    
+                success: function (json) {
+					alert(json.success)
+					
+                    $('.' + str(docID)+str(date)+str(opening_time)).html(json.success);
+                }
+            });
+        }
+	</script>
+	<style>
+	
+
+	
+	
+	</style>
+</body>
+</html>

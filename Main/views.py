@@ -39,20 +39,10 @@ from threading import Timer
 
 # Create your views here.
 def index(request):
-    return render(request, 'Main/index.html')
+    return render(request, 'Main/index copy.html')
 
+def index1(request):
+    return render(request, 'Main/login.html')
 
-# x = datetime.today()
-# y = x.replace(day=x.day, hour=1, minute=0, second=0, microsecond=0) + timedelta(seconds=15)
-# delta_t = y-x
-#
-# secs = delta_t.total_seconds()
-#
-#
-# def hello_world():
-#     print("hello world")
-#     return 0
-#
-#
-# t = Timer(secs, hello_world)
-# t.start()
+def index2(request):
+    return render(request, 'Main/signup.html')

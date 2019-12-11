@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_extensions',
     'crispy_forms',
+    'widget_tweaks',
 ]
 
 

@@ -1,7 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
+{% extends 'base.html' %}
+
 {% load staticfiles %}
-<head>
+
+{% block head %}
     <meta charset="UTF-8">
     <title>Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,8 +15,8 @@
     <link rel="stylesheet" type="text/css" href="{% static  "css/util.css" %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'food-logos.jpg' %}">
     <link rel="stylesheet" type="text/css" href="http://jquery-ui.googlecode.com/svn/tags/latest/themes/base/jquery-ui.css" media="all" />
-</head>
-<body>
+{% endblock %}
+{% block content %}}
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
@@ -21,7 +25,7 @@
             </div>
 
             <form class="login100-form validate-form" method="POST" id="AddressForm"
-                  data-areas-url="{% url 'D_ajax_load_areas' %}" action="{% url "D_profile" %}">
+                  data-areas-url="{% url 'P_ajax_load_areas' %}" action="{% url "D_profile" %}">
                 {% csrf_token %}
                 <span class="login100-form-title">
                     User Profile
@@ -44,7 +48,7 @@
                     <p style="font-size: 12px;color: red">{{ Profile_form.errors.Patient_Phone_Number }}
                         Please make sure to add +91 at the start</p>
                 {% endif %}
-                <div class="container-login100-form-btn">
+                    <div class="container-login100-form-btn">
                     <button class="login100-form-btn" type="submit" value="signup">
                         Submit
                     </button>
@@ -64,7 +68,7 @@
         </div>
     </div>
 </div>
-</body>
+{% endblock %}}
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
@@ -84,5 +88,3 @@
   </script>
 
 </html>
-
-

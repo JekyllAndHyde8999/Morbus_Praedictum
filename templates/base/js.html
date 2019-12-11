@@ -1,0 +1,26 @@
+{% load static %}
+
+<script type='text/javascript' src="{% static 'Main/js/jquery.collapsible.min.js' %}"></script>
+<script type='text/javascript' src="{% static 'Main/js/jquery.js' %}"></script>
+<script type='text/javascript' src="{% static 'Main/js/swiper.min.js' %}"></script>
+<script type='text/javascript' src="{% static 'Main/js/jquery.countdown.min.js' %}"></script>
+<script type='text/javascript' src="{% static 'Main/js/circle-progress.min.js' %}"></script>
+<script type='text/javascript' src="{% static 'Main/js/jquery.countTo.min.js' %}"></script>
+<script type='text/javascript' src="{% static 'Main/js/jquery.barfiller.js' %}"></script>
+<script type='text/javascript' src="{% static 'Main/js/custom.js' %}"></script>
+
+<script>
+
+
+
+
+$(".btn2").click(function (e) {           
+$(".dropdown-menu").css({
+    position:"absolute",
+    display: "block",
+    left: e.pageX,
+    top: e.pageY
+});
+
+return false;
+});</script>

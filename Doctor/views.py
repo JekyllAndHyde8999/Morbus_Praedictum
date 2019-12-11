@@ -211,7 +211,7 @@ def doctorScheduleView(request):
                                                closeTime=e_closeTime, interval=e_interval).save()
             CreateTimeSlots(doctor_obj)
             return HttpResponseRedirect(request.path_info)
-    return render(request, 'Doctor/doctorSchedule.html', {
+    return render(request, 'Doctor/scheduling.html', {
         'formset': formset,
         'heading': heading_message,
     })
@@ -257,7 +257,7 @@ def editDoctorSchedule(request):
             TimeSlots.objects.filter(Doctor_ID=Doctor.objects.get(user=request.user)).delete()
             CreateTimeSlots(doctor_obj)
             return HttpResponseRedirect(request.path_info)
-    return render(request, 'Doctor/editDoctorSchedule.html', {
+    return render(request, 'Doctor/editSchedule.html', {
         'formset': formset,
         'heading': heading_message,
     })

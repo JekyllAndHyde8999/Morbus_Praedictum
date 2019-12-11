@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    {% endblock %}
+    {% block title %}
+    <title>Morbus Predictum</title>
+    {% endblock %}
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    {% include 'base/css.html'  %}
+ 
+
+</head>
+<body>
+    <header class="site-header">
+
+        <!-- .nav-bar -->   
+        {% if user.is_authenticated %}
+
+        {% include 'base/navbarlogged.html'  %}
+
+        {% else %}
+
+        {% include 'base/navbar.html'  %}
+
+        {% endif %}
+   
+        <!-- .nav-bar -->
+        {% block slider %}
+
+        {% endblock %}
+
+    </header>
+    <div class="homepage-boxes">
+            {% block content %}
+
+            {% endblock %}
+
+        </div>
+        {% include 'base/footer.html'  %}
+
+   <!-- .site-footer -->
+   {% include 'base/js.html'  %}
+
+
+</body>
+</html>
