@@ -13,6 +13,8 @@ urlpatterns = [
     path('ajax/load-areas/', views.load_areas, name='D_ajax_load_areas'),
     path('edit-profile/', views.edit_profile, name='D_edit_profile'),
     path('logout/', views.user_logout, name='logout'),
+    re_path('feedback/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+            views.takeFeedback, name='D_feedback'),
 
 ]
 

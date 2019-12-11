@@ -13,6 +13,7 @@ urlpatterns = [
     path('edit-profile/', views.edit_profile, name='C_edit_profile'),
     path('logout/', views.user_logout, name='logout'),
     path('adddoctor', views.addDoctor, name='C_addDoctor'),
+    path('adddoctors', views.addDoctors, name='C_addDoctors'),
     path('schedule', views.CorpDoctorScheduleView, name="addSchedule"),
     path('editschedule', views.editCorpDoctorSchedule, name="editSchedule"),
     

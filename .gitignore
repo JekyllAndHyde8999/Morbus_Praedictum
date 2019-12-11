@@ -6,8 +6,10 @@ Patient/__pycache__/
 Morbus_Praedictum/__pycache__/
 Corporate/__pycache__/
 Main/__pycache__/
+apis/__pycache__/
 .vscode
 Doctor/migrations/__pycache__/
 Patient/migrations/__pycache__/
 Main/migrations/__pycache__/
 Corporate/migrations/__pycache__/
+apis/migrations/__pycache__/
