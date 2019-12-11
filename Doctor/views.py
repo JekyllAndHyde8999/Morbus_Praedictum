@@ -14,6 +14,7 @@ from itertools import chain
 from .forms import *
 from .tokens import account_activation_token, feedback_token
 from .models import *
+from Main.models import Blog
 import datetime
 
 from Patient.models import Profile
@@ -61,6 +62,30 @@ def index(request):
     else:
         return redirect('/doctor/profile/')
 
+@login_required(login_url='D_login')
+def createBlog(request):
+    if request.method == "POST":
+        print(Doctor.objects.filter(user=request.user).exists())
+        if Doctor.objects.filter(user=request.user).exists():
+            doc = Doctor.objects.get(user=request.user)
+            blog_obj = Blog(title=request.POST['title'], user=request.user, Doctor=doc, text=request.POST['text'])
+            blog_obj.save()
+            # redirect to doctor/blogs
+            return redirect(f'/blogs/@{doc.user.username}')
+    return render(request, 'Doctor/createblog.html')
+
+
+def allBlogs(request, username):
+    if Doctor.objects.filter(user=User.objects.get(username=username)).exists():
+        doc = Doctor.objects.get(user=User.objects.get(username=username))
+        blogs = Blog.objects.filter(Doctor=doc)
+        return render(request, 'Doctor/allblogs.html', context={'blogs': blogs, 'name': username})
+    else:
+        return render(request, 'Doctor/allblogs.html', context={'err': True, 'name': username})
+
+def blogDetail(request, username, blog_title):
+    blog_obj = Blog.objects.get(pk=pk)
+    return render(request, 'Doctor/blogdetail.html', context)
 
 def signup(request):
     if request.user.is_authenticated:
@@ -310,7 +335,6 @@ def takeFeedback(request, uidb64, token):
     if user is not None and feedback_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return render(request, 'Doctor/feedback_form.html') #Change HTML and add feedback form to thr template. 
+        return render(request, 'Doctor/feedback_form.html') #Change HTML and add feedback form to thr template.
     else:
         return HttpResponse('Link is invalid!')
-
