@@ -4,10 +4,10 @@
     
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link rel="stylesheet" type="text/css" href="{% static 'Doctor/css/index.css' %}" >
+<link rel="stylesheet" type="text/css" href="{% static 'Corporate/css/new_index.css' %}" >
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- <link rel="stylesheet" type="text/css" href="{% static 'Doctor/css/main.css' %}">
+ <link rel="stylesheet" type="text/css" href="{% static 'Corporate/css/main.css' %}">
 
 {% endblock %}
 {% block content %}
@@ -17,15 +17,15 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
-                            <img src="{{ profile.Doctor_Picture.url }}" alt=""/ style="border-radius:50%;width:200px;height:200px">
+                            <img src="{{ profile.Company_Logo.url }}" alt=""/ style="border-radius:50%;width:200px;height:200px">
                         <br><br>
-                           <a href={% url 'editDoctorSchedule' %}>    <button class="profile-edit-btn" name="btnAddMore">Edit Schedule</button></a>
+                           <a href={% url 'C_addDoctor' %}>    <button class="profile-edit-btn" name="btnAddMore">Add Doctor</button></a>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="profile-head">
                                     <h5>
-                                        {{ profile.Doctor_First_Name }} {{ profile.Doctor_Last_Name }}
+                                        {{ profile.Company_Name }}
                                     </h5>
                                     <h6>
                                         @{{ profile.user }}
@@ -38,21 +38,14 @@
                                
                             </ul>
                             <div>
-                            <ul>
-                                <li>Gender: {% if profile.Doctor_Gender == 1 %}
-                                    Male<br>
-                                {% elif profile.Doctor_Gender == 2 %}
-                                   Female<br>
-                                {% elif profile.Doctor_Gender == 3 %}
-                                    LGBTQ<br>
-                                {% elif profile.Doctor_Gender == 4 %}
-                                    Other<br>
-                                {% endif %}</li>
+      <ul>
+                                <li>License Number: {{ profile.Company_License_Number }}</li>
 <br>
-                                <li>Date of Birth: {{ profile.Doctor_DOB }}</li>
+                                <li>Email: {{ profile.Company_Email }}</li>
                                 <br>
-                                <li>Contact No.:  {{ profile.Doctor_Phone_Number }}</li>
-
+                                <li>Contact No.:  {{ profile.Company_Phone_Number }}</li>
+<br>
+                                <li>Address:  {{ profile.Company_Address.Home }}, {{ profile.Company_Address.Street }}, {{ profile.Company_Address.area.name }}, {{ profile.Company_Address.city.name }} - {{ profile.Company_Address.Pin }}</li>
                             </ul>
                             <br><br>
                             </div>
@@ -61,7 +54,7 @@
                     
                     <div class="col-md-2">
                     
-                     <a href={% url 'D_edit_profile' %} >    <button class="profile-edit-btn" style="" name="btnAddMore">Edit Profile</button></a> 
+                     <a href={% url 'C_edit_profile' %}>    <button class="profile-edit-btn" name="btnAddMore">Edit Profile</button></a> 
                       
                        
                     </div>
@@ -70,14 +63,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-work">
-                           
-                            <p>QUALIFICATIONS</p>
-                            {{ profile.Doctor_Qualifications }}
-                            <p>SPECIALIZATION</p>
-                            {{ profile.Doctor_Specialization }}
-                            <p>EXPERIENCE</p>
-                            {{ profile.Doctor_Experience }} Years<br/>
-                            
+                                                       
                         </div>
                     </div>
                    
@@ -86,24 +72,24 @@
                                     <thead>
                                         <tr class="table100-head" id="results">
             
-                                            <th class="column1">Patient</th>
-                                            <th class="column3">Date</th>
-                                            <th class="column2">Time</th>
+                                            <th class="column1">Doctor Name</th>
+                                            <th class="column3">Specialization</th>
+                                            <th class="column2">Email & Contact No.</th>
                                             
                                     </thead>
-                                    {% if not appointments %}
+                                    {% if not doctors %}
                                             <tr style="padding: 20px;">
-                                                <td  rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;font-size:20px">No appointments available.</td>
+                                                <td  rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;font-size:20px">No doctors have been added.</td>
                                                
                                             </tr>
                                     {% endif %}
-                                    {%  for result in appointments %}
+                                    {%  for result in doctors %}
                                     <tbody>    
                                             <tr style="padding: 20px;">
-                                                <td rowspan="2" class="column1 rowspanned cell">{{ result.Patient_ID.Patient_First_Name }} {{ result.Patient_ID.Patient_Last_Name }}
+                                                <td rowspan="2" class="column1 rowspanned cell">Dr. {{ result.Doctor_First_Name }} {{ result.Doctor_Last_Name }}
                                                 </td>
-                                                <td  rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;">{{ result.day }}, {{ result.date }}</td>
-                                                <td rowspan="2" class="column2 rowspanned cell">{{ result.opening_Time }}</td>
+                                                <td  rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;">{{ result.Doctor_Specialization }}</td>
+                                                <td rowspan="2" class="column2 rowspanned cell">{{ result.Doctor_Email }}, {{ result.Doctor_Phone_Number }}</td>
                                   
                                             </tr>		
                                                             

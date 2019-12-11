@@ -53,7 +53,9 @@ def index(request):
     if Doctor.objects.filter(user=request.user).exists():
         if Doctor.objects.get(user=request.user).Doctor_Activate:
             profile = Doctor.objects.get(user=request.user)
-            return render(request, 'Doctor/index_new.html', {'profile': profile})
+            appointments = TimeSlots.objects.filter(Doctor_ID=Doctor.objects.get(user=request.user)).exclude(Patient_ID=None)
+            print(appointments)
+            return render(request, 'Doctor/index_new.html', {'profile': profile, 'appointments':appointments})
         else:
             return render(request, 'Doctor/not_activated.html')
     else:
@@ -311,4 +313,4 @@ def takeFeedback(request, uidb64, token):
         return render(request, 'Doctor/feedback_form.html') #Change HTML and add feedback form to thr template. 
     else:
         return HttpResponse('Link is invalid!')
->>>>>>> d735d2df6c9de92d2f89e8b9c5a726fe5d06c5d0
+
