@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 {% load staticfiles %}
-
-<head>
-
+{% block head %}
     <meta charset="UTF-8">
     <title>Sign Up</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,9 +10,9 @@
     <link rel="stylesheet" type="text/css" href="{% static  "css/main1.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static  "css/util.css" %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'food-logos.jpg' %}">
-</head>
-
-<body>
+{% endblock %}
+{% block content %}
+<br>
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
@@ -64,6 +61,5 @@
         </div>
     </div>
 </div>
-</body>
+{% endblock %}
 </html>
-

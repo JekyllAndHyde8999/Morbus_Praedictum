@@ -97,7 +97,6 @@ def loginform(request):
             else:
                 return redirect('http://127.0.0.1:8000/company/profile')
         else:
-            print(form.errors)
             contexts = {'form': form}
             return render(request, 'Corporate/login.html', context=contexts)
     else:
@@ -199,6 +198,42 @@ def addDoctor(request):
         profile_form = DoctorProfileForm()
         user_form = SignUpForm()
     return render(request, 'Corporate/addDoctor.html', {'Profile_form': profile_form, 'address_form': user_form})
+
+
+def addDoctors(request):
+    if request.method == 'POST':
+        file1 = request.FILES.get('data')
+        if file1 == None:
+            result = 'No file uploaded.'
+            # return render(request, 'predictReview/batch_predict.html', {'result' : result})
+        ext = file1.name
+        if (not ".txt" in ext) or(file1.content_type != 'text/plain') :
+            result = 'Please upload .txt file only.'
+            # return render(request, 'predictReview/batch_predict.html', {'result' : result})
+        
+        lst = file1.read().splitlines()
+        nlist = []
+        for i in lst :
+            nlist.append(i.decode('utf-8').split(', '))
+        
+        for i in nlist:
+            if len(i) != 11:
+                result = "Data not in correct format."
+            user=User.objects.create_user(str(i[0]), email=str(i[1]), password=str(i[2]))
+            address = HospitalAddress.objects.get(user=request.user)
+            c = ClinicAddress(user=User.objects.get(username=str(i[0])), Home=address.Home,
+                          Street=address.Street, city=address.city, area=address.area, Pin=address.Pin)
+            c.save()
+            doctor=Doctor(Doctor_First_Name=str(i[3]), Doctor_Last_Name=str(i[4]), Doctor_Gender=int(i[5]), Doctor_Phone_Number=str(i[6]), 
+                            Doctor_Qualifications=str(i[7]), Doctor_Specialization=int(i[8]), Doctor_Experience=int(i[9]), Doctor_License=str(i[10]), user=user, Doctor_Corporate=Company.objects.get(user=request.user), Doctor_Address=c, Doctor_Activate=True)
+            doctor.save()
+
+
+        print(nlist)
+        
+        return render(request, 'Corporate/addDoctors.html')
+    else:
+        return render(request, 'Corporate/addDoctors.html')
 
 
 @login_required(login_url='C_login')

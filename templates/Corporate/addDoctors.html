@@ -1,0 +1,5 @@
+<form  method="POST" action="{% url 'C_addDoctors' %}" enctype="multipart/form-data">
+{% csrf_token %}
+ <input id = "data" type = "file" name="data">
+<button type="submit">Add</button>
+</form>

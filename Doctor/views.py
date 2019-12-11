@@ -12,9 +12,11 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from itertools import chain
 from .forms import *
-from .tokens import account_activation_token
+from .tokens import account_activation_token, feedback_token
 from .models import *
 import datetime
+
+from Patient.models import Profile
 
 
 def get_date(date, day):
@@ -51,7 +53,7 @@ def index(request):
     if Doctor.objects.filter(user=request.user).exists():
         if Doctor.objects.get(user=request.user).Doctor_Activate:
             profile = Doctor.objects.get(user=request.user)
-            return render(request, 'Doctor/index.html', {'profile': profile})
+            return render(request, 'Doctor/index_new.html', {'profile': profile})
         else:
             return render(request, 'Doctor/not_activated.html')
     else:
@@ -263,16 +265,18 @@ def editDoctorSchedule(request):
     })
 
 
-def feedBack(request):
+def sendFeedback(request):
+    doc_ID = 1
     current_site = get_current_site(request)
-    mail_subject = 'Activate your account.'
-    message = render_to_string('Patient/emailver.html', {
+    mail_subject = 'Please give your feedback for Dr.'
+    user = request.user
+    message = render_to_string('Patient/feedback_email.html', {
         'user': user,
         'domain': current_site.domain,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': account_activation_token.make_token(user),
+        'uid': urlsafe_base64_encode(force_bytes(doc_ID)),
+        'token': feedback_token.make_token(user),
     })
-    to_email = form.cleaned_data.get('email')
+    to_email = Profile.objects.get(user=request.user).Patient_Email
     email = EmailMessage(
         mail_subject, message, to=[to_email]
     )
@@ -293,3 +297,18 @@ def rating_view(request):
         form = DoctorRatingForm()
         context = {'form': form, }
         return render(request, 'Patient/star_rating.html', context=context)
+
+
+def takeFeedback(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and feedback_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return render(request, 'Doctor/feedback_form.html') #Change HTML and add feedback form to thr template. 
+    else:
+        return HttpResponse('Link is invalid!')
+>>>>>>> d735d2df6c9de92d2f89e8b9c5a726fe5d06c5d0

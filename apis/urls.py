@@ -11,4 +11,5 @@ urlpatterns = [
     path('auth/login/', views.loginViewAPI.as_view(), name="loginAPI"),
     path('auth/logout/', views.logoutViewAPI.as_view(), name="logoutAPI"),
     path('c_adddoctor', views.addDoctorView.as_view(), name="addDoctor")
+
     ]
