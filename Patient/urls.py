@@ -1,11 +1,7 @@
 from django.urls import path, re_path, include
 
 from . import views
-from rest_framework.urlpatterns import format_suffix_patterns
-
-
-
-
+from Doctor.views import rating_view
 
 urlpatterns = [
     path('', views.index, name='P_index'),
@@ -23,5 +19,6 @@ urlpatterns = [
     path('bookappointment/<docID>/', views.AppointmentBooking, name="bookAppointment"),
     path('confirmbooking/', views.confirmBooking, name="confirmBooking"),
     # path('predict/', views.input_symptoms, name="predictDisease"),
-    path('predict/', views.DiseasePredict, name="predict")
+    path('predict/', views.DiseasePredict, name="predict"),
+    path('doc_ratings/', rating_view, name='Ratings'),
 ]

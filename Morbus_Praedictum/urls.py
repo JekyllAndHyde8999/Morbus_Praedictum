@@ -28,6 +28,7 @@ urlpatterns = [
     path('company/', include('Corporate.urls')),
     path('feedback/', miscViews.feedbackView, name="Feedback_html"),
     path('api/', include('apis.urls')),
+    path('misc/', include('miscellaneous.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

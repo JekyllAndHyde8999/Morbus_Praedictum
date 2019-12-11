@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.files.images import get_image_dimensions
-from .models import ClinicAddress, Area, Doctor, doctorSchedule
+from .models import ClinicAddress, Area, Doctor, doctorSchedule,DoctorRating
 
 import datetime as dt
 from django.forms import formset_factory
@@ -43,18 +43,20 @@ class UserProfileInfoForm(forms.ModelForm):
         widgets = {
             'Doctor_DOB': DateInput()
         }
-        fields = ('Doctor_First_Name', 'Doctor_Last_Name', 'Doctor_Gender', 'Doctor_Picture', 'Doctor_DOB', 'Doctor_Phone_Number', 'Doctor_Qualifications', 'Doctor_Specialization', 'Doctor_Experience', 'Doctor_License')
+        fields = ('Doctor_First_Name', 'Doctor_Last_Name', 'Doctor_Gender', 'Doctor_Picture', 'Doctor_DOB',
+                  'Doctor_Phone_Number', 'Doctor_Qualifications', 'Doctor_Specialization', 'Doctor_Experience',
+                  'Doctor_License')
         labels = {'Doctor_First_Name': "First Name",
                   'Doctor_Last_Name': "Last Name",
                   'Doctor_Gender': "Gender",
                   'Doctor_DOB': 'Date of Birth',
                   'Doctor_Phone_Number': 'Phone Number',
-                  'Doctor_Picture':'Picture',
+                  'Doctor_Picture': 'Picture',
                   'Doctor_Qualifications': 'Qualifications',
                   'Doctor_Specialization': 'Specialization',
                   'Doctor_Experience': 'Years of Experience',
                   'Doctor_License': 'License Number',
-        }
+                  }
 
     def clean_avatar(self):
         avatar = self.cleaned_data['Doctor_Picture']
@@ -67,13 +69,13 @@ class UserProfileInfoForm(forms.ModelForm):
             if w > max_width or h > max_height:
                 raise forms.ValidationError(
                     u'Please use an image that is '
-                     '%s x %s pixels or smaller.' % (max_width, max_height))
+                    '%s x %s pixels or smaller.' % (max_width, max_height))
 
             # validate content type
             main, sub = avatar.content_type.split('/')
             if not (main == 'image' and sub in ['jpeg', 'pjpeg', 'gif', 'png']):
                 raise forms.ValidationError(u'Please use a JPEG, '
-                    'GIF or PNG image.')
+                                            'GIF or PNG image.')
 
             # validate file size
             if len(avatar) > (20 * 1024):
@@ -232,3 +234,7 @@ class editDoctorScheduleForm(forms.ModelForm):
 editScheduleFormset = formset_factory(editDoctorScheduleForm, extra=0)
 
 
+class DoctorRatingForm(forms.ModelForm):
+    class Meta:
+        model = DoctorRating
+        fields = ('Doctor_ID','Rating')

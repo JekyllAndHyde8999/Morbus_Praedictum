@@ -277,3 +277,19 @@ def feedBack(request):
         mail_subject, message, to=[to_email]
     )
     email.send()
+
+
+def rating_view(request):
+
+    if request.method == 'POST':
+        form = DoctorRatingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('Main_index')
+        else:
+            context = {'form': form, }
+            return render(request, 'Patient/star_rating.html', context=context)
+    else:
+        form = DoctorRatingForm()
+        context = {'form': form, }
+        return render(request, 'Patient/star_rating.html', context=context)

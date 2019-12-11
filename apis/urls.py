@@ -8,6 +8,7 @@ urlpatterns = [
     path('patients/', views.DonorList.as_view(), name="donor-all"),
     path('predict/', views.DiseasePredictor.as_view(), name="predictAPI"),
     path('timeslots/', views.timeSlotsApiView.as_view(), name="TimeSlotsAPI"),
-    path('auth/login/', views.loginViewAPI.as_view(), name="loginAPI")
-    path('auth/login/', views.loginViewAPI.as_view(), name="logoutAPI")
+    path('auth/login/', views.loginViewAPI.as_view(), name="loginAPI"),
+    path('auth/logout/', views.logoutViewAPI.as_view(), name="logoutAPI"),
+    path('c_adddoctor', views.addDoctorView.as_view(), name="addDoctor")
     ]
