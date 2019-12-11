@@ -12,7 +12,6 @@ with open(MODEL_FILE_PATH, mode="rb") as f:
     model = pickle.load(f)
 with open(SYMPTOMS_FILE_PATH, mode="rb") as f:
     symptoms_list = pickle.load(f).tolist()
-    print(len(symptoms_list))
 with open(DISEASE_LABELS_FILE_PATH, mode="rb") as f:
     disease_labels = pickle.load(f)
 
@@ -37,7 +36,6 @@ def predict(inputs):
     model_inputs = [[0] * len(symptoms_list)]
     for i in input_indices:
         model_inputs[0][i] = 1
-    print(model_inputs)
     # predict
     y_pred = model.predict(np.array(model_inputs))[0]
     # zip with disease label

@@ -7,6 +7,10 @@ from django.shortcuts import render
 # from django.utils import timezone
 # from Doctor.views import get_date
 #
+from datetime import datetime, timedelta
+from threading import Timer
+
+
 # def trigger_updatedoctorslots():
 #     doctors = doctorSchedule.objects.filter(day=timezone.now().day)
 #     print("deleting previous day slots");
@@ -36,3 +40,19 @@ from django.shortcuts import render
 # Create your views here.
 def index(request):
     return render(request, 'Main/index.html')
+
+
+# x = datetime.today()
+# y = x.replace(day=x.day, hour=1, minute=0, second=0, microsecond=0) + timedelta(seconds=15)
+# delta_t = y-x
+#
+# secs = delta_t.total_seconds()
+#
+#
+# def hello_world():
+#     print("hello world")
+#     return 0
+#
+#
+# t = Timer(secs, hello_world)
+# t.start()
