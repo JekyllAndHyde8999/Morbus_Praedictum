@@ -67,7 +67,7 @@ def createBlog(request):
             blog_obj = Blog(title=request.POST['title'], user=request.user, Doctor=doc, text=request.POST['text'])
             blog_obj.save()
             # redirect to doctor/blogs
-            return redirect(f'/doctor/blogs/@{doc.user.username}')
+            return redirect(f'/blogs/@{doc.user.username}')
     return render(request, 'Doctor/createblog.html')
 
 
@@ -78,6 +78,10 @@ def allBlogs(request, username):
         return render(request, 'Doctor/allblogs.html', context={'blogs': blogs, 'name': username})
     else:
         return render(request, 'Doctor/allblogs.html', context={'err': True, 'name': username})
+
+def blogDetail(request, username, blog_title):
+    blog_obj = Blog.objects.get(pk=pk)
+    return render(request, 'Doctor/blogdetail.html', context)
 
 def signup(request):
     if request.user.is_authenticated:
