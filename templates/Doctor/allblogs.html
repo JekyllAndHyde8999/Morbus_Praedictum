@@ -6,18 +6,21 @@
     </head>
     <body>
         {% if blogs %}
-        {% for blog in blog %}
+        {% for note in blogs %}
         <article class="media content-section">
             <div class="media-body">
                 <div class="article-metadata">
-                    <h2><a class="mr-2" href="{% url 'note-detail' note.id %}">{{ note.title }}</a></h2>
-                    <small class="text-muted">Last modified: {{ note.last_modified }}</small>
+                    <h2>{{ note.title }}</h2>
+                    <small class="text-muted">Last modified: {{ note.date }}</small>
                 </div>
-                <p class="article-content">{{ note.note_text }}</p><br>
-                <small>Tags: {% for tag in note.tags_list %}<a href="/home/{{tag}}">{{ tag }}</a>, {% endfor %}</small>
+                <p class="article-content">{{ note.text }}</p><br>
             </div>
         </article>
         {% endfor %}
+        {% endif %}
+
+        {% if err %}
+        <p>That doctor does not exist.</p>
         {% endif %}
     </body>
 </html>

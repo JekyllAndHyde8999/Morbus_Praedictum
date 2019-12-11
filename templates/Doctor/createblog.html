@@ -10,7 +10,7 @@
     </head>
     <body>
         <div class="content-section">
-            <form class="form-group" action="{% url 'D_index' %}" method="POST">
+            <form class="form-group" action="{% url 'create-blog' %}" method="POST">
                 {% csrf_token %}
                 Title:<br><input type="text" name="title" class="textinput textInput form-control" autofocus><br><br>
                 Text:<br><textarea name="text" rows="8" cols="80" class="textinput textInput form-control"></textarea><br><br>

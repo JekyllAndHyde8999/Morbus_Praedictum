@@ -14,6 +14,7 @@ from itertools import chain
 from .forms import *
 from .tokens import account_activation_token
 from .models import *
+from Main.models import Blog
 import datetime
 
 
@@ -60,9 +61,10 @@ def index(request):
 @login_required(login_url='D_login')
 def createBlog(request):
     if request.method == "POST":
+        print(Doctor.objects.filter(user=request.user).exists())
         if Doctor.objects.filter(user=request.user).exists():
             doc = Doctor.objects.get(user=request.user)
-            blog_obj = Blog(**request.POST, user=request.user, doctor=doc)
+            blog_obj = Blog(title=request.POST['title'], user=request.user, Doctor=doc, text=request.POST['text'])
             blog_obj.save()
             # redirect to doctor/blogs
             return redirect(f'/doctor/blogs/@{doc.user.username}')
@@ -72,10 +74,10 @@ def createBlog(request):
 def allBlogs(request, username):
     if Doctor.objects.filter(user=User.objects.get(username=username)).exists():
         doc = Doctor.objects.get(user=User.objects.get(username=username))
-        blogs = Blog.objects.filter(doctor=doc)
+        blogs = Blog.objects.filter(Doctor=doc)
         return render(request, 'Doctor/allblogs.html', context={'blogs': blogs, 'name': username})
     else:
-        return render(request, 'Doctor/allblogs.html', context={'err': 'That doctor does not exist.', 'name': username})
+        return render(request, 'Doctor/allblogs.html', context={'err': True, 'name': username})
 
 def signup(request):
     if request.user.is_authenticated:
