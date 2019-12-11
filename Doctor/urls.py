@@ -15,6 +15,5 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     re_path('feedback/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
             views.takeFeedback, name='D_feedback'),
-
+    path('createblog/', views.createBlog, name='create-blog'),
 ]
-

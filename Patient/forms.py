@@ -11,10 +11,10 @@ from Patient.models import City
 from django.forms import formset_factory
 
 
-cityChoiceList = City.objects.values_list('name', flat=True).distinct()
-#
-temp = [(i, i) for i in cityChoiceList]
-# temp = []
+# cityChoiceList = City.objects.values_list('name', flat=True).distinct()
+# #
+# temp = [(i, i) for i in cityChoiceList]
+temp = []
 temp.append((None, 'Choose City'))
 
 cityChoice = tuple(temp)
@@ -114,7 +114,7 @@ class AddressInfoForm(forms.ModelForm):
         model = Address
         fields = ('Home', 'Street', 'city', 'area', 'Pin')
 
-    def __init__(self, *args, **kwargs):    
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['area'].queryset = Area.objects.none()
         print(self.fields['area'].queryset)
@@ -136,7 +136,7 @@ class AddressInfoForm(forms.ModelForm):
 class CustomUserEditForm(forms.ModelForm):
     Patient_Picture = forms.ImageField(label='Picture', required=False, error_messages={'invalid': "Image files only."},
                                        widget=forms.FileInput)
-    
+
     class Meta:
         widgets = {
             'Patient_DOB': DateInput()
@@ -205,4 +205,3 @@ class PredictForm(forms.Form):
 
 PredictFormset = formset_factory(PredictForm)
 PredictFormset.form.base_fields['name'] = forms.ChoiceField(choices=symptomChoice)
-
