@@ -1,8 +1,13 @@
-<!DOCTYPE html>
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+
 {% load static %}
 {% load widget_tweaks %}
 <html lang="en">
-<head>
+{% block head %}
 	<title>Search Doctors</title>
     <meta charset="UTF-8">
     <meta charset="UTF-8">
@@ -37,8 +42,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'Patient/css/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'Patient/css/main2.css' %}">
 <!--===============================================================================================-->
-</head>
-<body>
+{% endblock %}
+{% block content%}
+<br>
     
         <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
                 <div class="wrapper wrapper--w790">
@@ -110,7 +116,7 @@
                                 {% endfor%}
                                 <div>
                                     <a href="#results">
-                                    <button class="btn btn--radius-2 btn--red" type="submit">Search</button>
+                                    <button class="btn btn--radius-2 btn--red" type="submit" style="background:#5db4ffab;">Search</button>
                                 </a>
                                 </div>
                                
@@ -190,5 +196,4 @@
 
 </style>
 
-</body>
-</html>
+{% endblock %}

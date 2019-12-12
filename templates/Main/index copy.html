@@ -103,8 +103,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h2>The News</h2>
-
+                    <h2>The Blogs</h2>
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="the-news-wrap">
@@ -113,18 +112,18 @@
                                 </figure>
 
                                 <header class="entry-header">
-                                    <h3>The latest in Medicine</h3>
+                                    <h3>{{ blogs.0.title }}</h3>
 
                                     <div class="post-metas d-flex flex-wrap align-items-center">
-                                        <div class="posted-date"><label>Date: </label><a href="#">April 12, 2018</a></div>
+                                        <div class="posted-date"><label>Date: </label>{{ blogs.0.day }}, {{ blogs.0.date }}</div>
 
-                                        <div class="posted-by"><label>By: </label><a href="#">Dr. Jake Williams</a></div>
+                                        <div class="posted-by"><label>By: </label><a href="{% url 'all-blogs' username=blogs.0.Doctor.user.username %}">Dr. {{ blogs.0.Doctor.user.username }}</a></div>
 
                                     </div>
                                 </header>
 
                                 <div class="entry-content">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum nulla dictum. Ut ac ligula sapien. Suspendisse cursus faucibus finibus. </p>
+                                    <p> {{ blogs.0.text }} </p>
                                 </div>
                             </div>
                         </div>
@@ -136,18 +135,18 @@
                                 </figure>
 
                                 <header class="entry-header">
-                                    <h3>All you need to know about pills</h3>
+                                    <h3>{{ blogs.1.title }}</h3>
 
                                     <div class="post-metas d-flex flex-wrap align-items-center">
-                                        <div class="posted-date"><label>Date: </label><a href="#">April 12, 2018</a></div>
+                                        <div class="posted-date"><label>Date: </label>{{ blogs.1.day }}, {{ blogs.1.date }}</div>
 
-                                        <div class="posted-by"><label>By: </label><a href="#">Dr. Jake Williams</a></div>
+                                        <div class="posted-by"><label>By: </label><a href="{% url 'all-blogs' username=blogs.1.Doctor.user.username %}">Dr. {{ blogs.1.Doctor.user.username }}</a></div>
 
                                     </div>
                                 </header>
 
                                 <div class="entry-content">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum nulla dictum. Ut ac ligula sapien. Suspendisse cursus faucibus finibus. </p>
+                                    <p>{{ blogs.1.text }}</p>
                                 </div>
                             </div>
                         </div>
@@ -159,18 +158,18 @@
                                 </figure>
 
                                 <header class="entry-header">
-                                    <h3>Marketing and Medicine</h3>
+                                    <h3>{{ blogs.2.title }}</h3>
 
                                     <div class="post-metas d-flex flex-wrap align-items-center">
-                                        <div class="posted-date"><label>Date: </label><a href="#">April 12, 2018</a></div>
+                                        <div class="posted-date"><label>Date: </label><a href="#">{{ blogs.2.day }}, {{ blogs.2.date }}</a></div>
 
-                                        <div class="posted-by"><label>By: </label><a href="#">Dr. Jake Williams</a></div>
+                                        <div class="posted-by"><label>By: </label><a href="{% url 'all-blogs' username=blogs.2.Doctor.user.username %}">Dr. {{ blogs.2.Doctor.user.username }}</a></div>
 
                                     </div>
                                 </header>
 
                                 <div class="entry-content">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum nulla dictum. Ut ac ligula sapien. Suspendisse cursus faucibus finibus. </p>
+                                    <p>{{ blogs.2.text }}</p>
                                 </div>
                             </div>
                         </div>

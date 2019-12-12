@@ -10,11 +10,19 @@
 
                     <nav class="site-navigation d-flex justify-content-end align-items-center">
                         <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-items-center">
-                            <li class="current-menu-item"><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About us</a></li>
-                            <li><a href="services.html">Services</a></li>
+                            <li class="current-menu-item"><a href="/">Home</a></li>
+                            <li><a href="/blogs">Blogs</a></li>
                         
-                            <li><a href="/patient">Profile</a></li>
+                            {% comment %} <li>{% if profile.Doctor_Gender == 1 %}
+                                   <a href="">Profile</a>  
+                                {% elif profile.Doctor_Gender == 2 %}
+                                    <a href="{{}}">Profile</a>
+                                {% elif profile.Doctor_Gender == 3 %}
+                                    <a href="{{}}">Profile</a>
+
+                                {% endif %} {% endcomment %}
+
+                            
 
                             
                             <li class="call-btn button gradient-bg mt-3 mt-md-0">
