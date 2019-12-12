@@ -67,7 +67,7 @@ def createBlog(request):
     if request.method == "POST":
         print(Doctor.objects.filter(user=request.user).exists())
         if Doctor.objects.filter(user=request.user).exists():
-            doc = Doctor.objects.get(user=request.user)
+            doc = Doctor.objects.get(user=request.user) 
             blog_obj = Blog(title=request.POST['title'], user=request.user, Doctor=doc, text=request.POST['text'])
             blog_obj.save()
             # redirect to doctor/blogs
