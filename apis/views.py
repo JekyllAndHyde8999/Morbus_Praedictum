@@ -100,7 +100,6 @@ class timeSlotsApiView(views.APIView):
 # Corporate APIs
 class addDoctorView(views.APIView):
     def post(self, request):
-
         data = request.data
         print(data)
         username = data['username']
@@ -210,11 +209,87 @@ class logoutViewAPI(APIView):
 
 # SERVICES
 class DoctorApi(views.APIView):
+    def get(self, request, *args, **kwargs):
+        result = []
+        selected = []
+        CITY = self.request.query_params.get('city')
+        SPECIALIZATION = self.request.query_params.get('specialization')
 
-    queryset = Doctor.objects.filter()
-    serializer_class = DoctorSerializer
+        if CITY or SPECIALIZATION:
+            if CITY:
+                cityDB = City.objects.all()
+                city_check = 0
+                for city in cityDB:
+                    if CITY.lower() == city.name.lower():
+                        city_check = 1
+                if city_check:
+                    ct_id = City.objects.get(name=CITY.capitalize()).id
+                    all_address = ClinicAddress.objects.filter(city=ct_id)
+                    for address in all_address:
+                        if SPECIALIZATION:
+                            doctor = Doctor.objects.get(user=ClinicAddress.user, Doctor_Specialization=SPECIALIZATION)
+                        else:
+                            doctor = Doctor.objects.get(user=ClinicAddress.user)
+                        selected.append(doctor.Doctor_ID)
+                        result.append({
+                                    'Doctor_First_Name': doctor.Doctor_First_Name,
+                                    'Doctor_Last_Name': doctor.Doctor_Last_Name,
+                                    'Doctor_Gender': doctor.Doctor_Gender,
+                                    'Doctor_Phone_Number': str(doctor.Doctor_Phone_Number),
+                                    'Doctor_Email': doctor.Doctor_Email,
+                                    'Doctor_Qualifications': doctor.Doctor_Qualifications,
+                                    'Doctor_Specialization': doctor.Doctor_Specialization,
+                                    'Doctor_Experience': doctor.Doctor_Experience,
+                                    'Doctor_Area': address.area.name,
+                                    'Doctor_City': address.city.name
+                    })
+                else:
+                    return Response({})
+            elif SPECIALIZATION:
+                print(SPECIALIZATION)
+                doctors = Doctor.objects.filter(Patient_Blood_Donation=0, Doctor_Specialization=SPECIALIZATION)
+                for doctor in doctors:
+                    address = Address.objects.get(user=doctor.user)
+                    result.append({
+                        'Doctor_First_Name': doctor.Doctor_First_Name,
+                        'Doctor_Last_Name': doctor.Doctor_Last_Name,
+                        'Doctor_Gender': doctor.Doctor_Gender,
+                        'Doctor_Phone_Number': str(doctor.Doctor_Phone_Number),
+                        'Doctor_Email': doctor.Doctor_Email,
+                        'Doctor_Qualifications': doctor.Doctor_Qualifications,
+                        'Doctor_Specialization': doctor.Doctor_Specialization,
+                        'Doctor_Experience': doctor.Doctor_Experience,
+                        'Doctor_Area': address.area.name,
+                        'Doctor_City': address.city.name
+                    })
+            if (CITY or SPECIALIZATION) and not result:
+                return Response({"error": "No query"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            doctors = Doctor.objects.filter(Doctor_Corporate=None)
+            for doctor in doctors:
+                address = ClinicAddress.objects.get(user=doctor.user)
+                result.append({
+                            'Doctor_First_Name': doctor.Doctor_First_Name,
+                            'Doctor_Last_Name': doctor.Doctor_Last_Name,
+                            'Doctor_Gender': doctor.Doctor_Gender,
+                            'Doctor_Phone_Number': str(doctor.Doctor_Phone_Number),
+                            'Doctor_Email': doctor.Doctor_Email,
+                            'Doctor_Qualifications': doctor.Doctor_Qualifications,
+                            'Doctor_Specialization': doctor.Doctor_Specialization,
+                            'Doctor_Experience': doctor.Doctor_Experience,
+                            'Doctor_Area': address.area.name,
+                            'Doctor_City': address.city.name
+                            })
+        return Response(result)
+
     authentication_classes = [TokenAuthentication,]
     permission_classes = [IsAuthenticated]
+
+
+    # queryset = Doctor.objects.filter()
+    # serializer_class = DoctorSerializer
+    # authentication_classes = [TokenAuthentication,]
+    # permission_classes = [IsAuthenticated]
 
 
 class DiseasePredictor(views.APIView):
