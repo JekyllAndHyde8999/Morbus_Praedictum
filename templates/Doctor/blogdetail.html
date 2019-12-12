@@ -3,29 +3,21 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>@{{ name }}&apos;s Blogs</title>
+        <title>{{ blog.title }}</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="{% static 'css/helper.css' %}">
     </head>
     <body>
-        {% if blogs %}
-        {% for note in blogs %}
         <article class="media content-section">
-            <div class="media-body">
+            <div class="media-body" name="blog-detail">
                 <div class="article-metadata">
-                    <h2><a href="{% url 'blog-detail' username=note.user.username blog_title=note.title %}">{{ note.title }}</a></h2>
-                    <small class="text-muted">Date Published: {{ note.date }}</small>
+                    <h2 class="mr-2 article-title">{{ blog.title }}</h2>
+                    <small class="text-muted">Date Published: {{ blog.date }}</small>
                 </div>
-                <p class="article-content">{{ note.text | truncatechars:30 }}</p><br>
+                <p class="article-content">{{ blog.text }}</p><br>
             </div>
         </article>
-        {% endfor %}
-        {% endif %}
-
-        {% if err %}
-        <p>That doctor does not exist.</p>
-        {% endif %}
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

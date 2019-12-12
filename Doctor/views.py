@@ -84,8 +84,8 @@ def allBlogs(request, username):
         return render(request, 'Doctor/allblogs.html', context={'err': True, 'name': username})
 
 def blogDetail(request, username, blog_title):
-    blog_obj = Blog.objects.get(pk=pk)
-    return render(request, 'Doctor/blogdetail.html', context)
+    blog_obj = Blog.objects.get(user=User.objects.get(username=username), title=blog_title)
+    return render(request, 'Doctor/blogdetail.html', context={'blog': blog_obj})
 
 def signup(request):
     if request.user.is_authenticated:
