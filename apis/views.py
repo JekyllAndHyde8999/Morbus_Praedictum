@@ -1,6 +1,3 @@
-
-from Doctor.models import *
-from Patient.models import *
 from Patient.utils import *
 from .serializer import *
 
@@ -91,8 +88,8 @@ class DoctorApi(generics.ListCreateAPIView):
     filter_backends = (DynamicSearchFilter,)
     queryset = Doctor.objects.filter()
     serializer_class = DoctorSerializer
-    # authentication_classes = [TokenAuthentication,]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication,]
+    permission_classes = [IsAuthenticated]
 
 
 # #PATIENT APIS
@@ -126,7 +123,6 @@ class EyeDonorList(views.APIView):
             donor.save()
         else:
             return Response({"error": "Enter all fields"})
-
 
 
 class OrganDonorList(views.APIView):
@@ -276,3 +272,10 @@ class logoutViewAPI(APIView):
     def post(self, request):
         django_logout(request)
         return Response(status=204)
+
+
+class BlogAPI(views.APIView):
+    def get(self, request):
+        queryset = Blog.objects.all()
+        serializer = BlogSerializer(queryset, many=True)
+        return Response(serializer.data)

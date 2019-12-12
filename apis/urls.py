@@ -17,4 +17,5 @@ urlpatterns = [
     path('auth/logout/', views.logoutViewAPI.as_view(), name="logoutAPI"),
     path('corp/adddoctor/', views.addDoctorView.as_view(), name="addDoctor"),
     path('corp/viewschedule/', views.viewCorpDoctorScheduleApiView.as_view(), name="viewCorpDoctorSchedule"),
+    path('blog/', views.BlogAPI.as_view(), name="BlogAPI")
     ]

@@ -2,8 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.files.images import get_image_dimensions
-from .models import Address, Area, City, Profile
-from django.core.validators import MinValueValidator, MaxValueValidator
+from .models import Address, Area, Profile
 import os
 import pickle
 
@@ -18,12 +17,12 @@ temp.append((None, 'Choose City'))
 
 cityChoice = tuple(temp)
 
-SYMPTOMS_FILE_PATH = os.path.join("Pickles", "symptom_labels.pkl")
+SYMPTOMS_FILE_PATH = os.path.join("Pickles", "symptoms_stoi.pkl")
 with open(SYMPTOMS_FILE_PATH, mode="rb") as f:
-    symptoms_list = pickle.load(f).tolist()
+    symptoms_list = pickle.load(f)
 
 temp2 = [(str(i), str(i)) for i in symptoms_list]
-temp2.append((None, '--blank--'))
+temp2.insert(0, (None, '--blank--'))
 
 symptomChoice = tuple(temp2)
 
@@ -163,7 +162,7 @@ class CustomUserEditForm(forms.ModelForm):
             if w > max_width or h > max_height:
                 raise forms.ValidationError(
                     u'Please use an image that is '
-                     '%s x %s pixels or smaller.' % (max_width, max_height))
+                    '%s x %s pixels or smaller.' % (max_width, max_height))
 
             # validate content type
             main, sub = avatar.content_type.split('/')
@@ -185,7 +184,7 @@ class CustomUserEditForm(forms.ModelForm):
 
 
 class doctorSearchForm(forms.Form):
-    docName = forms.CharField(max_length=50,required=False)
+    docName = forms.CharField(max_length=50, required=False)
     docCity = forms.CharField(widget=forms.Select(choices=cityChoice), required=False, initial='--blank--')
     docSpecial = forms.IntegerField(widget=forms.Select(choices=specializationChoices),
                                     required=False, initial='--blank--')
@@ -199,8 +198,6 @@ class PredictForm(forms.Form):
                              choices=symptomChoice
                              )
 
-    # def __init__(self, *args, **kwargs):
-    #     super(PredictForm, self).__init__(*args, **kwargs)
 
 PredictFormset = formset_factory(PredictForm)
 PredictFormset.form.base_fields['name'] = forms.ChoiceField(choices=symptomChoice)
