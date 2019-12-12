@@ -250,27 +250,6 @@ def confirmBooking(request):
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
-@login_required(login_url='P_login')
-def confirmBooking(request):
-    response_data = {}
-    if request.method == "POST":
-        retVariable = request.POST['docID']
-        res_list = retVariable.split(", ")
-        user = User.objects.get(username=res_list[0])
-        docID = Doctor.objects.get(user=user)
-        # date = request.POST['date']
-        # opening_time = request.POST['opening_time']
-        patient_id = Profile.objects.get(user=request.user)
-        slot = TimeSlots.objects.filter(Doctor_ID=docID, date=res_list[1], Patient_ID=patient_id)
-        if not slot:
-            TimeSlots.objects.filter(Doctor_ID=docID, date=res_list[1], opening_Time=res_list[2])\
-                .update(Patient_ID=patient_id)
-            response_data['success'] = 'Booking Confirmed!'
-        else:
-            response_data['success'] = 'Cannot book more than 1 slot per day'
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
 def input_symptoms(request):
     heading_message = 'Formset Demo'
     if request.method == 'GET':

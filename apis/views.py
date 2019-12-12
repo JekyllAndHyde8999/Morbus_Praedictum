@@ -14,6 +14,18 @@ from Corporate.forms import *
 from Doctor.views import CreateTimeSlots
 from Main.models import *
 
+bloodGroupMap = {
+    "A+": 1,
+    "A-": 2,
+    "B+": 3,
+    "B-": 4,
+    "AB+": 5,
+    "AB-": 6,
+    "O+": 7,
+    "O-": 8,
+}
+
+
 # Create your views here.
 class DynamicSearchFilter(filters.SearchFilter):
     def get_search_fields(self, view, request):
@@ -93,6 +105,72 @@ class DoctorApi(generics.ListCreateAPIView):
 
 
 # #PATIENT APIS
+class BloodDonor(views.APIView):
+    def get(self, request, *args, **kwargs):
+        result =[]
+        selected = []
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        CITY = self.request.query_params.get('city')
+        BLOOD_GROUP = self.request.query_params.get('blood_group')
+        print(CITY)
+        print(BLOOD_GROUP)
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("***************************")
+        if CITY or BLOOD_GROUP:
+            print("OK")
+            if CITY:
+                cityDB = City.objects.all()
+                city_check = 0
+                for city in cityDB:
+                    if CITY.lower() == city.name.lower():
+                        city_check = 1
+                if city_check:
+                    ct_id = City.objects.get(name=CITY.capitalize()).id
+                    all_address = Address.objects.filter(city=ct_id)
+                    for address in all_address:
+                        if BLOOD_GROUP:
+                            userObj = Profile.objects.get(user=address.user, Patient_Blood_Group=BLOOD_GROUP)
+                        else:
+                            userObj = Profile.objects.get(user=address.user)
+                        selected.append(userObj.Patient_ID)
+                        result.append({
+                            'Patient_first_name': userObj.Patient_First_Name,
+                            'Patient_last_name': userObj.Patient_Last_Name,
+                            'Patient_Phone_Number': str(userObj.Patient_Phone_Number),
+                            'Patient_Blood_Group': userObj.Patient_Blood_Group,
+                            'Patient_City': CITY
+                        })
+                else:
+                    return Response({})
+            elif BLOOD_GROUP:
+                print(BLOOD_GROUP)
+                bloodGrp_id = bloodGroupMap[BLOOD_GROUP]
+                bloodGrp_sorted = Profile.objects.filter(Patient_Blood_Donation=0, Patient_Blood_Group=bloodGrp_id)
+                for patient in bloodGrp_sorted:
+                        address = Address.objects.get(user=patient.user)
+                        result.append({
+                            'Patient_first_name': patient.Patient_First_Name,
+                            'Patient_last_name': patient.Patient_Last_Name,
+                            'Patient_Phone_Number': str(patient.Patient_Phone_Number),
+                            'Patient_Blood_Group': patient.Patient_Blood_Group,
+                            'Patient_City': address.city.name
+                        })
+            if (CITY or BLOOD_GROUP) and not result:
+                return Response({"error": "No query"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            print("+++++++++++++++++++++++++++++++++++++++")
+            bloodGrp_sorted = Profile.objects.filter(Patient_Blood_Donation=0)
+            for patient in bloodGrp_sorted:
+                address = Address.objects.get(user=patient.user)
+                result.append({
+                    'Patient_first_name': patient.Patient_First_Name,
+                    'Patient_last_name': patient.Patient_Last_Name,
+                    'Patient_Phone_Number': str(patient.Patient_Phone_Number),
+                    'Patient_Blood_Group': patient.Patient_Blood_Group,
+                    'Patient_City': address.city.name
+                })
+        print(result)
+        return Response(result)
 
 
 class BloodDonorList(generics.ListCreateAPIView):
@@ -100,7 +178,7 @@ class BloodDonorList(generics.ListCreateAPIView):
     filter_backends = (DynamicSearchFilter,)
     queryset = Profile.objects.filter(Patient_Blood_Donation=0)
     serializer_class = BdSerializer
-    authentication_classes = [TokenAuthentication,]
+    authentication_classes = [TokenAuthentication, ]
     permission_classes = [IsAuthenticated]
 
 
@@ -151,6 +229,7 @@ class OrganDonorList(views.APIView):
 class DiseasePredictor(views.APIView):
     def get(self, request):
         raw_data = request.data
+        print(request.data)
         data = raw_data['data'].split(",")
         data = [x.strip() for x in data]
         result_dict = predict(data)

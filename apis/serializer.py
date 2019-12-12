@@ -80,6 +80,14 @@ class BdSerializer(serializers.ModelSerializer):
                   'Patient_Gender', 'Patient_DOB', 'Patient_Blood_Group', 'Patient_Address')
 
 
+class BloodDonationSerializer(serializers.Serializer):
+    Patient_first_name = serializers.CharField()
+    Patient_last_name = serializers.CharField()
+    Patient_Phone_Number = serializers.CharField()
+    Patient_Blood_Group = serializers.CharField()
+    Patient_City = serializers.CharField()
+
+
 class addDoctorSerializer(serializers.Serializer):
     username = serializers.CharField()
     email = serializers.CharField()
