@@ -3,6 +3,7 @@ from abc import ABC
 from rest_framework import serializers
 from Doctor.models import *
 from Patient.models import *
+from Main.models import EyeDonor,OrganDonor
 from django.contrib.auth import authenticate, login
 from rest_framework import exceptions
 
@@ -54,6 +55,18 @@ class BloodDonorSerializer(serializers.ModelSerializer):
                   'Patient_ID__Patient_Phone_Number','Patient_ID__Patient_Gender','Patient_ID__Patient_DOB',
                   'Patient_ID__Patient_Email','city')
 
+
+class EyeDonorSerializer(serializers.ModelSerializer):
+    time_of_death = serializers.TimeField(input_formats=['ISO-8601'])
+    class Meta:
+        model = EyeDonor
+        fields = ('Name_of_Donor', 'time_of_death', 'attendee_name', 'contact_info', 'City')
+
+
+class OrganDonorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrganDonor
+        fields = ('Name_of_Donor', 'attendee_name', 'contact_info', 'City')
 
 class BdSerializer(serializers.ModelSerializer):
     # Address_ID__city = serializers.CharField()
@@ -149,3 +162,16 @@ y= {
     "e_closeTime": "19:00"
 }
 
+z = {
+    "Name_of_Donor": "Mukesh Sharma",
+    "attendee_name": "Sukesh Sharma",
+    "contact_info": "+918528528525",
+    "City": "Jaipur"
+}
+
+w = {
+    "Name_of_Donor": "Mukesh Sharma",
+    "attendee_name": "Sukesh Sharma",
+    "contact_info": "+918528528525",
+    "City": "Jaipur"
+}

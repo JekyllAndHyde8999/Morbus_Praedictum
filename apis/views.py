@@ -5,7 +5,6 @@ from Patient.utils import *
 from .serializer import *
 
 
-from itertools import chain
 from rest_framework import filters, generics, status, views
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
@@ -15,9 +14,8 @@ from django.contrib.auth import login as django_login, logout as django_logout
 from rest_framework.authtoken.models import Token
 import datetime
 from Corporate.forms import *
-from Doctor.views import CreateTimeSlots, get_date
-from Doctor.forms import UserProfileInfoForm as DoctorProfileForm
-
+from Doctor.views import CreateTimeSlots
+from Main.models import *
 
 # Create your views here.
 class DynamicSearchFilter(filters.SearchFilter):
@@ -93,20 +91,65 @@ class DoctorApi(generics.ListCreateAPIView):
     filter_backends = (DynamicSearchFilter,)
     queryset = Doctor.objects.filter()
     serializer_class = DoctorSerializer
-    # authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
+    # authentication_classes = [TokenAuthentication]
     # permission_classes = [IsAuthenticated]
 
 
 # #PATIENT APIS
 
 
-class DonorList(generics.ListCreateAPIView):
+class BloodDonorList(generics.ListCreateAPIView):
     search_fields = ['Patient_Blood_Group']
     filter_backends = (DynamicSearchFilter,)
     queryset = Profile.objects.filter(Patient_Blood_Donation=0)
     serializer_class = BdSerializer
-    authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
+    authentication_classes = [TokenAuthentication,]
     permission_classes = [IsAuthenticated]
+
+
+class EyeDonorList(views.APIView):
+    def get(self, request):
+        queryset = EyeDonor.objects.all()
+        serializer = EyeDonorSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        data = request.data
+        Name_of_Donor = data['Name_of_Donor']
+        time_of_death = data['time_of_death']
+        attendee_name = data['attendee_name']
+        contact_info = data['contact_info']
+        city = data['City'].lower()
+        if Name_of_Donor and time_of_death and attendee_name and contact_info and city:
+            donor = EyeDonor(Name_of_Donor=Name_of_Donor, time_of_death=time_of_death,
+                             attendee_name=attendee_name, contact_info=contact_info, City=city)
+            donor.save()
+        else:
+            return Response({"error": "Enter all fields"})
+
+
+
+class OrganDonorList(views.APIView):
+    def get(self, request):
+        queryset = OrganDonor.objects.all()
+        serializer = OrganDonorSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        print("POST WORKING")
+        data = request.data
+        Name_of_Donor = data['Name_of_Donor']
+        attendee_name = data['attendee_name']
+        contact_info = data['contact_info']
+        city = data['City'].lower()
+        if Name_of_Donor and attendee_name and contact_info and city:
+            donor = OrganDonor(Name_of_Donor=Name_of_Donor, attendee_name=attendee_name, contact_info=contact_info,
+                               City=city)
+            donor.save()
+            print("Donor Saved")
+            return Response({"success": "Entry Saved"})
+        else:
+            return Response({"error": "Enter all fields"})
 
 
 class DiseasePredictor(views.APIView):
@@ -164,10 +207,6 @@ class addDoctorView(views.APIView):
             return Response({'error': "Error occurred"}, status=201)
     authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
-
-        # else:
-        #     return Response({'error': "Enter all fields"}, status=201)
-        # return Response({}, status=201)
 
 
 class viewCorpDoctorScheduleApiView(views.APIView):
