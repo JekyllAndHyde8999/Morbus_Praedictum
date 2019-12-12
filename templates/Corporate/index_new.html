@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head %}
+    
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" type="text/css" href="{% static 'Corporate/css/new_index.css' %}" >
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="{% static 'Corporate/css/main.css' %}">
+
+{% endblock %}
+{% block content %}
+
+<div class="container emp-profile">
+           
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="{{ profile.Company_Logo.url }}" alt=""/ style="border-radius:50%;width:200px;height:200px">
+                        <br><br>
+                           <a href={% url 'C_addDoctor' %}>    <button class="profile-edit-btn" name="btnAddMore">Add Doctor</button></a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        {{ profile.Company_Name }}
+                                    </h5>
+                                    <h6>
+                                        @{{ profile.user }}
+                                    </h6>
+                                    <br>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                </li>
+                               
+                            </ul>
+                            <div>
+      <ul>
+                                <li>License Number: {{ profile.Company_License_Number }}</li>
+<br>
+                                <li>Email: {{ profile.Company_Email }}</li>
+                                <br>
+                                <li>Contact No.:  {{ profile.Company_Phone_Number }}</li>
+<br>
+                                <li>Address:  {{ profile.Company_Address.Home }}, {{ profile.Company_Address.Street }}, {{ profile.Company_Address.area.name }}, {{ profile.Company_Address.city.name }} - {{ profile.Company_Address.Pin }}</li>
+                            </ul>
+                            <br><br>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-2">
+                    
+                     <a href={% url 'C_edit_profile' %}>    <button class="profile-edit-btn" name="btnAddMore">Edit Profile</button></a> 
+                      
+                       
+                    </div>
+                     
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+                                                       
+                        </div>
+                    </div>
+                   
+                            <div class="table100">
+                                <table>
+                                    <thead>
+                                        <tr class="table100-head" id="results">
+            
+                                            <th class="column1">Doctor Name</th>
+                                            <th class="column3">Specialization</th>
+                                            <th class="column2">Email & Contact No.</th>
+                                            
+                                    </thead>
+                                    {% if not doctors %}
+                                            <tr style="padding: 20px;">
+                                                <td  rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;font-size:20px">No doctors have been added.</td>
+                                               
+                                            </tr>
+                                    {% endif %}
+                                    {%  for result in doctors %}
+                                    <tbody>    
+                                            <tr style="padding: 20px;">
+                                                <td rowspan="2" class="column1 rowspanned cell">Dr. {{ result.Doctor_First_Name }} {{ result.Doctor_Last_Name }}
+                                                </td>
+                                                <td  rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;">{{ result.Doctor_Specialization }}</td>
+                                                <td rowspan="2" class="column2 rowspanned cell">{{ result.Doctor_Email }}, {{ result.Doctor_Phone_Number }}</td>
+                                  
+                                            </tr>		
+                                                            
+                                    </tbody>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        
+                    
+                </div>
+                    
+        </div>
+        
+        {% endblock %}

@@ -48,7 +48,8 @@ def CreateTimeSlots(docID):
 def index(request):
     if Company.objects.filter(user=request.user).exists():
         profile = Company.objects.get(user=request.user)
-        return render(request, 'Corporate/index.html', {'profile': profile})
+        doctors = Doctor.objects.filter(Doctor_Corporate=Company.objects.get(user=request.user))
+        return render(request, 'Corporate/index_new.html', {'profile': profile, 'doctors':doctors})
     else:
         return redirect('http://127.0.0.1:8000/company/profile')
 
@@ -235,7 +236,7 @@ def addDoctors(request):
 
         print(nlist)
         
-        return render(request, 'Corporate/addDoctors.html')
+        return redirect('C_index')
     else:
         return render(request, 'Corporate/addDoctors.html')
 

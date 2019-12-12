@@ -235,6 +235,7 @@ editScheduleFormset = formset_factory(editDoctorScheduleForm, extra=0)
 
 
 class DoctorRatingForm(forms.ModelForm):
+    
     class Meta:
         model = DoctorRating
         fields = ('Doctor_ID','Rating')

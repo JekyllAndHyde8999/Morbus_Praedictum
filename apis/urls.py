@@ -9,8 +9,8 @@ urlpatterns = [
     path('patients/', views.DonorList.as_view(), name="donor-all"),                     # SERVICE view all Blood donors
     path('predict/', views.DiseasePredictor.as_view(), name="predictAPI"),              # SERVICE disease prediction API
     path('timeslots/', views.timeSlotsApiView.as_view(), name="TimeSlotsAPI"),
-    path('auth/login/', views.loginViewAPI.as_view(), name="loginAPI"),
     path('auth/logout/', views.logoutViewAPI.as_view(), name="logoutAPI"),
     path('corp/adddoctor/', views.addDoctorView.as_view(), name="addDoctor"),
     path('corp/viewschedule/', views.viewCorpDoctorScheduleApiView.as_view(), name="viewCorpDoctorSchedule"),
+
     ]
