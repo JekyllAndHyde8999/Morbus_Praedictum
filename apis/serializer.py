@@ -70,17 +70,17 @@ class BdSerializer(serializers.ModelSerializer):
 class addDoctorSerializer(serializers.Serializer):
     username = serializers.CharField()
     email = serializers.CharField()
-    password = serializers.CharField()
-    PasswordConfirmation = serializers.CharField()
-    fName = serializers.CharField()
-    lName = serializers.CharField()
-    Gender = serializers.IntegerField()
-    DateOfBirth = serializers.DateField()
-    PhoneNumber = serializers.CharField()
-    Qualifications = serializers.CharField()
-    Specialization = serializers.CharField()
-    YearsOfExperience = serializers.CharField()
-    LicenseNumber = serializers.CharField()
+    password1 = serializers.CharField()
+    password2 = serializers.CharField()
+    Doctor_First_Name = serializers.CharField()
+    Doctor_Last_Name = serializers.CharField()
+    Doctor_Gender = serializers.IntegerField()
+    Doctor_DOB = serializers.DateField()
+    Doctor_Phone_Number = serializers.CharField()
+    Doctor_Qualifications = serializers.CharField()
+    Doctor_Specialization = serializers.CharField()
+    Doctor_Experience = serializers.CharField()
+    Doctor_License = serializers.CharField()
 
 
 class loginSerializer(serializers.Serializer):
@@ -108,18 +108,44 @@ class loginSerializer(serializers.Serializer):
         return data
 
 
+# trial json(POST) for addDoctor(corporate) API
 x = {
-    "username": "patient1251",
+    "username": "doctor45656",
     "email": "narainmukul98@gmail.com",
-    "password": "qwerty@123",
-    "PasswordConfirmation": "qwerty@123",
-    "fName": "XYZ",
-    "lName": "SHARMA",
-    "Gender": "1",
-    "DateOfBirth": "12/11/1999",
-    "PhoneNumber": "+919121391889",
-    "Qualifications": "MBBS",
-    "Specialization": "5",
-    "YearsOfExperience": "12",
-    "LicenseNumber": "AWX-4567891235"
+    "password1": "qwerty@123",
+    "password2": "qwerty@123",
+    "Doctor_First_Name": "XYZ",
+    "Doctor_Last_Name": "SHARMA",
+    "Doctor_Gender": "1",
+    "Doctor_DOB": "12/11/1999",
+    "Doctor_Phone_Number": "+919121391889",
+    "Doctor_Qualifications": "MBBS",
+    "Doctor_Specialization": "5",
+    "Doctor_Experience": "12",
+    "Doctor_License": "AWX-4567891235"
 }
+
+
+# trial json(POST) for addSchedule(Doctor) API
+y= {
+    "day": "Thursday",
+    "m_interval": "60",
+    "m_openTime": "07:00",
+    "m_closeTime": "12:00",
+    "e_interval": "60",
+    "e_openTime": "14:00",
+    "e_closeTime": "19:00"
+}
+
+# trial json(POST) for CorpAddSchedule(Doctor) API
+y= {
+    "username": "jh",
+    "day": "Thursday",
+    "m_interval": "60",
+    "m_openTime": "07:00",
+    "m_closeTime": "12:00",
+    "e_interval": "60",
+    "e_openTime": "14:00",
+    "e_closeTime": "19:00"
+}
+

@@ -107,7 +107,7 @@ class DoctorRating (models.Model):
 
 class TimeSlots(models.Model):
     Doctor_ID = models.ForeignKey(Doctor, on_delete=models.CASCADE, name="Doctor_ID")
-    Patient_ID = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, name="Patient_ID")
+    Patient_ID = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True , name="Patient_ID")
     day = models.CharField(max_length=10, choices=DAYS)
     date = models.DateField()
     opening_Time = models.TimeField()

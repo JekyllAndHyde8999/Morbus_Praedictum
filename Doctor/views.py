@@ -311,4 +311,3 @@ def takeFeedback(request, uidb64, token):
         return render(request, 'Doctor/feedback_form.html') #Change HTML and add feedback form to thr template. 
     else:
         return HttpResponse('Link is invalid!')
->>>>>>> d735d2df6c9de92d2f89e8b9c5a726fe5d06c5d0
