@@ -67,7 +67,7 @@ def createBlog(request):
     if request.method == "POST":
         print(Doctor.objects.filter(user=request.user).exists())
         if Doctor.objects.filter(user=request.user).exists():
-            doc = Doctor.objects.get(user=request.user) 
+            doc = Doctor.objects.get(user=request.user)
             blog_obj = Blog(title=request.POST['title'], user=request.user, Doctor=doc, text=request.POST['text'])
             blog_obj.save()
             # redirect to doctor/blogs
@@ -204,7 +204,7 @@ def edit_profile(request):
 def user_logout(request):
     # Log out the user.
     logout(request)
-    return redirect('http://127.0.0.1:8000/')
+    return redirect('')
 
     # %L1803YvvcObmNS80ARB exd04458@bcaoo.com
 

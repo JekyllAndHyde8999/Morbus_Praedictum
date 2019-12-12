@@ -153,7 +153,7 @@ class OrganDonorList(views.APIView):
 
 
 class DiseasePredictor(views.APIView):
-    def post(self, request):
+    def get(self, request):
         raw_data = request.data
         data = raw_data['data'].split(",")
         data = [x.strip() for x in data]
@@ -276,4 +276,3 @@ class logoutViewAPI(APIView):
     def post(self, request):
         django_logout(request)
         return Response(status=204)
-
