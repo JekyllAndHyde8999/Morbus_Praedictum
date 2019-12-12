@@ -124,12 +124,12 @@
                                             <th class="column5">Search Doctors</th>
                                         </tr>
                                     </thead>
-                                    {%  for key, value, specialisation in predictions %}
+                                    {%  for key, value, specialization in predictions %}
                                     <tbody>    
                                             <tr style="padding: 20px;">
                                                 <td rowspan="2" class="column4 rowspanned cell" align="left">{{ key }}</td>
                                                 <td rowspan="2" class="column5 rowspanned cell" align="left">{{ value }}</td>
-                                                <td rowspan="2" class="column4 rowspanned cell" align="left"><a href="{% url 'searchDoctor1' specialization=specialization city=city %}">{{ specialization }}</a></td>
+                                                <td rowspan="2" class="column4 rowspanned cell" align="left">{{ specialization }}</a></td>
                                             </tr>		
                                             
                                     </tbody>
