@@ -1,0 +1,237 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% load static %}
+{% load widget_tweaks %}
+<html lang="en">
+{% block head %}
+	<title>Search Doctors</title>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link href="{% static 'Patient/vendor/mdi-font/css/material-design-iconic-font.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'Patient/vendor/font-awesome-4.7/css/font-awesome.min.css' %}" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="{% static 'Patient/vendor/select2/select2.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'Patient/vendor/datepicker/daterangepicker.css' %}" rel="stylesheet" media="all">
+
+	
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'Patient/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'Patient/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'Patient/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'Patient/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'Patient/vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'Patient/css/util.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Patient/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Patient/css/main2.css' %}">
+<!--===============================================================================================-->
+{% endblock %}
+{% block content%}
+<br>
+    
+        <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+                <div class="wrapper wrapper--w790">
+                    <div class="card card-5">
+                         <div class="card-heading">
+                            <h2 class="title">Disease Predicton</h2>
+                        </div>
+                        <div class="card-body">
+                                <form method="POST" action="{% url 'predict' %}">
+                                        {{ formset.management_form }}
+
+                                        {% csrf_token %}
+                                      {% for form in formset %}
+
+                                    
+                                {% comment %} <div class="form-row m-b-55">
+                                    <div class="name">Name</div>
+                                    <div class="value">
+                                        <div class="row row-space">
+                                            <div class="col-2">
+                                                <div class="input-group-desc">
+                                                    
+                                                    {{ form.name }}
+                <button class="btn btn-success add-form-row">+</button>
+                                                   
+                                                   
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                </div> {% endcomment %}
+
+
+                                 <div class="form-row">
+                                    <div class="name">Symptom's Name</div>
+                                    <div class="value">
+                                        <div class="input-group rs-select2 js-select-simple select--no-search">
+                                            
+
+                                                     {{ form.name }}
+                                                     
+                                            <button class="btn btn-success add-form-row" style="width:10%;margin-left:20px;font-size:30px;">+</button>
+                                                   
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% endfor%}
+                                <div>
+                                    <a href="#results">
+                                    <button class="btn btn--radius-2 btn--red" type="submit" style="background:#5db4ffab;">Search</button>
+                                </a>
+                                </div>
+                               
+                              <span style="text-align:center;font-weight:bold;margin:280px;margin-top:90px">{% if message %}
+                                                    {{ message }}
+                                {% endif %}
+                                </span>
+                            </form>
+
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+
+                    {% if predictions %}
+                    <div class="wrap-table100" style="margin-left:-200px">
+                            <div class="table100">
+                                <table>
+                                    <thead>
+                                        <tr class="table100-head" id="results">
+                                            <th class="column4">Condition</th>
+                                            <th class="column5">Possibility</th>
+                                            <th class="column5">Search Doctors</th>
+                                        </tr>
+                                    </thead>
+                                    {%  for key, value in predictions %}
+                                    <tbody>    
+                                            <tr style="padding: 20px;">
+                                                <td rowspan="2" class="column4 rowspanned cell" align="left">{{ key }}</td>
+                                                <td rowspan="2" class="column5 rowspanned cell" align="left">{{ value }}</td>
+                                            </tr>		
+                                                            
+                                    </tbody>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    {% endif %}
+                                      
+                </div>
+            </div>
+        
+
+    
+
+
+	
+
+	
+
+    <script src="{% static 'Patient/vendor/jquery/jquery.min.js' %}"></script>
+<!--===============================================================================================-->	
+	<script src="{% static 'Patient/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'Patient/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'Patient/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'Patient/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+    <script src="{% static 'Patient/js/main.js' %}"></script>
+    
+    <script src="{% static 'Patient/vendor/datepicker/moment.min.js' %}"></script>
+    <script src="{% static 'Patient/vendor/datepicker/daterangepicker.js' %}"></script>
+    <script src="{% static 'Patient/js/global.js' %}"></script>
+
+<style>
+    
+       
+    
+
+</style>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script type="text/javascript">
+function updateElementIndex(el, prefix, ndx) {
+    var id_regex = new RegExp('(' + prefix + '-\\d+)');
+    var replacement = prefix + '-' + ndx;
+    if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+    if (el.id) el.id = el.id.replace(id_regex, replacement);
+    if (el.name) el.name = el.name.replace(id_regex, replacement);
+}
+function cloneMore(selector, prefix) {
+    var newElement = $(selector).clone(true);
+    var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+    newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
+        var name = $(this).attr('name')
+        if(name) {
+            name = name.replace('-' + (total-1) + '-', '-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        }
+    });
+    newElement.find('label').each(function() {
+        var forValue = $(this).attr('for');
+        if (forValue) {
+          forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
+          $(this).attr({'for': forValue});
+        }
+    });
+    total++;
+    $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+    var conditionRow = $('.form-row:not(:last)');
+    conditionRow.find('.btn.add-form-row')
+    .removeClass('btn-success').addClass('btn-danger')
+    .removeClass('add-form-row').addClass('remove-form-row')
+    .html('-');
+    return false;
+}
+function deleteForm(prefix, btn) {
+    var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+    if (total > 1){
+        btn.closest('.form-row').remove();
+        var forms = $('.form-row');
+        $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+        for (var i=0, formCount=forms.length; i<formCount; i++) {
+            $(forms.get(i)).find(':input').each(function() {
+                updateElementIndex(this, prefix, i);
+            });
+        }
+    }
+    return false;
+}
+
+
+$(document).on('click', '.add-form-row', function(e){
+    e.preventDefault();
+    cloneMore('.form-row:last', 'form');
+    return false;
+});
+$(document).on('click', '.remove-form-row', function(e){
+    e.preventDefault();
+    deleteForm('form', $(this));
+    return false;
+});
+</script>
+{% endblock %}

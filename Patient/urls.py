@@ -15,7 +15,7 @@ urlpatterns = [
     path('edit-profile/', views.edit_profile, name='P_edit_profile'),
     path('logout/', views.user_logout, name='logout'),
     path('searchdoctor/', views.doctorSearchView, name='searchDoctor'),
-
+    path('searchdoctor/<str:specialization>/<str:city>/', views.doctorSearchView1, name='searchDoctor1'),
     path('bookappointment/<docID>/', views.AppointmentBooking, name="bookAppointment"),
     path('confirmbooking/', views.confirmBooking, name="confirmBooking"),
     # path('predict/', views.input_symptoms, name="predictDisease"),
