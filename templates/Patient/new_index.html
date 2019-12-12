@@ -23,7 +23,7 @@
                         <a href={% url 'searchDoctor' %}>    <button class="profile-edit-btn" name="btnAddMore">Search Doctors</button></a> 
                         <br><br>
                     
-                         <a href={% url 'P_symptoms' %}>    <button class="profile-edit-btn" name="btnAddMore">Condition Checkup</button></a> 
+                         <a href={% url 'predict' %}>    <button class="profile-edit-btn" name="btnAddMore">Condition Checkup</button></a> 
                         
                     
                            
@@ -59,6 +59,24 @@
                                 <li>Date of Birth: {{ profile.Patient_DOB }}</li>
                                 <br>
                                 <li>Contact No.:  {{ profile.Patient_Phone_Number }}</li>
+                                <br>
+                                <li>Blood Group: {% if profile.Patient_Blood_Group == 1 %}
+                                    A +ve<br>
+                                {% elif profile.Patient_Patient_Blood_Group == 2 %}
+                                   A -ve<br>
+                                {% elif profile.Patient_Patient_Blood_Group == 3 %}
+                                    B +ve<br>
+                                {% elif profile.Patient_Patient_Blood_Group == 4 %}
+                                   B -ve<br>
+                                {% elif profile.Patient_Patient_Blood_Group == 5 %}
+                                    AB +ve<br>
+                                {% elif profile.Patient_Patient_Blood_Group == 6 %}
+                                   AB -ve<br>
+                                {% elif profile.Patient_Patient_Blood_Group == 7 %}
+                                    o +ve<br>
+                                {% elif profile.Patient_Patient_Blood_Group == 8 %}
+                                    O -ve<br>
+                                {% endif %}</li>
 
                             </ul>
                             

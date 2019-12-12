@@ -323,9 +323,9 @@ def DiseasePredict(request):
             results = [[x[0], str(round(x[1] * 100, 2)) + '%'] for x in sorted(list(result_dict.items()),
                                                                                key=lambda x: -x[1])]
             # make new list of lists with list comprehension
-            results = [x + [return_specialization(x[0])] for x in results]
+            results = [x + [return_specialization(x[0])] for x in results if return_specialization(x[0])]
             city = Address.objects.get(user=request.user).city.name
-            return render(request, 'Patient/checkup.html', {'predictions': results, 'formset': formset, 'city':city})
+            return render(request, 'Patient/checkup.html', {'predictions': results[:3], 'formset': formset, 'city':city})
         else:
             heading_message = "Please fill form correctly"
 

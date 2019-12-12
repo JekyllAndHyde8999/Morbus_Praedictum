@@ -9,7 +9,7 @@ SYMPTOMS_FILE_PATH = os.path.join("Pickles", "symptoms_stoi.pkl")
 DISEASE_LABELS_FILE_PATH = os.path.join("Pickles", "diseases_stoi.pkl")
 
 # other files
-MAPPING_PATH = os.path.join("Pickles", "new_mapping.csv")
+MAPPING_PATH = os.path.join("Pickles", "new_mapping2.csv")
 
 # load pickled objects
 with open(MODEL_FILE_PATH, mode="rb") as f:

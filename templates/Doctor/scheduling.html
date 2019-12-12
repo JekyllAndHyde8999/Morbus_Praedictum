@@ -1,8 +1,11 @@
 
-<!DOCTYPE HTML>
+
+
+
 {% load static %}
 {% load widget_tweaks %}
 
+{% block head %}
 <html>
 <head>
 <title>Schedule</title>
@@ -13,15 +16,18 @@
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <!-- Custom Theme files -->
-<link href="{%static 'css/wickedpicker.css' %}" rel="stylesheet" type='text/css' media="all" />
-<link href="{%static 'css/style.css' %}" rel='stylesheet' type='text/css' />
+<link href="{%static 'Doctor/css/wickedpicker.css' %}" rel="stylesheet" type='text/css' media="all" />
+<link href="{%static 'Doctor/css/style.css' %}" rel='stylesheet' type='text/css' />
 <!--fonts--> 
 <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 <link href="//fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet">
 <!--//fonts--> 
 </head>
-<body>
+{% endblock %}
+{% block content %}
 <!--background-->
+<body>
+<br>
 <h1> Doctor Scheduling Form </h1>
     <div class="bg-agile">
 	<div class="book-appointment">
@@ -30,7 +36,7 @@
                     {{ formset.management_form }}
             {% for form in formset %}
             
-	<h1>{{ form.day }}</h1>
+	<h1 style>{{ form.day }}</h1>
 			
                 
 			<div class="left-agileits-w3layouts same">
@@ -101,5 +107,6 @@
 				  </script>
 			<!-- //Calendar -->
 
+{% endblock %}
 </body>
 </html>
