@@ -27,7 +27,8 @@ import json
 def index(request):
     if Profile.objects.filter(user=request.user).exists():
         profile = Profile.objects.get(user=request.user)
-        return render(request, 'Patient/new_index.html', {'profile': profile})
+        appointments = TimeSlots.objects.filter(Patient_ID=Profile.objects.get(user=request.user))
+        return render(request, 'Patient/new_index.html', {'profile': profile, 'appointments':appointments})
     else:
         return redirect('/patient/profile/')
 
@@ -35,7 +36,7 @@ def index(request):
 def signup(request):
     if request.user.is_authenticated:
         print("Authenticated", request.user)
-    #     return redirect('127.0.0.1/patient/')
+    #     return redirect('192.168.43.144/patient/')
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -72,9 +73,9 @@ def loginform(request):
             user = form.get_user()
             login(request, user)
             if Profile.objects.filter(user=user).exists():
-                return redirect('http://127.0.0.1:8000/patient')
+                return redirect('http://192.168.43.144:8080/patient')
             else:
-                return redirect('http://127.0.0.1:8000/patient/profile')
+                return redirect('http://192.168.43.144:8080/patient/profile')
         else:
             print(form.errors)
             contexts = {'form': form}
@@ -113,7 +114,7 @@ def profile_page(request):
             address.save()
             profile.Patient_Address = Address.objects.get(user=request.user)
             profile.save()
-            return redirect('http://127.0.0.1:8000/patient')
+            return redirect('http://192.168.43.144:8080/patient')
         elif not profile_form.is_valid():
             print(profile_form.errors)
         else:
@@ -150,7 +151,7 @@ def edit_profile(request):
 def user_logout(request):
     # Log out the user.
     logout(request)
-    return redirect('http://127.0.0.1:8000/')
+    return redirect('http://192.168.43.144:8080/')
 
 
 @login_required
@@ -238,7 +239,6 @@ def AppointmentBooking(request, docID):
             res_list.append(TimeSlots.objects.filter(Doctor_ID=docID, Patient_ID__isnull=True, date=date))
             date = date + datetime.timedelta(days=1)
         res_list = [i for i in res_list if i] 
-
         context = {"DocName": obj.Doctor_First_Name + " " + obj.Doctor_Last_Name,
                    "Doctor_ID": obj.Doctor_ID,
                    'Doctor_Picture': "../../media/" + str(obj.Doctor_Picture),
@@ -248,34 +248,61 @@ def AppointmentBooking(request, docID):
                    'Doctor_Experience': str(obj.Doctor_Experience) + "years",
                    'address': addrs.Home + " " + addrs.Street + "\n" + str(addrs.area) + "\n" + str(addrs.city),
                    'slots': res_list}
+        print(context)
         return render(request, 'Patient/appointment.html', {'context': context})
 
+
+# @login_required(login_url='P_login')
+# def confirmBooking(request):
+#     response_data = {}
+#     if request.method == "POST":
+
+#         username=request.POST['docID']
+#         print("***************************")
+#         print(username)
+#         print("***************************")
+#         user = User.objects.get(username=username)
+#         docID = Doctor.objects.get(user=user)
+        
+
+#         date = request.POST['date']
+#         x = date.split(" ")
+#         print(date)
+#         opening_time = request.POST['opening_time']
+#         monthMap = {'Jan.': 1, 'Feb.': 2, 'Mar.': 3, 'Apr.': 4, 'May.': 5, 'Jun.': 6, 'Jul.': 7, 'Aug.': 8, 'Sep.': 9,
+#                     'Oct.': 10, 'Nov.': 11, 'Dec.': 12}
+#         str_date = (str(x[1][:-1]) + '-' + str(monthMap[x[0]]) + '-' + str(x[2]))
+#         corrected_date = datetime.datetime.strptime(str_date, '%d-%m-%Y')
+#         patient_id = Profile.objects.get(user=request.user)
+#         slot = TimeSlots.objects.filter(Doctor_ID=docID, date=corrected_date, Patient_ID=patient_id)
+#         if not slot:
+#             TimeSlots.objects.filter(Doctor_ID=docID, date=corrected_date,
+#                                      opening_Time=opening_time).update(Patient_ID=patient_id)
+#             response_data['success']='Booking Confirmed!'
+#         else:
+#             response_data['success'] = 'Cannot book more than 1 slot per day'
+#     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 @login_required(login_url='P_login')
 def confirmBooking(request):
     response_data = {}
     if request.method == "POST":
-        username=request.POST['docID']
-        user = User.objects.get(username=username)
+        retVariable = request.POST['docID']
+        print(retVariable)
+        res_list = retVariable.split(", ")
+        user = User.objects.get(username=res_list[0])
         docID = Doctor.objects.get(user=user)
-        print(request.user)
-        date = request.POST['date']
-        x = date.split(" ")
-        print(date)
-        opening_time = request.POST['opening_time']
-        monthMap = {'Jan.': 1, 'Feb.': 2, 'Mar.': 3, 'Apr.': 4, 'May.': 5, 'Jun.': 6, 'Jul.': 7, 'Aug.': 8, 'Sep.': 9,
-                    'Oct.': 10, 'Nov.': 11, 'Dec.': 12}
-        str_date = (str(x[1][:-1]) + '-' + str(monthMap[x[0]]) + '-' + str(x[2]))
-        corrected_date = datetime.datetime.strptime(str_date, '%d-%m-%Y')
+        # date = request.POST['date']
+        # opening_time = request.POST['opening_time']
         patient_id = Profile.objects.get(user=request.user)
-        slot = TimeSlots.objects.filter(Doctor_ID=docID, date=corrected_date, Patient_ID=patient_id)
+        slot = TimeSlots.objects.filter(Doctor_ID=docID, date=res_list[1], Patient_ID=patient_id)
         if not slot:
-            TimeSlots.objects.filter(Doctor_ID=docID, date=corrected_date,
-                                     opening_Time=opening_time).update(Patient_ID=patient_id)
-            response_data['success']='Booking Confirmed!'
+            TimeSlots.objects.filter(Doctor_ID=docID, date=res_list[1], opening_Time=res_list[2]).update(Patient_ID=patient_id)
+            response_data['success'] = 'Booking Confirmed!'
         else:
             response_data['success'] = 'Cannot book more than 1 slot per day'
     return HttpResponse(json.dumps(response_data), content_type="application/json")
+
 
 def input_symptoms(request):
     heading_message = 'Formset Demo'

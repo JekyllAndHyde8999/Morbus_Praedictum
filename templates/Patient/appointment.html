@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-{% extends 'base.html' %}
+{% comment %} {% extends 'base.html' %}
 {% load static %}
-{% block head %}
+{% block head %} {% endcomment %}
+{% load static %}
+<head>
 <title>Appointment Booking</title>
 <!-- custom-theme -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,9 +23,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 
+</head>
+<body>
 
-{% endblock %}
-{% block content %}
 <br>
 
 	<div class="main">
@@ -92,7 +94,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 				</section>
 			</div>
-			
+
 			<div class="clear"> </div>
 		</div>
 		
@@ -139,4 +141,4 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	</style>
 	
-{% endblock %}}
+</body>

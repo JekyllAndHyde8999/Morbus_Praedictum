@@ -51,13 +51,13 @@ def index(request):
         doctors = Doctor.objects.filter(Doctor_Corporate=Company.objects.get(user=request.user))
         return render(request, 'Corporate/index_new.html', {'profile': profile, 'doctors':doctors})
     else:
-        return redirect('http://127.0.0.1:8000/company/profile')
+        return redirect('http://192.168.43.144:8080/company/profile')
 
 
 def signup(request):
     if request.user.is_authenticated:
         print("Authenticated", request.user)
-    #     return redirect('127.0.0.1/patient/')
+    #     return redirect('192.168.43.144/patient/')
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -94,9 +94,9 @@ def loginform(request):
             user = form.get_user()
             login(request, user)
             if Company.objects.filter(user=user).exists():
-                return redirect('http://127.0.0.1:8000/company')
+                return redirect('http://192.168.43.144:8080/company')
             else:
-                return redirect('http://127.0.0.1:8000/company/profile')
+                return redirect('http://192.168.43.144:8080/company/profile')
         else:
             contexts = {'form': form}
             return render(request, 'Corporate/login.html', context=contexts)
@@ -135,7 +135,7 @@ def profile_page(request):
             address.save()
             profile.Patient_Address = HospitalAddress.objects.get(user=request.user)
             profile.save()
-            return redirect('http://127.0.0.1:8000/company')
+            return redirect('http://192.168.43.144:8080/company')
         elif not profile_form.is_valid():
             print(profile_form.errors)
         else:
@@ -167,7 +167,7 @@ def edit_profile(request):
 def user_logout(request):
     # Log out the user.
     logout(request)
-    return redirect('http://127.0.0.1:8000/')
+    return redirect('http://192.168.43.144:8080/')
 
 
 @login_required(login_url='C_login')
@@ -190,7 +190,7 @@ def addDoctor(request):
             profile.Doctor_Address = c
             profile.Doctor_Activate = True
             profile.save()
-            return redirect('http://127.0.0.1:8000/company/adddoctor')
+            return redirect('http://192.168.43.144:8080/company/adddoctor')
         elif not profile_form.is_valid():
             print(profile_form.errors)
         else:

@@ -18,6 +18,10 @@ GENDER_CHOICES = (
     (4, 'Other')
 )
 
+SPECIALIZATION_CHOICES = ()
+
+QUALIFICATION_CHOICES = ()
+
 DAYS = (
     ('Monday', 'Monday'),
     ('Tuesday', 'Tuesday'),
@@ -86,8 +90,8 @@ class Doctor(models.Model):
     Doctor_Phone_Number = PhoneNumberField(max_length=13)
     Doctor_Email = models.EmailField(default="asd@rew.com")
     Doctor_Gender = models.IntegerField(choices=GENDER_CHOICES, validators=[MinValueValidator(1), MaxValueValidator(4)])
-    Doctor_Qualifications = models.CharField(max_length=350)
-    Doctor_Specialization = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
+    Doctor_Qualifications = models.CharField(max_length=350, choices=QUALIFICATION_CHOICES)
+    Doctor_Specialization = models.CharField(max_length=250, choices=SPECIALIZATION_CHOICES)
     Doctor_Experience = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(80)])
     Doctor_License = models.CharField(default='1234567890', max_length=25, null=True)
     Doctor_Picture = models.ImageField(upload_to='media', default='default-user-image.jpg', null=True)

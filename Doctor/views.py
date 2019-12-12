@@ -131,9 +131,9 @@ def loginform(request):
             user = form.get_user()
             login(request, user)
             if Doctor.objects.filter(user=user).exists():
-                return redirect('http://127.0.0.1:8000/doctor')
+                return redirect('http://192.168.43.144:8080/doctor')
             else:
-                return redirect('http://127.0.0.1:8000/doctor/profile')
+                return redirect('http://192.168.43.144:8080/doctor/profile')
         else:
             print(form.errors)
             contexts = {'form': form}
@@ -172,7 +172,7 @@ def profile_page(request):
             address.save()
             profile.Doctor_Address = Doctor.objects.get(user=request.user)
             profile.save()
-            return redirect('http://127.0.0.1:8000/doctor')
+            return redirect('http://192.168.43.144:8080/schedule')
         elif not profile_form.is_valid():
             print(profile_form.errors)
         else:
@@ -244,7 +244,7 @@ def doctorScheduleView(request):
                                 doctorSchedule(Doctor_ID=doctor_obj, day=day, openTime=e_openTime,
                                                closeTime=e_closeTime, interval=e_interval).save()
             CreateTimeSlots(doctor_obj)
-            return HttpResponseRedirect(request.path_info)
+            return redirect('D_index')
     return render(request, 'Doctor/scheduling.html', {
         'formset': formset,
         'heading': heading_message,
@@ -290,7 +290,7 @@ def editDoctorSchedule(request):
                                                closeTime=e_closeTime, interval=e_interval).save()
             TimeSlots.objects.filter(Doctor_ID=Doctor.objects.get(user=request.user)).delete()
             CreateTimeSlots(doctor_obj)
-            return HttpResponseRedirect(request.path_info)
+            return redirect('D_profile')
     return render(request, 'Doctor/editSchedule.html', {
         'formset': formset,
         'heading': heading_message,

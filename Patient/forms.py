@@ -10,9 +10,9 @@ from Patient.models import City
 from django.forms import formset_factory
 
 
-cityChoiceList = City.objects.values_list('name', flat=True).distinct()
-temp = [(i, i) for i in cityChoiceList]
-# temp = []
+# cityChoiceList = City.objects.values_list('name', flat=True).distinct()
+# temp = [(i, i) for i in cityChoiceList]
+temp = []
 temp.append((None, 'Choose City'))
 
 cityChoice = tuple(temp)

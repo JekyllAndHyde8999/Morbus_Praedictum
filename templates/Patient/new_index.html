@@ -7,6 +7,8 @@
 <link rel="stylesheet" type="text/css" href="{% static 'Patient/css/new_index.css' %}" >
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'Doctor/css/main.css' %}">
+
 
 {% endblock %}
 {% block content %}
@@ -44,6 +46,7 @@
                                 </li>
                                
                             </ul>
+                            
                             <div>
                             <ul>
                                 <li>Gender: {% if profile.Patient_Gender == 1 %}
@@ -91,54 +94,46 @@
                         
                     </div>
                 </div>
-               
-                    <div class="col-md-8">
-                        <div class="tab-content profile-tab" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>User Id</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Kshiti123</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Name</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Kshiti Ghelani</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Email</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>kshitighelani@gmail.com</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Phone</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>123 456 7890</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Profession</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Web Developer and Designer</p>
-                                            </div>
-                                        </div>
-                            </div>
-                         
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+                            
                         </div>
                     </div>
+
+                <div class="table100">
+                                <table>
+                                    <thead>
+                                        <tr class="table100-head" id="results">
+            
+                                            <th class="column1">Doctor</th>
+                                            <th class="column3">Appointment Date</th>
+                                            <th class="column2">Time</th>
+                                            
+                                    </thead>
+                                    {% if not appointments %}
+                                            <tr style="padding: 20px;">
+                                                <td  rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;font-size:20px">No appointments available.</td>
+                                               
+                                            </tr>
+                                    {% endif %}
+                                    {%  for result in appointments %}
+                                    <tbody>    
+                                            <tr style="padding: 20px;">
+                                                <td rowspan="2" class="column1 rowspanned cell">{{ result.Doctor_ID.Doctor_First_Name }} {{ result.Doctor_ID.Doctor_Last_Name }}
+                                                </td>
+                                                <td  rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;">{{ result.day }}, {{ result.date }}</td>
+                                                <td rowspan="2" class="column2 rowspanned cell">{{ result.opening_Time }}</td>
+                                  
+                                            </tr>		
+                                                            
+                                    </tbody>
+                                    {% endfor %}
+                                </table>
+                            </div>
+
+                    
                 </div>
                     
         </div>
