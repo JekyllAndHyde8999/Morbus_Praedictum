@@ -5,7 +5,8 @@ from . import views
 urlpatterns = [
 
     path('doctor/viewschedule/', views.viewDoctorScheduleApiView.as_view(), name="scheduleAPI"),  # view Doctor's schedule
-    path('auth/login/', views.viewDoctorScheduleApiView.as_view(), name="scheduleAPI"),  # view Doctor's schedule
+    path('auth/login/', views.loginViewAPI.as_view(), name="scheduleAPI"),
+    path('auth/logout/', views.logoutViewAPI.as_view(), name="scheduleAPI"),
     path('doctor/addschedule/', views.addDoctorScheduleApiView.as_view(), name="scheduleAPI"),  # Add Doctor's schedule
     path('doctors/', views.DoctorApi.as_view(), name="doctorList"),                     # SERVICE view All Doctors available for recruitment
     path('blood-donor/', views.BloodDonorList.as_view(), name="blood-donor-all"),                     # SERVICE view all Blood donors

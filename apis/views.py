@@ -91,7 +91,7 @@ class DoctorApi(generics.ListCreateAPIView):
     filter_backends = (DynamicSearchFilter,)
     queryset = Doctor.objects.filter()
     serializer_class = DoctorSerializer
-    # authentication_classes = [TokenAuthentication]
+    # authentication_classes = [TokenAuthentication,]
     # permission_classes = [IsAuthenticated]
 
 
@@ -153,7 +153,7 @@ class OrganDonorList(views.APIView):
 
 
 class DiseasePredictor(views.APIView):
-    def post(self, request):
+    def get(self, request):
         raw_data = request.data
         data = raw_data['data'].split(",")
         data = [x.strip() for x in data]
@@ -161,7 +161,7 @@ class DiseasePredictor(views.APIView):
         print(result_dict)
         results = [[x[0], str(round(x[1] * 100, 2)) + '%'] for x in
                    sorted(list(result_dict.items()), key=lambda x: -x[1])]
-        return Response(result_dict, status=status.HTTP_200_OK)
+        return Response(dict(results), status=status.HTTP_200_OK)
 
     authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
