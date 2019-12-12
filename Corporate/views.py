@@ -174,6 +174,7 @@ def user_logout(request):
 def addDoctor(request):
     if request.method == 'POST':
         profile_form = DoctorProfileForm(data=request.POST)
+        print(request.POST)
         user_form = SignUpForm(data=request.POST)
 
         if profile_form.is_valid() and user_form.is_valid():
@@ -184,7 +185,7 @@ def addDoctor(request):
             profile.Doctor_Corporate = Company.objects.get(user=request.user)
             address = HospitalAddress.objects.get(user=request.user)
             c = ClinicAddress(user=User.objects.get(username=request.POST.get("username")), Home=address.Home,
-                          Street=address.Street, city=address.city, area=address.area, Pin=address.Pin)
+                              Street=address.Street, city=address.city, area=address.area, Pin=address.Pin)
             c.save()
             profile.Doctor_Address = c
             profile.Doctor_Activate = True
@@ -204,7 +205,7 @@ def addDoctor(request):
 def addDoctors(request):
     if request.method == 'POST':
         file1 = request.FILES.get('data')
-        if file1 == None:
+        if not file1:
             result = 'No file uploaded.'
             # return render(request, 'predictReview/batch_predict.html', {'result' : result})
         ext = file1.name
@@ -220,13 +221,16 @@ def addDoctors(request):
         for i in nlist:
             if len(i) != 11:
                 result = "Data not in correct format."
-            user=User.objects.create_user(str(i[0]), email=str(i[1]), password=str(i[2]))
+            user = User.objects.create_user(str(i[0]), email=str(i[1]), password=str(i[2]))
             address = HospitalAddress.objects.get(user=request.user)
             c = ClinicAddress(user=User.objects.get(username=str(i[0])), Home=address.Home,
-                          Street=address.Street, city=address.city, area=address.area, Pin=address.Pin)
+                              Street=address.Street, city=address.city, area=address.area, Pin=address.Pin)
             c.save()
-            doctor=Doctor(Doctor_First_Name=str(i[3]), Doctor_Last_Name=str(i[4]), Doctor_Gender=int(i[5]), Doctor_Phone_Number=str(i[6]), 
-                            Doctor_Qualifications=str(i[7]), Doctor_Specialization=int(i[8]), Doctor_Experience=int(i[9]), Doctor_License=str(i[10]), user=user, Doctor_Corporate=Company.objects.get(user=request.user), Doctor_Address=c, Doctor_Activate=True)
+            doctor = Doctor(Doctor_First_Name=str(i[3]), Doctor_Last_Name=str(i[4]), Doctor_Gender=int(i[5]),
+                            Doctor_Phone_Number=str(i[6]), Doctor_Qualifications=str(i[7]),
+                            Doctor_Specialization=int(i[8]), Doctor_Experience=int(i[9]), Doctor_License=str(i[10]),
+                            user=user, Doctor_Corporate=Company.objects.get(user=request.user), Doctor_Address=c,
+                            Doctor_Activate=True)
             doctor.save()
 
 
