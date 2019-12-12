@@ -133,7 +133,7 @@ def load_areas(request):
 
 @login_required(login_url='P_login')
 def symptoms(request):
-    return render(request, 'Patient/symptoms.html')
+    return render(request, 'Patient/checkup.html')
 
 
 @login_required(login_url='P_login')
@@ -199,6 +199,34 @@ def doctorSearchView(request):
     return render(request, 'Patient/doctorSearch.html', {'form': form})
 
 
+
+@login_required
+def doctorSearchView1(request, specialization, city):
+    form = doctorSearchForm()
+    filtered_obj = ClinicAddress.objects.filter(city__name=city)
+    result = Doctor.objects.filter(Doctor_Address__in=filtered_obj).filter(Doctor_Specialization=specialization)
+
+    searchResult = []
+            
+    if result:
+        for obj in result:
+            print(obj)
+            addrs = ClinicAddress.objects.get(user=obj.user)
+            searchResult.append({"DocName": obj.Doctor_First_Name+" "+obj.Doctor_Last_Name,
+                                    "Doctor_ID": obj.Doctor_ID,
+                                    'Doctor_Picture': "../../media/"+str(obj.Doctor_Picture),
+                                    'Doctor_Phone_Number': obj.Doctor_Phone_Number,
+                                    'Doctor_Qualifications': obj.Doctor_Qualifications,
+                                    'Doctor_Specialization': obj.Doctor_Specialization,
+                                    'Doctor_Experience': str(obj.Doctor_Experience)+"years",
+                                    'address': addrs.Home + " " + addrs.Street + "\n" + str(addrs.area) + "\n"
+                                            +str(addrs.city)})
+        return render(request, 'Patient/doctorSearch1.html', {'searchResult': searchResult, 'form': form})
+    return render(request, 'Patient/doctorSearch1.html', {'message': 'No Results Found', 'form': form})
+
+
+
+
 @login_required(login_url='P_login')
 def AppointmentBooking(request, docID):
     obj = Doctor.objects.get(Doctor_ID=docID)
@@ -249,7 +277,6 @@ def confirmBooking(request):
             response_data['success'] = 'Cannot book more than 1 slot per day'
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
-
 def input_symptoms(request):
     heading_message = 'Formset Demo'
     if request.method == 'GET':
@@ -271,14 +298,14 @@ def input_symptoms(request):
             heading_message = "Please fill form correctly"
     else:
         formset = PredictFormset(request.GET)
-    return render(request, 'Patient/predictDisease.html', {
+    return render(request, 'Patient/checkup.html', {
         'formset': formset,
         'heading': heading_message,
     })
 
 
 def DiseasePredict(request):
-    template_name = 'Patient/predictDisease.html'
+    template_name = 'Patient/checkup.html'
     heading_message = 'Disease based on symptom'
     if request.method == 'GET':
         formset = PredictFormset(request.GET or None)
@@ -295,7 +322,10 @@ def DiseasePredict(request):
             result_dict = predict(data)
             results = [[x[0], str(round(x[1] * 100, 2)) + '%'] for x in sorted(list(result_dict.items()),
                                                                                key=lambda x: -x[1])]
-            return render(request, 'Patient/predictDisease.html', {'predictions': results, 'formset': formset})
+            # make new list of lists with list comprehension
+            results = [x + [return_specialization(x[0])] for x in results]
+            city = Address.objects.get(user=request.user).city.name
+            return render(request, 'Patient/checkup.html', {'predictions': results, 'formset': formset, 'city':city})
         else:
             heading_message = "Please fill form correctly"
 
