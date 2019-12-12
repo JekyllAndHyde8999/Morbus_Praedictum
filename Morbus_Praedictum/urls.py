@@ -31,6 +31,7 @@ urlpatterns = [
     path('api/', include('apis.urls')),
     path('misc/', include('miscellaneous.urls')),
     path('blogs/@<str:username>', doc_views.allBlogs, name='all-blogs'),
+    path('blogs/@<str:username>/', doc_views.allBlogs, name='all-blogs'),
     path('blogs/@<str:username>/<str:blog_title>', doc_views.blogDetail, name='blog-detail')
 ]
 
