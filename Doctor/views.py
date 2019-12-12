@@ -75,13 +75,18 @@ def createBlog(request):
     return render(request, 'Doctor/createblog.html')
 
 
+def allThemBlogs(request):
+    blogs = Blog.objects.all()
+    return render(request, 'Main/blog.html', context={'blogs': blogs})
+
+
 def allBlogs(request, username):
     if Doctor.objects.filter(user=User.objects.get(username=username)).exists():
         doc = Doctor.objects.get(user=User.objects.get(username=username))
         blogs = Blog.objects.filter(Doctor=doc)
-        return render(request, 'Doctor/allblogs.html', context={'blogs': blogs, 'name': username})
+        return render(request, 'Main/blog.html', context={'blogs': blogs, 'name': username})
     else:
-        return render(request, 'Doctor/allblogs.html', context={'err': True, 'name': username})
+        return render(request, 'Main/blog.html', context={'err': True, 'name': username})
 
 def blogDetail(request, username, blog_title):
     blog_obj = Blog.objects.get(user=User.objects.get(username=username), title=blog_title)
