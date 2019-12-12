@@ -1,10 +1,8 @@
-from abc import ABC
-
 from rest_framework import serializers
 from Doctor.models import *
 from Patient.models import *
-from Main.models import EyeDonor,OrganDonor
-from django.contrib.auth import authenticate, login
+from Main.models import EyeDonor, OrganDonor, Blog
+from django.contrib.auth import authenticate
 from rest_framework import exceptions
 
 
@@ -51,13 +49,14 @@ class BloodDonorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Address
-        fields = ('Patient_ID__Patient_Blood_Group','Patient_ID__Patient_First_Name','Patient_ID__Patient_Last_Name',
-                  'Patient_ID__Patient_Phone_Number','Patient_ID__Patient_Gender','Patient_ID__Patient_DOB',
-                  'Patient_ID__Patient_Email','city')
+        fields = ('Patient_ID__Patient_Blood_Group', 'Patient_ID__Patient_First_Name', 'Patient_ID__Patient_Last_Name',
+                  'Patient_ID__Patient_Phone_Number', 'Patient_ID__Patient_Gender', 'Patient_ID__Patient_DOB',
+                  'Patient_ID__Patient_Email', 'city')
 
 
 class EyeDonorSerializer(serializers.ModelSerializer):
     time_of_death = serializers.TimeField(input_formats=['ISO-8601'])
+
     class Meta:
         model = EyeDonor
         fields = ('Name_of_Donor', 'time_of_death', 'attendee_name', 'contact_info', 'City')
@@ -68,6 +67,7 @@ class OrganDonorSerializer(serializers.ModelSerializer):
         model = OrganDonor
         fields = ('Name_of_Donor', 'attendee_name', 'contact_info', 'City')
 
+
 class BdSerializer(serializers.ModelSerializer):
     # Address_ID__city = serializers.CharField()
     # address = AddressSerializer(many=True)
@@ -76,8 +76,16 @@ class BdSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         # fields = '__all__'
-        fields = ('Patient_Address', 'Patient_First_Name', 'Patient_Last_Name', 'Patient_Phone_Number', 'Patient_Gender', 'Patient_DOB', 'Patient_Blood_Group', 'Patient_Address')
+        fields = ('Patient_Address', 'Patient_First_Name', 'Patient_Last_Name', 'Patient_Phone_Number',
+                  'Patient_Gender', 'Patient_DOB', 'Patient_Blood_Group', 'Patient_Address')
 
+
+class BloodDonationSerializer(serializers.Serializer):
+    Patient_first_name = serializers.CharField()
+    Patient_last_name = serializers.CharField()
+    Patient_Phone_Number = serializers.CharField()
+    Patient_Blood_Group = serializers.CharField()
+    Patient_City = serializers.CharField()
 
 
 class addDoctorSerializer(serializers.Serializer):
@@ -121,6 +129,13 @@ class loginSerializer(serializers.Serializer):
         return data
 
 
+class BlogSerializer(serializers.ModelSerializer):
+    # date = serializers.DateField(input_formats=['ISO-8601'])
+    class Meta:
+        model = Blog
+        fields = ('Doctor', 'title', 'text', 'date')
+
+
 # trial json(POST) for addDoctor(corporate) API
 x = {
     "username": "doctor45656",
@@ -140,7 +155,7 @@ x = {
 
 
 # trial json(POST) for addSchedule(Doctor) API
-y= {
+y = {
     "day": "Thursday",
     "m_interval": "60",
     "m_openTime": "07:00",
@@ -151,7 +166,7 @@ y= {
 }
 
 # trial json(POST) for CorpAddSchedule(Doctor) API
-y= {
+z = {
     "username": "jh",
     "day": "Thursday",
     "m_interval": "60",
@@ -162,14 +177,14 @@ y= {
     "e_closeTime": "19:00"
 }
 
-z = {
+w = {
     "Name_of_Donor": "Mukesh Sharma",
     "attendee_name": "Sukesh Sharma",
     "contact_info": "+918528528525",
     "City": "Jaipur"
 }
 
-w = {
+v = {
     "Name_of_Donor": "Mukesh Sharma",
     "attendee_name": "Sukesh Sharma",
     "contact_info": "+918528528525",

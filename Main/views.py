@@ -46,7 +46,7 @@ from .models import Blog
 def index(request):
     if request.user.is_anonymous:
         blogs = Blog.objects.all()[:3]
-        return render(request, 'Main/index copy.html', {'blogs':blogs})
+        return render(request, 'Main/index copy.html', {'blogs': blogs})
         
     if Doctor.objects.filter(user=request.user).exists():
         return redirect('D_index')

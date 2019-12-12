@@ -277,8 +277,6 @@ def confirmBooking(request):
             response_data['success'] = 'Cannot book more than 1 slot per day'
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
-
-
 def input_symptoms(request):
     heading_message = 'Formset Demo'
     if request.method == 'GET':
