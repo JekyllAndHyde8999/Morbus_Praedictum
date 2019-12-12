@@ -50,7 +50,7 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="post-preview">
-          <a href="post.html">
+          <a href="{% url 'blog-detail' blog.Doctor.user.username blog.title %}">
             <h2 class="post-title">
               {{ blog.title }}
             </h2>

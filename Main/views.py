@@ -9,7 +9,12 @@ from django.shortcuts import render
 #
 from datetime import datetime, timedelta
 from threading import Timer
+from django.shortcuts import render, redirect
 
+from Doctor.models import Doctor
+from Patient.models import Profile
+from Corporate.models import Company
+from .models import Blog
 
 # def trigger_updatedoctorslots():
 #     doctors = doctorSchedule.objects.filter(day=timezone.now().day)
@@ -39,8 +44,16 @@ from threading import Timer
 
 # Create your views here.
 def index(request):
-    
-    return render(request, 'Main/index copy.html')
+    if request.user.is_anonymous:
+        blogs = Blog.objects.all()[:3]
+        return render(request, 'Main/index copy.html', {'blogs':blogs})
+        
+    if Doctor.objects.filter(user=request.user).exists():
+        return redirect('D_index')
+    if Profile.objects.filter(user=request.user).exists():
+        return redirect('P_index')
+    if Company.objects.filter(user=request.user).exists():
+        return redirect('C_index')
 
 
 def index1(request):
