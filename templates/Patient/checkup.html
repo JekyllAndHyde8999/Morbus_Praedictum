@@ -40,7 +40,7 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'Patient/css/util.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'Patient/css/main.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'Patient/css/main2.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Patient/css/main3.css' %}">
 <!--===============================================================================================-->
 {% endblock %}
 {% block content%}
@@ -82,10 +82,10 @@
                                  <div class="form-row">
                                     <div class="name">Symptom's Name</div>
                                     <div class="value">
-                                        <div class="input-group rs-select2 js-select-simple select--no-search">
+                                        <div class="input-group rs-select2  select--no-search">
                                             
 
-                                                     {{ form.name }}
+                                                     {{ form.name|attr:"class:js-select-simple" }}
                                                      
                                             <button class="btn btn-success add-form-row" style="width:10%;margin-left:20px;font-size:30px;">+</button>
                                                    
@@ -124,13 +124,14 @@
                                             <th class="column5">Search Doctors</th>
                                         </tr>
                                     </thead>
-                                    {%  for key, value in predictions %}
+                                    {%  for key, value, specialisation in predictions %}
                                     <tbody>    
                                             <tr style="padding: 20px;">
                                                 <td rowspan="2" class="column4 rowspanned cell" align="left">{{ key }}</td>
                                                 <td rowspan="2" class="column5 rowspanned cell" align="left">{{ value }}</td>
+                                                <td rowspan="2" class="column4 rowspanned cell" align="left"><a href="{% url 'searchDoctor1' specialization=specialization city=city %}">{{ specialization }}</a></td>
                                             </tr>		
-                                                            
+                                            
                                     </tbody>
                                     {% endfor %}
                                 </table>

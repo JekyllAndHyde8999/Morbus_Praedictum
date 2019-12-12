@@ -202,30 +202,7 @@ def doctorSearchView(request):
 
 @login_required
 def doctorSearchView1(request, specialization, city):
-    # form = doctorSearchForm()
-    # if request.method == "POST":
-    #     form = doctorSearchForm(request.POST)
-    #     if form.is_valid():
-    #         name = form.cleaned_data['docName']
-    #         city = form.cleaned_data['docCity']
-    #         specialization = form.cleaned_data['docSpecial']
-    #         query = name.lower().replace(" ", "")
-    #         result = []
-    #         if len(name) > 0:
-    #             result = Doctor.objects.annotate(full_name=Concat('Doctor_First_Name', 'Doctor_Last_Name')
-    #                                              ).filter(full_name__icontains=query)
-    #         if city:
-    #             filtered_obj = ClinicAddress.objects.filter(city__name=city)
-    #             r = []
-    #             if result:
-    #                 result = result.filter(Doctor_Address__in=filtered_obj)
-    #             else:
-    #                 result = Doctor.objects.filter(Doctor_Address__in=filtered_obj)
-    #         if specialization:
-    #             if result:
-    #                 result = result.filter(Doctor_Specialization=specialization)
-    #             else:
-    #                 result = Doctor.objects.filter()
+    form = doctorSearchForm()
     filtered_obj = ClinicAddress.objects.filter(city__name=city)
     result = Doctor.objects.filter(Doctor_Address__in=filtered_obj).filter(Doctor_Specialization=specialization)
 
@@ -244,8 +221,8 @@ def doctorSearchView1(request, specialization, city):
                                     'Doctor_Experience': str(obj.Doctor_Experience)+"years",
                                     'address': addrs.Home + " " + addrs.Street + "\n" + str(addrs.area) + "\n"
                                             +str(addrs.city)})
-        return render(request, 'Patient/doctorSearch1.html', {'searchResult': searchResult})
-    return render(request, 'Patient/doctorSearch1.html', {'message': 'No Results Found'})
+        return render(request, 'Patient/doctorSearch1.html', {'searchResult': searchResult, 'form': form})
+    return render(request, 'Patient/doctorSearch1.html', {'message': 'No Results Found', 'form': form})
 
 
 
@@ -347,7 +324,10 @@ def DiseasePredict(request):
             result_dict = predict(data)
             results = [[x[0], str(round(x[1] * 100, 2)) + '%'] for x in sorted(list(result_dict.items()),
                                                                                key=lambda x: -x[1])]
-            return render(request, 'Patient/checkup.html', {'predictions': results, 'formset': formset})
+            # make new list of lists with list comprehension
+            results = [x + [return_specialization(x[0])] for x in results]
+            city = Address.objects.get(user=request.user).city.name
+            return render(request, 'Patient/checkup.html', {'predictions': results, 'formset': formset, 'city':city})
         else:
             heading_message = "Please fill form correctly"
 

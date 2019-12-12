@@ -18,9 +18,9 @@ temp.append((None, 'Choose City'))
 
 cityChoice = tuple(temp)
 
-SYMPTOMS_FILE_PATH = os.path.join("Pickles", "symptom_labels.pkl")
+SYMPTOMS_FILE_PATH = os.path.join("Pickles", "symptoms_stoi.pkl")
 with open(SYMPTOMS_FILE_PATH, mode="rb") as f:
-    symptoms_list = pickle.load(f).tolist()
+    symptoms_list = pickle.load(f)
 
 temp2 = [(str(i), str(i)) for i in symptoms_list]
 temp2.append((None, '--blank--'))
