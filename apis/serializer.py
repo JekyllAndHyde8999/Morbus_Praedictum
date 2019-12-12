@@ -130,7 +130,7 @@ class loginSerializer(serializers.Serializer):
 
 
 class BlogSerializer(serializers.ModelSerializer):
-    date = serializers.DateField(input_formats=['ISO-8601'])
+    # date = serializers.DateField(input_formats=['ISO-8601'])
     class Meta:
         model = Blog
         fields = ('Doctor', 'title', 'text', 'date')

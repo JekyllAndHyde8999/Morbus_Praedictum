@@ -78,7 +78,7 @@ class addDoctorScheduleApiView(views.APIView):
 
 
 class timeSlotsApiView(views.APIView):
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         user = request.user
         if str(user) != "AnonymousUser":
             docID = Doctor.objects.get(user=user)
@@ -94,152 +94,7 @@ class timeSlotsApiView(views.APIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
-
-class DoctorApi(generics.ListCreateAPIView):
-    search_fields = ['Doctor_Gender', 'Doctor_Qualifications', 'Doctor_Specialization']
-    filter_backends = (DynamicSearchFilter,)
-    queryset = Doctor.objects.filter()
-    serializer_class = DoctorSerializer
-    authentication_classes = [TokenAuthentication,]
-    permission_classes = [IsAuthenticated]
-
-
 # #PATIENT APIS
-class BloodDonor(views.APIView):
-    def get(self, request, *args, **kwargs):
-        result =[]
-        selected = []
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        CITY = self.request.query_params.get('city')
-        BLOOD_GROUP = self.request.query_params.get('blood_group')
-        print(CITY)
-        print(BLOOD_GROUP)
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        print("***************************")
-        if CITY or BLOOD_GROUP:
-            print("OK")
-            if CITY:
-                cityDB = City.objects.all()
-                city_check = 0
-                for city in cityDB:
-                    if CITY.lower() == city.name.lower():
-                        city_check = 1
-                if city_check:
-                    ct_id = City.objects.get(name=CITY.capitalize()).id
-                    all_address = Address.objects.filter(city=ct_id)
-                    for address in all_address:
-                        if BLOOD_GROUP:
-                            userObj = Profile.objects.get(user=address.user, Patient_Blood_Group=BLOOD_GROUP)
-                        else:
-                            userObj = Profile.objects.get(user=address.user)
-                        selected.append(userObj.Patient_ID)
-                        result.append({
-                            'Patient_first_name': userObj.Patient_First_Name,
-                            'Patient_last_name': userObj.Patient_Last_Name,
-                            'Patient_Phone_Number': str(userObj.Patient_Phone_Number),
-                            'Patient_Blood_Group': userObj.Patient_Blood_Group,
-                            'Patient_City': CITY
-                        })
-                else:
-                    return Response({})
-            elif BLOOD_GROUP:
-                print(BLOOD_GROUP)
-                bloodGrp_id = bloodGroupMap[BLOOD_GROUP]
-                bloodGrp_sorted = Profile.objects.filter(Patient_Blood_Donation=0, Patient_Blood_Group=bloodGrp_id)
-                for patient in bloodGrp_sorted:
-                        address = Address.objects.get(user=patient.user)
-                        result.append({
-                            'Patient_first_name': patient.Patient_First_Name,
-                            'Patient_last_name': patient.Patient_Last_Name,
-                            'Patient_Phone_Number': str(patient.Patient_Phone_Number),
-                            'Patient_Blood_Group': patient.Patient_Blood_Group,
-                            'Patient_City': address.city.name
-                        })
-            if (CITY or BLOOD_GROUP) and not result:
-                return Response({"error": "No query"}, status=status.HTTP_404_NOT_FOUND)
-        else:
-            print("+++++++++++++++++++++++++++++++++++++++")
-            bloodGrp_sorted = Profile.objects.filter(Patient_Blood_Donation=0)
-            for patient in bloodGrp_sorted:
-                address = Address.objects.get(user=patient.user)
-                result.append({
-                    'Patient_first_name': patient.Patient_First_Name,
-                    'Patient_last_name': patient.Patient_Last_Name,
-                    'Patient_Phone_Number': str(patient.Patient_Phone_Number),
-                    'Patient_Blood_Group': patient.Patient_Blood_Group,
-                    'Patient_City': address.city.name
-                })
-        print(result)
-        return Response(result)
-
-
-class BloodDonorList(generics.ListCreateAPIView):
-    search_fields = ['Patient_Blood_Group']
-    filter_backends = (DynamicSearchFilter,)
-    queryset = Profile.objects.filter(Patient_Blood_Donation=0)
-    serializer_class = BdSerializer
-    authentication_classes = [TokenAuthentication, ]
-    permission_classes = [IsAuthenticated]
-
-
-class EyeDonorList(views.APIView):
-    def get(self, request):
-        queryset = EyeDonor.objects.all()
-        serializer = EyeDonorSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        data = request.data
-        Name_of_Donor = data['Name_of_Donor']
-        time_of_death = data['time_of_death']
-        attendee_name = data['attendee_name']
-        contact_info = data['contact_info']
-        city = data['City'].lower()
-        if Name_of_Donor and time_of_death and attendee_name and contact_info and city:
-            donor = EyeDonor(Name_of_Donor=Name_of_Donor, time_of_death=time_of_death,
-                             attendee_name=attendee_name, contact_info=contact_info, City=city)
-            donor.save()
-        else:
-            return Response({"error": "Enter all fields"})
-
-
-class OrganDonorList(views.APIView):
-    def get(self, request):
-        queryset = OrganDonor.objects.all()
-        serializer = OrganDonorSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        print("POST WORKING")
-        data = request.data
-        Name_of_Donor = data['Name_of_Donor']
-        attendee_name = data['attendee_name']
-        contact_info = data['contact_info']
-        city = data['City'].lower()
-        if Name_of_Donor and attendee_name and contact_info and city:
-            donor = OrganDonor(Name_of_Donor=Name_of_Donor, attendee_name=attendee_name, contact_info=contact_info,
-                               City=city)
-            donor.save()
-            print("Donor Saved")
-            return Response({"success": "Entry Saved"})
-        else:
-            return Response({"error": "Enter all fields"})
-
-
-class DiseasePredictor(views.APIView):
-    def get(self, request):
-        raw_data = request.data
-        print(request.data)
-        data = raw_data['data'].split(",")
-        data = [x.strip() for x in data]
-        result_dict = predict(data)
-        print(result_dict)
-        results = [[x[0], str(round(x[1] * 100, 2)) + '%'] for x in
-                   sorted(list(result_dict.items()), key=lambda x: -x[1])]
-        return Response(dict(results), status=status.HTTP_200_OK)
-
-    authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
-    permission_classes = [IsAuthenticated]
 
 
 # Corporate APIs
@@ -353,8 +208,157 @@ class logoutViewAPI(APIView):
         return Response(status=204)
 
 
+# SERVICES
+class DoctorApi(views.APIView):
+
+    queryset = Doctor.objects.filter()
+    serializer_class = DoctorSerializer
+    authentication_classes = [TokenAuthentication,]
+    permission_classes = [IsAuthenticated]
+
+
+class DiseasePredictor(views.APIView):
+    def get(self, request):
+        raw_data = request.data
+        print(request.data)
+        data = raw_data['data'].split(",")
+        data = [x.strip() for x in data]
+        result_dict = predict(data)
+        print(result_dict)
+        results = [[x[0], str(round(x[1] * 100, 2)) + '%'] for x in
+                   sorted(list(result_dict.items()), key=lambda x: -x[1])]
+        return Response(dict(results), status=status.HTTP_200_OK)
+
+    authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+class OrganDonorList(views.APIView):
+    def get(self, request):
+        queryset = OrganDonor.objects.all()
+        serializer = OrganDonorSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        print("POST WORKING")
+        data = request.data
+        Name_of_Donor = data['Name_of_Donor']
+        attendee_name = data['attendee_name']
+        contact_info = data['contact_info']
+        city = data['City'].lower()
+        if Name_of_Donor and attendee_name and contact_info and city:
+            donor = OrganDonor(Name_of_Donor=Name_of_Donor, attendee_name=attendee_name, contact_info=contact_info,
+                               City=city)
+            donor.save()
+            print("Donor Saved")
+            return Response({"success": "Entry Saved"})
+        else:
+            return Response({"error": "Enter all fields"})
+
+    authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+class EyeDonorList(views.APIView):
+    def get(self, request):
+        queryset = EyeDonor.objects.all()
+        serializer = EyeDonorSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        data = request.data
+        Name_of_Donor = data['Name_of_Donor']
+        time_of_death = data['time_of_death']
+        attendee_name = data['attendee_name']
+        contact_info = data['contact_info']
+        city = data['City'].lower()
+        if Name_of_Donor and time_of_death and attendee_name and contact_info and city:
+            donor = EyeDonor(Name_of_Donor=Name_of_Donor, time_of_death=time_of_death,
+                             attendee_name=attendee_name, contact_info=contact_info, City=city)
+            donor.save()
+        else:
+            return Response({"error": "Enter all fields"})
+
+    authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+class BloodDonor(views.APIView):
+    def get(self, request, *args, **kwargs):
+        result =[]
+        selected = []
+        CITY = self.request.query_params.get('city')
+        BLOOD_GROUP = self.request.query_params.get('blood_group')
+        if CITY or BLOOD_GROUP:
+            if CITY:
+                cityDB = City.objects.all()
+                city_check = 0
+                for city in cityDB:
+                    if CITY.lower() == city.name.lower():
+                        city_check = 1
+                if city_check:
+                    ct_id = City.objects.get(name=CITY.capitalize()).id
+                    all_address = Address.objects.filter(city=ct_id)
+                    for address in all_address:
+                        if BLOOD_GROUP:
+                            userObj = Profile.objects.get(user=address.user, Patient_Blood_Group=BLOOD_GROUP)
+                        else:
+                            userObj = Profile.objects.get(user=address.user)
+                        selected.append(userObj.Patient_ID)
+                        result.append({
+                            'Patient_first_name': userObj.Patient_First_Name,
+                            'Patient_last_name': userObj.Patient_Last_Name,
+                            'Patient_Phone_Number': str(userObj.Patient_Phone_Number),
+                            'Patient_Blood_Group': userObj.Patient_Blood_Group,
+                            'Patient_City': CITY
+                        })
+                else:
+                    return Response({})
+            elif BLOOD_GROUP:
+                print(BLOOD_GROUP)
+                bloodGrp_id = bloodGroupMap[BLOOD_GROUP]
+                bloodGrp_sorted = Profile.objects.filter(Patient_Blood_Donation=0, Patient_Blood_Group=bloodGrp_id)
+                for patient in bloodGrp_sorted:
+                    address = Address.objects.get(user=patient.user)
+                    result.append({
+                        'Patient_first_name': patient.Patient_First_Name,
+                        'Patient_last_name': patient.Patient_Last_Name,
+                        'Patient_Phone_Number': str(patient.Patient_Phone_Number),
+                        'Patient_Blood_Group': patient.Patient_Blood_Group,
+                        'Patient_City': address.city.name
+                    })
+            if (CITY or BLOOD_GROUP) and not result:
+                return Response({"error": "No query"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            bloodGrp_sorted = Profile.objects.filter(Patient_Blood_Donation=0)
+            for patient in bloodGrp_sorted:
+                address = Address.objects.get(user=patient.user)
+                result.append({
+                    'Patient_first_name': patient.Patient_First_Name,
+                    'Patient_last_name': patient.Patient_Last_Name,
+                    'Patient_Phone_Number': str(patient.Patient_Phone_Number),
+                    'Patient_Blood_Group': patient.Patient_Blood_Group,
+                    'Patient_City': address.city.name
+                })
+        return Response(result)
+    authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
 class BlogAPI(views.APIView):
     def get(self, request):
-        queryset = Blog.objects.all()
-        serializer = BlogSerializer(queryset, many=True)
-        return Response(serializer.data)
+        blogs = Blog.objects.all()
+        result = []
+        for blog in blogs:
+            doc_obj = Doctor.objects.get(user=blog.user)
+            result.append({
+                        'Author': doc_obj.user.username,
+                        'title': blog.title,
+                        'text': blog.text,
+                        'date': blog.date
+                         })
+        return Response(result)
+
+    authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
