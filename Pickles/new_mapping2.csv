@@ -1,0 +1,207 @@
+,0,1
+0,Abscess,Infectious Disease Specialist
+1,Acoustic Neuroma,Neurosurgeon
+2,Acute Kidney Failure,Nephrologist
+3,Acute Sinusitis,Otolaryngologist
+4,Acute Stress Reaction,Psychiatrist
+5,Adhd,Anesthesiologist
+6,Agoraphobia,Psychiatrist
+7,Alcohol Intoxication,Sleep Medicine Specialist
+8,Anemia,Hematologist
+9,Anemia (Chronic Disease),Hematologist
+11,Anemia (Hemolytic),Hematologist
+12,Anemia (Iron Deficiency),Hematologist
+13,Anorexia Nervosa,Hematologist
+14,Anthrax,Dermatologist
+15,Aortic Aneurysm,Psychiatrist
+16,Aortic Regurgitation,Otolaryngologist
+17,Asperger Syndrome,Neurologist
+18,Aspirin Poisoning,Allergist
+19,Aspirin Use,Otolaryngologist
+20,Atrial Fibrillation,Nephrologist
+21,Autism,Neurologist
+22,Bacterial Pneumonia,Infectious Disease Specialist
+23,Benzodiazepine Abuse,Cardiologist
+24,Bipolar Disorder,Podiatrist
+25,Bird Flu,General Physician
+26,Blood Clotting Disorder,Sleep Medicine Specialist
+27,Brain Infection,Neurosurgeon
+28,Brain Tumor,Neurosurgeon
+29,Bronchial Adenoma,Sports Medicine Specialist
+30,Bulimia,Medical Geneticist
+31,Caffeine Withdrawal,Gynecologist
+32,Carbon Monoxide Poisoning,Gastroenterologist
+33,Cat-Scratch Disease,Dermatologist
+34,Cervical Spondylosis,Sleep Medicine Specialist
+35,Chagas Disease,Sports Medicine Specialist
+36,Chemical Burns,Podiatrist
+37,Chronic Fatigue Syndrome,Psychiatrist
+38,Chronic Kidney Disease,Nephrologist
+39,Chronic Obstructive Pulmonary Disease (Copd),Anesthesiologist
+40,Chronic Sinusitis,Otolaryngologist
+41,Cirrhosis,Geriatric Medicine Specialist
+42,Cocaine Abuse,Hematologist
+43,Cocaine Withdrawal,Osteopath
+44,Cold Exposure,Otolaryngologist
+45,Constipation,Urologist
+46,Coxsackie Virus Infection,Infectious Disease Specialist
+47,Crohn'S Disease,Osteopath
+48,Cryptococcosis,Critical Care Medicine Specialist
+49,Cushing'S Syndrome,Palliative Medicine Specialist
+50,Cyanide Poisoning,Critical Care Medicine Specialist
+51,Cystic Fibrosis,Urologist
+52,Dandruff,Ophthalmologist
+53,Dehydration,Hematologist
+54,Dementia,Nephrologist
+55,Dementia In Head Injury,Ophthalmologist
+56,Dengue Fever,General Physician
+57,Depression,Neurologist
+58,Diabetic Ketoacidosis,Endocrinologist
+59,Diabetic Neuropathy,Endocrinologist
+60,Down Syndrome,Infectious Disease Specialist
+61,Drug Overdose,Sports Medicine Specialist
+62,Drug Withdrawal,Emergency Medicine Specialist
+63,Dry Skin,Dermatologist
+64,Eating Disorder,Physiatrist
+65,Emphysema,Pulmonologist
+66,Endocarditis,Anesthesiologist
+67,Epiglottitis,Cardiologist
+68,Epilepsy,Neurologist
+69,Excessive Caffeine Use,Obstetricians
+70,Excessive Weight Lifting,Sports Medicine Specialist
+71,Exercise,Sports Medicine Specialist
+72,Gastroenteritis,Gastroenterologist
+73,Gastrointestinal Bleeding,Gastroenterologist
+74,Gaucher Disease,Plastic Surgeon
+75,Generalized Anxiety Disorder,Rheumatologist
+76,Giardiasis,General Surgeon
+77,Glomerulonephritis,Pediatrician
+78,Glycogen Storage Disease Type Ii,Plastic Surgeon
+79,Grief Reaction,Osteopath
+80,Hay Fever,Sports Medicine Specialist
+81,Heart Rhythm Disorder,Cardiologist
+82,Heat Exhaustion,General Physician
+83,Heat Exposure,General Physician
+84,Heat Stroke,General Physician
+85,Helicobacter Pylori Infection,Hematologist
+86,Hemophilia,Hematologist
+87,Hepatitis A,Critical Care Medicine Specialist
+88,Hepatitis B,Pathologist
+89,Hepatitis C,Gastroenterologist
+90,Histoplasmosis,Endocrinologist
+91,Hyperhidrosis,Colon and Rectal Surgeon
+92,Hyperparathyroidism,Neurologist
+93,Hypertension,Dermatologist
+94,Hyperthyroidism,General Surgeon
+95,Hyperventilation,Ophthalmologist
+96,Hypocalcemia,Medical Geneticist
+97,Hypoglycemia,Physiatrist
+98,Hypoparathyroidism,Ophthalmologist
+99,Hypopituitarism,Physiatrist
+100,Hypotension,Podiatrist
+101,Hypothyroidism,Palliative Medicine Specialist
+102,Inflammatory Bowel Disease,Colon Surgeon
+103,Influenza,General Physician
+104,Intestinal Ileus,Emergency Medicine Specialist
+105,Intoxication,Neurologist
+106,Iron Poisoning,General Physician
+107,Jumping Frenchmen,Pathologist
+108,Labyrinthitis,Nephrologist
+109,Lack Of Exercise,General Physician
+110,Lead Poisoning,General Physician
+111,Legionella,Endocrinologist
+112,Lumbar Spinal Stenosis,Geriatric Medicine Specialist
+113,Lupus,Rheumatologist
+114,Lyme Disease,Infectious Disease Specialist
+115,Mad Cow Disease,Colon and Rectal Surgeon
+116,Malaria,Preventive Medicine Specialist
+117,Malnutrition,General Physician
+118,Measles,General Surgeon
+119,Medication Reaction,Endocrinologist
+120,Meniere'S Disease,Plastic Surgeon
+121,Meningitis,Colon and Rectal Surgeon
+122,Mesentric Lymphadenitis,Hematologist
+123,Metabolic Syndrome,General Surgeon
+124,Methamphetamine Use,Preventive Medicine Specialist
+125,Middle Ear Infection,Otolaryngologist
+126,Mononucleosis,Podiatrist
+127,Motion Sickness,General Surgeon
+128,Mps1,Radiologist
+129,Mps2,Infectious Disease Specialist
+130,Multiple Sclerosis,Endocrinologist
+131,Mumps,Oncologist
+132,Muscle Strain,Anesthesiologist
+133,Myasthenia Gravis,Colon and Rectal Surgeon
+134,Myotonia Congenita,Nephrologist
+135,Myotonic Dystrophy,Anesthesiologist
+136,Narcotic Abuse,Ophthalmologist
+137,Norovirus,Infectious Disease Specialist
+138,Obesity,Pediatrician
+139,Obsessive Compulsive Personality Disorder,Psychiatrist
+140,Ocd,Podiatrist
+141,Osteomyelitis,Orthopedist
+142,Overeating,Anesthesiologist
+143,Panic Attack,Anesthesiologist
+144,Pericarditis,Cardiologist
+145,Phlebitis,Pathologist
+146,Pica,Osteopath
+147,Pilonidal Cyst,Emergency Medicine Specialist
+148,Plague,Medical Geneticist
+149,Pleural Effusion,Podiatrist
+150,Polycystic Kidney Disease,Nephrologist
+151,Pompe Disease,Otolaryngologist
+152,Porphyria,Gynecologist
+153,Prader-Will Syndrome,Medical Geneticist
+154,Pre-Leukemia,Oncologist
+155,Primary Biliary Cirrhosis,Infectious Disease Specialist
+156,Pseudohypoparathyroidism,Anesthesiologist
+157,Psoriasis,Osteopath
+158,Ptsd,Psychiatrist
+159,Pulmonary Embolism,Cardiologist
+160,Pulmonary Hypertension,Gastroenterologist
+161,Pyelonephritis,Psychiatrist
+162,Radiation Sickness,Radiologist
+163,Radon Exposure,Radiologist
+164,Restless Leg Syndrome,General Physician
+165,Rheumatic Fever,Infectious Disease Specialist
+166,Rheumatoid Arthritis,Rheumatologist
+167,Ricin Poisoning,Otolaryngologist
+168,Rosacea,Dermatologist
+169,Sarcoidosis,Otolaryngologist
+170,Scarlet Fever,Infectious Disease Specialist
+171,Schizoaffective Disorder,Psychiatrist
+172,Schizophrenia,Psychiatrist
+173,Scleroderma,Infectious Disease Specialist
+174,Scurvy,Sleep Medicine Specialist
+175,Shingles,Hematologist
+176,Shock,Nephrologist
+177,Sickle Cell Disease,Hematologist
+178,Sleep Apnea,Sleep Specialist
+179,Sleep Deprivation,Sleep Specialist
+180,Small Intestine Cancer,Oncologist
+181,Spinal Tumor,Orthopedist
+182,Sunburn,Dermatologist
+183,Supraventricular Tachycardia,Radiologist
+184,Syphilis,Medical Geneticist
+185,Tetanus,Urologist
+186,Thalassemia,Critical Care Medicine Specialist
+187,Throat Cancer,Oncologist
+188,Thrombocytopenia,Anesthesiologist
+189,Thyroid Storm,Gastroenterologist
+190,Tick Bite,Allergist
+191,Toxic Shock Syndrome,Palliative Medicine Specialist
+192,Trauma,Medical Geneticist
+193,Tuberculosis,Infectious Disease Specialist
+194,Type I Diabetes,Diabetologist
+195,Type Ii Diabetes,Diabetologist
+196,Typhoid Fever,Infectious Disease Specialist
+197,Underweight,Nephrologist
+198,Urinary Tract Infection,Urologist
+199,Valley Fever,Infectious Disease Specialist
+200,Viral Pharyngitis,Infectious Disease Specialist
+201,Viral Pneumonia,Infectious Disease Specialist
+202,Viral Syndrome,Infectious Disease Specialist
+203,Vitamin B12 Deficiency,General Physician
+204,West Nile Virus,Infectious Disease Specialist
+205,Whooping Cough,Family Physician
+206,Wind Exposure,Family Physician
