@@ -1,0 +1,6 @@
+Doctor_First_Name,Doctor_Last_Name,Doctor_DOB,Doctor_Email,Doctor_Gender,Doctor_Qualifications,Doctor_Specialization,Doctor_Experience,Doctor_License,Doctor_Activate
+Sebastian,Kadel,1928-08-27,sebastiankadel@gmail.com,2,MS,Rheumatologist,2,3363582510,True
+Stella,Gagnon,1934-02-02,stellagagnon@gmail.com,1,BSc,Rheumatologist,13,7568622370,True
+Tristan,Lewis,1972-05-27,tristanlewis@gmail.com,1,BSc,Allergist,13,3269385360,True
+Van,Kadel,1976-06-24,vankadel@gmail.com,2,DCH,Rheumatologist,14,6531686030,True
+Victor,Abby,1913-07-08,victorabby@gmail.com,1,MBBS,Neurologist,4,4848563280,True

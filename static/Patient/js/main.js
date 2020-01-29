@@ -1,8 +1,7 @@
-
 (function ($) {
     "use strict";
 
-        
-    
+
+
 
 })(jQuery);

@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block head %}
-    
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static  "css/bootstrap.min.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static  "css/font-awesome.min.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static  "css/main1.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static  "css/util.css" %}">
-    <link rel="shortcut icon" type="image/png" href="{% static 'food-logos.jpg' %}">
+
+<meta charset="UTF-8">
+<title>Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static  "css/bootstrap.min.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static  "css/font-awesome.min.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static  "css/main1.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static  "css/util.css" %}">
+<link rel="shortcut icon" type="image/png" href="{% static 'food-logos.jpg' %}">
 {% endblock %}
 {% block content %}
 <br>
@@ -25,17 +25,17 @@
                     Login
                 </span>
                 {% for field in form %}
-                    {{ field.label_tag }}<br>
-                    <div class="wrap-input100 validate-input input100">
-                        {{ field }}
-                        <span class="focus-input100"></span>
-                    </div>
-                    {% if field.help_text %}
-                        <small></small>
-                    {% endif %}
+                {{ field.label_tag }}<br>
+                <div class="wrap-input100 validate-input input100">
+                    {{ field }}
+                    <span class="focus-input100"></span>
+                </div>
+                {% if field.help_text %}
+                <small></small>
+                {% endif %}
                 {% endfor %}
                 {% if form.errors %}
-                    <p style="font-size: 12px;color: red">{{ form.get_invalid_login_error }}</p>
+                <p style="font-size: 12px;color: red">{{ form.get_invalid_login_error }}</p>
                 {% endif %}
                 <div class="container-login100-form-btn">
                     <button class="login100-form-btn" type="submit" value="Login">
@@ -60,4 +60,5 @@
     </div>
 </div>
 {% endblock %}
+
 </html>

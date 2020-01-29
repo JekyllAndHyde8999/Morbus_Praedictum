@@ -114,8 +114,7 @@
         showHideMeridiemControl: function () {
             if (this.options.twentyFour === false) {
                 $('.wickedpicker__controls__control--meridiem').parent().show();
-            }
-            else {
+            } else {
                 $('.wickedpicker__controls__control--meridiem').parent().hide();
             }
         },
@@ -262,7 +261,7 @@
          *
          * @param {object} The input element
          */
-        handleTimeAdjustments: function(element) {
+        handleTimeAdjustments: function (element) {
             var timeOut = 0;
             //Click and click and hold timepicker incrementer and decrementer
             $(this.up).add(this.down).off('mousedown click touchstart').on('mousedown click', {
@@ -274,7 +273,10 @@
                 if (event.type == 'mousedown') {
                     timeOut = setInterval($.proxy(function (args) {
                         args.Wickedpicker.changeValue(operator, args.input, this);
-                    }, this, {'Wickedpicker': passedData.Wickedpicker, 'input': passedData.input}), 200);
+                    }, this, {
+                        'Wickedpicker': passedData.Wickedpicker,
+                        'input': passedData.input
+                    }), 200);
                 } else {
                     passedData.Wickedpicker.changeValue(operator, passedData.input, this);
                 }
@@ -337,8 +339,7 @@
         formatTime: function (hour, min, meridiem) {
             if (this.options.twentyFour) {
                 return hour + ' : ' + min;
-            }
-            else {
+            } else {
                 return hour + ' : ' + min + ' ' + meridiem;
             }
         },
@@ -369,12 +370,10 @@
                     $.data(this, "plugin_" + pluginName, new Wickedpicker(this, options));
                 }
             });
-        }
-        else if ($(this).hasClass('hasWickedpicker')) {
+        } else if ($(this).hasClass('hasWickedpicker')) {
             if (index !== undefined) {
                 return $.data($(this)[index], 'plugin_' + pluginName)['_' + options]();
-            }
-            else {
+            } else {
                 return $.data($(this)[0], 'plugin_' + pluginName)['_' + options]();
             }
         }

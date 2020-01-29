@@ -241,7 +241,7 @@ def AppointmentBooking(request, docID):
         res_list = [i for i in res_list if i] 
         context = {"DocName": obj.Doctor_First_Name + " " + obj.Doctor_Last_Name,
                    "Doctor_ID": obj.Doctor_ID,
-                   'Doctor_Picture': "../../media/" + str(obj.Doctor_Picture),
+                   'Doctor_Picture': obj.Doctor_Picture,
                    'Doctor_Phone_Number': obj.Doctor_Phone_Number,
                    'Doctor_Qualifications': obj.Doctor_Qualifications,
                    'Doctor_Specialization': obj.Doctor_Specialization,

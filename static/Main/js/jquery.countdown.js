@@ -19,23 +19,26 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-(function(factory) {
+(function (factory) {
     "use strict";
     if (typeof define === "function" && define.amd) {
-        define([ "jquery" ], factory);
+        define(["jquery"], factory);
     } else {
         factory(jQuery);
     }
-})(function($) {
+})(function ($) {
     "use strict";
-    var instances = [], matchers = [], defaultOptions = {
-        precision: 100,
-        elapse: false
-    };
+    var instances = [],
+        matchers = [],
+        defaultOptions = {
+            precision: 100,
+            elapse: false
+        };
     matchers.push(/^[0-9]*$/.source);
     matchers.push(/([0-9]{1,2}\/){2}[0-9]{4}( [0-9]{1,2}(:[0-9]{2}){2})?/.source);
     matchers.push(/[0-9]{4}([\/\-][0-9]{1,2}){2}( [0-9]{1,2}(:[0-9]{2}){2})?/.source);
     matchers = new RegExp(matchers.join("|"));
+
     function parseDateString(dateString) {
         if (dateString instanceof Date) {
             return dateString;
@@ -63,16 +66,22 @@
         M: "minutes",
         S: "seconds"
     };
+
     function escapedRegExp(str) {
         var sanitize = str.toString().replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
         return new RegExp(sanitize);
     }
+
     function strftime(offsetObject) {
-        return function(format) {
+        return function (format) {
             var directives = format.match(/%(-|!)?[A-Z]{1}(:[^;]+;)?/gi);
             if (directives) {
                 for (var i = 0, len = directives.length; i < len; ++i) {
-                    var directive = directives[i].match(/%(-|!)?([a-zA-Z]{1})(:[^;]+;)?/), regexp = escapedRegExp(directive[0]), modifier = directive[1] || "", plural = directive[3] || "", value = null;
+                    var directive = directives[i].match(/%(-|!)?([a-zA-Z]{1})(:[^;]+;)?/),
+                        regexp = escapedRegExp(directive[0]),
+                        modifier = directive[1] || "",
+                        plural = directive[3] || "",
+                        value = null;
                     directive = directive[2];
                     if (DIRECTIVE_KEY_MAP.hasOwnProperty(directive)) {
                         value = DIRECTIVE_KEY_MAP[directive];
@@ -95,8 +104,10 @@
             return format;
         };
     }
+
     function pluralize(format, count) {
-        var plural = "s", singular = "";
+        var plural = "s",
+            singular = "";
         if (format) {
             format = format.replace(/(:|;|\s)/gi, "").split(/\,/);
             if (format.length === 1) {
@@ -112,7 +123,7 @@
             return plural;
         }
     }
-    var Countdown = function(el, finalDate, options) {
+    var Countdown = function (el, finalDate, options) {
         this.el = el;
         this.$el = $(el);
         this.interval = null;
@@ -134,48 +145,50 @@
         this.start();
     };
     $.extend(Countdown.prototype, {
-        start: function() {
+        start: function () {
             if (this.interval !== null) {
                 clearInterval(this.interval);
             }
             var self = this;
             this.update();
-            this.interval = setInterval(function() {
+            this.interval = setInterval(function () {
                 self.update.call(self);
             }, this.options.precision);
         },
-        stop: function() {
+        stop: function () {
             clearInterval(this.interval);
             this.interval = null;
             this.dispatchEvent("stoped");
         },
-        toggle: function() {
+        toggle: function () {
             if (this.interval) {
                 this.stop();
             } else {
                 this.start();
             }
         },
-        pause: function() {
+        pause: function () {
             this.stop();
         },
-        resume: function() {
+        resume: function () {
             this.start();
         },
-        remove: function() {
+        remove: function () {
             this.stop.call(this);
             instances[this.instanceNumber] = null;
             delete this.$el.data().countdownInstance;
         },
-        setFinalDate: function(value) {
+        setFinalDate: function (value) {
             this.finalDate = parseDateString(value);
         },
-        update: function() {
+        update: function () {
             if (this.$el.closest("html").length === 0) {
                 this.remove();
                 return;
             }
-            var hasEventsAttached = $._data(this.el, "events") !== undefined, now = new Date(), newTotalSecsLeft;
+            var hasEventsAttached = $._data(this.el, "events") !== undefined,
+                now = new Date(),
+                newTotalSecsLeft;
             newTotalSecsLeft = this.finalDate.getTime() - now.getTime();
             newTotalSecsLeft = Math.ceil(newTotalSecsLeft / 1e3);
             newTotalSecsLeft = !this.options.elapse && newTotalSecsLeft < 0 ? 0 : Math.abs(newTotalSecsLeft);
@@ -204,7 +217,7 @@
                 this.dispatchEvent("update");
             }
         },
-        dispatchEvent: function(eventName) {
+        dispatchEvent: function (eventName) {
             var event = $.Event(eventName + ".countdown");
             event.finalDate = this.finalDate;
             event.elapsed = this.elapsed;
@@ -213,12 +226,13 @@
             this.$el.trigger(event);
         }
     });
-    $.fn.countdown = function() {
+    $.fn.countdown = function () {
         var argumentsArray = Array.prototype.slice.call(arguments, 0);
-        return this.each(function() {
+        return this.each(function () {
             var instanceNumber = $(this).data("countdown-instance");
             if (instanceNumber !== undefined) {
-                var instance = instances[instanceNumber], method = argumentsArray[0];
+                var instance = instances[instanceNumber],
+                    method = argumentsArray[0];
                 if (Countdown.prototype.hasOwnProperty(method)) {
                     instance[method].apply(instance, argumentsArray.slice(1));
                 } else if (String(method).match(/^[$A-Z_][0-9A-Z_$]*$/i) === null) {

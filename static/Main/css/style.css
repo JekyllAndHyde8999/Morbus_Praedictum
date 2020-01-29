@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700');
+
 body {
     color: #404040;
     font-size: 16px;
@@ -212,6 +213,7 @@ a:active {
         overflow: auto;
         background: transparent;
     }
+
     .site-navigation ul li a {
         padding: 30px 0;
     }
@@ -299,6 +301,7 @@ a:active {
         bottom: 60px;
         margin-top: 0;
     }
+
     .hero-slider .swiper-pagination-bullet {
         width: 30px;
         margin-left: 15px;
@@ -373,7 +376,7 @@ a:active {
     /* ie10+ */
     background: linear-gradient(270deg, rgba(50, 200, 250, 1) 0%, rgba(88, 125, 228, 1) 100%);
     /* w3c */
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#18a3eb', endColorstr='#587de4', GradientType=1);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#18a3eb', endColorstr='#587de4', GradientType=1);
     /* ie6-9 */
     color: #fff;
 }
@@ -415,7 +418,7 @@ a:active {
     /* ie10+ */
     background: linear-gradient(270deg, rgba(50, 200, 250, 1) 0%, rgba(88, 125, 228, 1) 100%);
     /* w3c */
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#18a3eb', endColorstr='#18a3eb', GradientType=1);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#18a3eb', endColorstr='#18a3eb', GradientType=1);
     /* ie6-9 */
     color: #fff;
 }
@@ -484,7 +487,7 @@ ul.tabs-nav .tab-nav.active {
     /* ie10+ */
     background: linear-gradient(270deg, rgba(50, 200, 250, 1) 0%, rgba(88, 125, 228, 1) 100%);
     /* w3c */
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#18a3eb', endColorstr='#18a3eb', GradientType=1);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#18a3eb', endColorstr='#18a3eb', GradientType=1);
     /* ie6-9 */
     color: #fff;
 }
@@ -850,7 +853,7 @@ ul.tabs-nav .tab-nav.active {
     /* ie10+ */
     background: linear-gradient(270deg, rgba(50, 200, 250, 1) 0%, rgba(88, 125, 228, 1) 100%);
     /* w3c */
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#18a3eb', endColorstr='#18a3eb', GradientType=1);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#18a3eb', endColorstr='#18a3eb', GradientType=1);
     /* ie6-9 */
 }
 
@@ -1025,6 +1028,7 @@ ul.tabs-nav .tab-nav.active {
     .testimonial-slider-wrap {
         padding: 72px 30px 120px;
     }
+
     .swiper-pagination-wrap {
         bottom: 30px;
     }
@@ -1419,7 +1423,7 @@ ul.tabs-nav .tab-nav.active {
     /* ie10+ */
     background: linear-gradient(270deg, rgba(50, 200, 250, 1) 0%, rgba(88, 125, 228, 1) 100%);
     /* w3c */
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#18a3eb', endColorstr='#587de4', GradientType=1);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#18a3eb', endColorstr='#587de4', GradientType=1);
     /* ie6-9 */
 }
 

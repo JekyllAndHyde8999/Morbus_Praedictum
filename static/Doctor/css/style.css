@@ -472,6 +472,7 @@ p.wickedpicker__title {
     .gaps {
         padding-left: 2em;
     }
+
     .book-appointment button[type="text"],
     .book-appointment button[type="date"],
     .book-appointment button[type="time"],
@@ -479,25 +480,32 @@ p.wickedpicker__title {
     textarea {
         width: 90%;
     }
+
     .book-appointment select.form-control {
         width: 95.5%;
     }
+
     h1 {
         font-size: 35px;
     }
+
     .same {
         padding: 0px 2px;
     }
+
     .book-appointment p {
         font-size: 16px;
     }
+
     .book-appointment h1 {
         font-size: 22px;
     }
+
     button[type=submit] {
         margin-top: 1.5em;
         font-size: 1.02em;
     }
+
     body {
         min-height: 700px;
     }
@@ -513,6 +521,7 @@ p.wickedpicker__title {
     .bg-agile {
         width: 77%;
     }
+
     .gaps {
         padding-left: 1.5em;
     }
@@ -529,10 +538,12 @@ p.wickedpicker__title {
     .book-appointment {
         padding: 40px 30px;
     }
+
     .book-appointment h1 {
         font-size: 21px;
         margin-bottom: 1.3em;
     }
+
     .book-appointment button[type="text"],
     .book-appointment button[type="date"],
     .book-appointment button[type="time"],
@@ -540,15 +551,19 @@ p.wickedpicker__title {
     textarea {
         margin: .3em 0em .7em;
     }
+
     .book-appointment select.form-control {
         margin: 5px 0px 9.5px;
     }
+
     h1 {
         margin: 1.2em 0;
     }
+
     body {
         min-height: 638px;
     }
+
     .copy.w3ls {
         margin: 2em 0em 0;
     }
@@ -559,6 +574,7 @@ p.wickedpicker__title {
         font-size: 1.01em;
         padding: 7px 20px;
     }
+
     .book-appointment select.form-control {
         width: 96.5%;
     }
@@ -569,6 +585,7 @@ p.wickedpicker__title {
         font-size: 18px;
         letter-spacing: 3px;
     }
+
     .book-appointment button[type="text"],
     .book-appointment button[type="date"],
     .book-appointment button[type="time"],
@@ -576,28 +593,36 @@ p.wickedpicker__title {
     textarea {
         line-height: 21px;
     }
+
     textarea {
         height: 21px;
     }
+
     .book-appointment select.form-control {
         padding: 5.4px 10px;
     }
+
     .book-appointment p {
         font-size: 14px;
     }
+
     .book-appointment {
         padding: 32px 30px;
     }
+
     h1 {
         font-size: 29px;
         letter-spacing: 5px;
     }
+
     .copy p {
         font-size: 14.4px;
     }
+
     .copy.w3ls {
         margin: 1.6em 0em 0;
     }
+
     body {
         min-height: 565px;
     }
@@ -607,9 +632,11 @@ p.wickedpicker__title {
     .bg-agile {
         width: 85%;
     }
+
     .same {
         padding: 0px 0px;
     }
+
     button[type=submit] {
         font-size: 0.9em;
         padding: 6px 18px;
@@ -620,9 +647,11 @@ p.wickedpicker__title {
     body {
         min-height: 894.5px;
     }
+
     h1 {
         margin: 4em 0 2em;
     }
+
     .copy.w3ls {
         margin: 4em 0em 0;
     }
@@ -632,12 +661,15 @@ p.wickedpicker__title {
     h1 {
         margin: 1.2em 0;
     }
+
     .copy.w3ls {
         margin: 1.7em 0em 0;
     }
+
     .book-appointment select.form-control {
         padding: 5.4px 10px;
     }
+
     body {
         min-height: 565.7px;
     }
@@ -653,9 +685,11 @@ p.wickedpicker__title {
     .gaps {
         padding-left: 1em;
     }
+
     .book-appointment p {
         font-size: 13px;
     }
+
     .book-appointment button[type="text"],
     .book-appointment button[type="date"],
     .book-appointment button[type="time"],
@@ -663,16 +697,20 @@ p.wickedpicker__title {
     textarea {
         margin: .3em 0em .8em;
     }
+
     .book-appointment select.form-control {
         margin: 5.2px 0px 11px;
     }
+
     .copy p {
         font-size: 14px;
     }
+
     h1 {
         margin: 1.4em 0;
         font-size: 26px;
     }
+
     body {
         min-height: 564.1px;
     }
@@ -682,20 +720,25 @@ p.wickedpicker__title {
     .book-appointment h1 {
         font-size: 16px;
     }
+
     button[type=submit] {
         margin-top: 1em;
     }
+
     h1 {
         margin: 1.7em 0 1em;
         font-size: 24px;
         letter-spacing: 4px;
     }
+
     .copy.w3ls {
         margin: 1.4em 1.5em 0;
     }
+
     .copy p {
         line-height: 28px;
     }
+
     body {
         min-height: 559.5px;
     }
@@ -705,6 +748,7 @@ p.wickedpicker__title {
     .bg-agile {
         width: 88%;
     }
+
     .book-appointment select.form-control {
         width: 99%;
     }
@@ -714,9 +758,11 @@ p.wickedpicker__title {
     .copy p {
         word-spacing: 0px;
     }
+
     .copy.w3ls {
         margin: 1.2em 1.5em 0;
     }
+
     h1 {
         ` margin: 1.7em 0 1.1em;
     }
@@ -727,16 +773,20 @@ p.wickedpicker__title {
         width: 100%;
         float: none;
     }
+
     .right-agileinfo {
         width: 100%;
         float: none;
     }
+
     .gaps {
         padding-left: 0;
     }
+
     .book-appointment {
         padding: 35px 40px;
     }
+
     .book-appointment button[type="text"],
     .book-appointment button[type="date"],
     .book-appointment button[type="time"],
@@ -744,27 +794,33 @@ p.wickedpicker__title {
     textarea {
         width: 93.5%;
     }
+
     h1 {
         margin: 1.6em 0 1.1em;
         font-size: 22px;
         letter-spacing: 3px;
         word-spacing: 5px;
     }
+
     .bg-agile {
         width: 83%;
     }
+
     .book-appointment h1 {
         font-size: 15px;
         margin-bottom: 1em;
     }
+
     .book-appointment h4 {
         font-size: 15px;
         margin-bottom: 1em;
     }
+
     .copy p {
         line-height: 27px;
         font-size: 13px;
     }
+
     body {
         min-height: 809.5px;
     }
@@ -777,11 +833,13 @@ p.wickedpicker__title {
         letter-spacing: 2px;
         word-spacing: 3px;
     }
+
     .book-appointment h1 {
         font-size: 14px;
         margin-bottom: 1.5em;
         letter-spacing: 2.5px;
     }
+
     .book-appointment button[type="text"],
     .book-appointment button[type="date"],
     .book-appointment button[type="time"],
@@ -798,18 +856,23 @@ p.wickedpicker__title {
         font-size: 19px;
         letter-spacing: 3px;
     }
+
     .book-appointment {
         padding: 35px 32px;
     }
+
     .book-appointment select.form-control {
         width: 100%;
     }
+
     .wickedpicker {
         width: 241px;
     }
+
     button[type=submit] {
         padding: 5px 14px;
     }
+
     body {
         min-height: 850px;
     }
@@ -819,6 +882,7 @@ p.wickedpicker__title {
     .bg-agile {
         width: 86%;
     }
+
     .book-appointment button[type="text"],
     .book-appointment button[type="date"],
     .book-appointment button[type="time"],
@@ -832,18 +896,22 @@ p.wickedpicker__title {
     .bg-agile {
         width: 91%;
     }
+
     .book-appointment h1 {
         letter-spacing: 2px;
     }
+
     h1 {
         margin: 1.3em 1em .5em;
         line-height: 30px;
         font-size: 18px;
         letter-spacing: 2px;
     }
+
     .book-appointment {
         padding: 35px 25px;
     }
+
     .book-appointment button[type="text"],
     .book-appointment button[type="date"],
     .book-appointment button[type="time"],
@@ -851,9 +919,11 @@ p.wickedpicker__title {
     textarea {
         width: 91%;
     }
+
     body {
         min-height: 855px;
     }
+
     .copy.w3ls {
         margin: 1.1em 1.5em 0;
     }

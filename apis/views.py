@@ -25,6 +25,8 @@ bloodGroupMap = {
     "O-": 8,
 }
 
+inv_blood = {val: key for key, val in bloodGroupMap.items()}
+
 
 # Create your views here.
 class DynamicSearchFilter(filters.SearchFilter):
@@ -214,7 +216,9 @@ class DoctorApi(views.APIView):
         selected = []
         CITY = self.request.query_params.get('city')
         SPECIALIZATION = self.request.query_params.get('specialization')
-
+        print("************************")
+        print(CITY, SPECIALIZATION)
+        print("************************")
         if CITY or SPECIALIZATION:
             if CITY:
                 cityDB = City.objects.all()
@@ -227,11 +231,9 @@ class DoctorApi(views.APIView):
                     all_address = ClinicAddress.objects.filter(city=ct_id)
                     for address in all_address:
                         if SPECIALIZATION:
-                            doctor = Doctor.objects.get(user=ClinicAddress.user, Doctor_Specialization=SPECIALIZATION)
-                        else:
-                            doctor = Doctor.objects.get(user=ClinicAddress.user)
-                        selected.append(doctor.Doctor_ID)
-                        result.append({
+                            if Doctor.objects.filter(user=address.user, Doctor_Specialization=SPECIALIZATION).exists():
+                                doctor = Doctor.objects.get(user=address.user, Doctor_Specialization=SPECIALIZATION)
+                                result.append({
                                     'Doctor_First_Name': doctor.Doctor_First_Name,
                                     'Doctor_Last_Name': doctor.Doctor_Last_Name,
                                     'Doctor_Gender': doctor.Doctor_Gender,
@@ -242,14 +244,28 @@ class DoctorApi(views.APIView):
                                     'Doctor_Experience': doctor.Doctor_Experience,
                                     'Doctor_Area': address.area.name,
                                     'Doctor_City': address.city.name
-                    })
+                                        })  
+                        else:
+                            doctor = Doctor.objects.get(user=address.user)
+                            result.append({
+                                        'Doctor_First_Name': doctor.Doctor_First_Name,
+                                        'Doctor_Last_Name': doctor.Doctor_Last_Name,
+                                        'Doctor_Gender': doctor.Doctor_Gender,
+                                        'Doctor_Phone_Number': str(doctor.Doctor_Phone_Number),
+                                        'Doctor_Email': doctor.Doctor_Email,
+                                        'Doctor_Qualifications': doctor.Doctor_Qualifications,
+                                        'Doctor_Specialization': doctor.Doctor_Specialization,
+                                        'Doctor_Experience': doctor.Doctor_Experience,
+                                        'Doctor_Area': address.area.name,
+                                        'Doctor_City': address.city.name
+                                })
                 else:
                     return Response({})
             elif SPECIALIZATION:
                 print(SPECIALIZATION)
-                doctors = Doctor.objects.filter(Patient_Blood_Donation=0, Doctor_Specialization=SPECIALIZATION)
+                doctors = Doctor.objects.filter(Doctor_Specialization=SPECIALIZATION)
                 for doctor in doctors:
-                    address = Address.objects.get(user=doctor.user)
+                    address = ClinicAddress.objects.get(user=doctor.user)
                     result.append({
                         'Doctor_First_Name': doctor.Doctor_First_Name,
                         'Doctor_Last_Name': doctor.Doctor_Last_Name,
@@ -280,6 +296,7 @@ class DoctorApi(views.APIView):
                             'Doctor_Area': address.area.name,
                             'Doctor_City': address.city.name
                             })
+        print(result)                    
         return Response(result)
 
     authentication_classes = [TokenAuthentication,]
@@ -317,6 +334,7 @@ class OrganDonorList(views.APIView):
     def post(self, request):
         print("POST WORKING")
         data = request.data
+        print(data)
         Name_of_Donor = data['Name_of_Donor']
         attendee_name = data['attendee_name']
         contact_info = data['contact_info']
@@ -351,6 +369,7 @@ class EyeDonorList(views.APIView):
             donor = EyeDonor(Name_of_Donor=Name_of_Donor, time_of_death=time_of_death,
                              attendee_name=attendee_name, contact_info=contact_info, City=city)
             donor.save()
+            return Response({"success": "Entry Saved"})
         else:
             return Response({"error": "Enter all fields"})
 
@@ -364,6 +383,9 @@ class BloodDonor(views.APIView):
         selected = []
         CITY = self.request.query_params.get('city')
         BLOOD_GROUP = self.request.query_params.get('blood_group')
+        print(CITY)
+        print("*************")
+        print(BLOOD_GROUP)
         if CITY or BLOOD_GROUP:
             if CITY:
                 cityDB = City.objects.all()
@@ -373,20 +395,29 @@ class BloodDonor(views.APIView):
                         city_check = 1
                 if city_check:
                     ct_id = City.objects.get(name=CITY.capitalize()).id
+                    print(ct_id)
                     all_address = Address.objects.filter(city=ct_id)
                     for address in all_address:
                         if BLOOD_GROUP:
-                            userObj = Profile.objects.get(user=address.user, Patient_Blood_Group=BLOOD_GROUP)
+                            if Profile.objects.filter(user=address.user, Patient_Blood_Group=bloodGroupMap[BLOOD_GROUP]).exists():
+                                userObj = Profile.objects.get(user=address.user, Patient_Blood_Group=bloodGroupMap[BLOOD_GROUP])
+                                print("Working @@@@@@@@")
+                                result.append({
+                                'Patient_first_name': userObj.Patient_First_Name,
+                                'Patient_last_name': userObj.Patient_Last_Name,
+                                'Patient_Phone_Number': str(userObj.Patient_Phone_Number),
+                                'Patient_Blood_Group': inv_blood[userObj.Patient_Blood_Group],
+                                'Patient_City': CITY
+                                })  
                         else:
                             userObj = Profile.objects.get(user=address.user)
-                        selected.append(userObj.Patient_ID)
-                        result.append({
-                            'Patient_first_name': userObj.Patient_First_Name,
-                            'Patient_last_name': userObj.Patient_Last_Name,
-                            'Patient_Phone_Number': str(userObj.Patient_Phone_Number),
-                            'Patient_Blood_Group': userObj.Patient_Blood_Group,
-                            'Patient_City': CITY
-                        })
+                            result.append({
+                                'Patient_first_name': userObj.Patient_First_Name,
+                                'Patient_last_name': userObj.Patient_Last_Name,
+                                'Patient_Phone_Number': str(userObj.Patient_Phone_Number),
+                                'Patient_Blood_Group': inv_blood[userObj.Patient_Blood_Group],
+                                'Patient_City': CITY
+                            })
                 else:
                     return Response({})
             elif BLOOD_GROUP:
@@ -415,6 +446,7 @@ class BloodDonor(views.APIView):
                     'Patient_Blood_Group': patient.Patient_Blood_Group,
                     'Patient_City': address.city.name
                 })
+        print(result)
         return Response(result)
     authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]

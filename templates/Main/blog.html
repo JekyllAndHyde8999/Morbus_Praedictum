@@ -1,84 +1,83 @@
-
 {% extends 'base.html' %}
 {% load static %}
 
 {% block head %}
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 
-  <title>Clean Blog - Start Bootstrap Theme</title>
+<title>Clean Blog - Start Bootstrap Theme</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="{% static 'Main/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="{% static 'Main/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
-  <!-- Custom fonts for this template -->
-  <link href="{% static 'Main/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
-  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+<!-- Custom fonts for this template -->
+<link href="{% static 'Main/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link
+  href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+  rel='stylesheet' type='text/css'>
 
-  <!-- Custom styles for this template -->
-  <link href="{% static 'Main/css/clean-blog.min.css ' %}" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="{% static 'Main/css/clean-blog.min.css ' %}" rel="stylesheet">
 
 {% endblock %}
 
 {% block content %}
 <br>
-    
-
-  <!-- Page Header -->
-  <header class="masthead">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>Blog de Morbus</h1>
-            <span class="subheading">A Medical Blog by The Doctors of Morbus Praedictum</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
 
 
-  <!-- Main Content -->
-{% for blog in blogs %}
+<!-- Page Header -->
+<header class="masthead">
+  <div class="overlay"></div>
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <div class="post-preview">
-          <a href="{% url 'blog-detail' blog.Doctor.user.username blog.title %}">
-            <h2 class="post-title">
-              {{ blog.title }}
-            </h2>
-            <h3 class="post-subtitle">
-              {{ blog.text|truncatechars:50  }}
-            </h3>
-          </a>
-          <p class="post-meta">Posted by
-            <a href="{% url 'all-blogs' username=blog.Doctor.user.username %}">@{{ blog.Doctor.user.username }}</a>
-            on {{ blog.date|date:"l, d M Y" }}</p>
+        <div class="site-heading">
+          <h1>Blog de Morbus</h1>
+          <span class="subheading">A Medical Blog by The Doctors of Morbus Praedictum</span>
         </div>
-        <hr>
-        
       </div>
     </div>
   </div>
+</header>
+
+
+<!-- Main Content -->
+{% for blog in blogs %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <div class="post-preview">
+        <a href="{% url 'blog-detail' blog.Doctor.user.username blog.title %}">
+          <h2 class="post-title">
+            {{ blog.title }}
+          </h2>
+          <h3 class="post-subtitle">
+            {{ blog.text|truncatechars:50  }}
+          </h3>
+        </a>
+        <p class="post-meta">Posted by
+          <a href="{% url 'all-blogs' username=blog.Doctor.user.username %}">@{{ blog.Doctor.user.username }}</a>
+          on {{ blog.date|date:"l, d M Y" }}</p>
+      </div>
+      <hr>
+
+    </div>
+  </div>
+</div>
 {% endfor %}
-  <hr>
+<hr>
 
-  
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="{%static 'Main/vendor/jquery/jquery.min1.js' %}"></script>
-  <script src="{%static 'Main/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-  <!-- Custom scripts for this template -->
-  <script src="{%static 'Main/js/clean-blog.min.js' %}"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="{%static 'Main/vendor/jquery/jquery.min1.js' %}"></script>
+<script src="{%static 'Main/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Custom scripts for this template -->
+<script src="{%static 'Main/js/clean-blog.min.js' %}"></script>
 
 {% endblock %}
-
-

@@ -1,122 +1,129 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block head %}
-    
+
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link rel="stylesheet" type="text/css" href="{% static 'Doctor/css/index.css' %}" >
+<link rel="stylesheet" type="text/css" href="{% static 'Doctor/css/index.css' %}">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- <link rel="stylesheet" type="text/css" href="{% static 'Doctor/css/main.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'Doctor/css/main.css' %}">
 
 {% endblock %}
 {% block content %}
 
 <div class="container emp-profile">
-           
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="profile-img">
-                            <img src="{{ profile.Doctor_Picture.url }}" alt=""/ style="border-radius:50%;width:200px;height:200px">
-                        <br><br>
-                           <a href={% url 'editDoctorSchedule' %}>    <button class="profile-edit-btn" name="btnAddMore">Edit Schedule</button></a>
-                           <br>
-                            <a href={% url 'create-blog' %}>    <button class="profile-edit-btn" name="btnAddMore">Create Blog</button></a>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="profile-head">
-                                    <h5>
-                                        {{ profile.Doctor_First_Name }} {{ profile.Doctor_Last_Name }}
-                                    </h5>
-                                    <h6>
-                                        @{{ profile.user }}
-                                    </h6>
-                                    <br>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                                </li>
-                               
-                            </ul>
-                            <div>
-                            <ul>
-                                <li>Gender: {% if profile.Doctor_Gender == 1 %}
-                                    Male<br>
-                                {% elif profile.Doctor_Gender == 2 %}
-                                   Female<br>
-                                {% elif profile.Doctor_Gender == 3 %}
-                                    LGBTQ<br>
-                                {% elif profile.Doctor_Gender == 4 %}
-                                    Other<br>
-                                {% endif %}</li>
-<br>
-                                <li>Date of Birth: {{ profile.Doctor_DOB }}</li>
-                                <br>
-                                <li>Contact No.:  {{ profile.Doctor_Phone_Number }}</li>
 
-                            </ul>
-                            <br><br>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-2">
-                    
-                     <a href={% url 'D_edit_profile' %} >    <button class="profile-edit-btn" style="" name="btnAddMore">Edit Profile</button></a> 
-                      
-                       
-                    </div>
-                     
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="profile-work">
-                           
-                            <p>QUALIFICATIONS</p>
-                            {{ profile.Doctor_Qualifications }}
-                            <p>SPECIALIZATION</p>
-                            {{ profile.Doctor_Specialization }}
-                            <p>EXPERIENCE</p>
-                            {{ profile.Doctor_Experience }} Years<br/>
-                            
-                        </div>
-                    </div>
-                   
-                            <div class="table100">
-                                <table>
-                                    <thead>
-                                        <tr class="table100-head" id="results">
-            
-                                            <th class="column1">Patient</th>
-                                            <th class="column3">Date</th>
-                                            <th class="column2">Time</th>
-                                            
-                                    </thead>
-                                    {% if not appointments %}
-                                            <tr style="padding: 20px;">
-                                                <td  rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;font-size:20px">No appointments available.</td>
-                                               
-                                            </tr>
-                                    {% endif %}
-                                    {%  for result in appointments %}
-                                    <tbody>    
-                                            <tr style="padding: 20px;">
-                                                <td rowspan="2" class="column1 rowspanned cell">{{ result.Patient_ID.Patient_First_Name }} {{ result.Patient_ID.Patient_Last_Name }}
-                                                </td>
-                                                <td  rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;">{{ result.day }}, {{ result.date }}</td>
-                                                <td rowspan="2" class="column2 rowspanned cell">{{ result.opening_Time }}</td>
-                                  
-                                            </tr>		
-                                                            
-                                    </tbody>
-                                    {% endfor %}
-                                </table>
-                            </div>
-                        
-                    
-                </div>
-                    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-img">
+                <img src="{{ profile.Doctor_Picture.url }}" alt=""/ style="border-radius:50%;width:200px;height:200px">
+                <br><br>
+                <a href={% url 'editDoctorSchedule' %}> <button class="profile-edit-btn" name="btnAddMore">Edit
+                        Schedule</button></a>
+                <br>
+                <a href={% url 'create-blog' %}> <button class="profile-edit-btn" name="btnAddMore">Create
+                        Blog</button></a>
+            </div>
         </div>
-        
-        {% endblock %}
+        <div class="col-md-6">
+            <div class="profile-head">
+                <h5>
+                    {{ profile.Doctor_First_Name }} {{ profile.Doctor_Last_Name }}
+                </h5>
+                <h6>
+                    @{{ profile.user }}
+                </h6>
+                <br>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                            aria-controls="home" aria-selected="true">About</a>
+                    </li>
+
+                </ul>
+                <div>
+                    <ul>
+                        <li>Gender: {% if profile.Doctor_Gender == 1 %}
+                            Male<br>
+                            {% elif profile.Doctor_Gender == 2 %}
+                            Female<br>
+                            {% elif profile.Doctor_Gender == 3 %}
+                            LGBTQ<br>
+                            {% elif profile.Doctor_Gender == 4 %}
+                            Other<br>
+                            {% endif %}</li>
+                        <br>
+                        <li>Date of Birth: {{ profile.Doctor_DOB }}</li>
+                        <br>
+                        <li>Contact No.: {{ profile.Doctor_Phone_Number }}</li>
+
+                    </ul>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+
+            <a href={% url 'D_edit_profile' %}> <button class="profile-edit-btn" style="" name="btnAddMore">Edit
+                    Profile</button></a>
+
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-work">
+
+                <p>QUALIFICATIONS</p>
+                {{ profile.Doctor_Qualifications }}
+                <p>SPECIALIZATION</p>
+                {{ profile.Doctor_Specialization }}
+                <p>EXPERIENCE</p>
+                {{ profile.Doctor_Experience }} Years<br />
+
+            </div>
+        </div>
+
+        <div class="table100">
+            <table>
+                <thead>
+                    <tr class="table100-head" id="results">
+
+                        <th class="column1">Patient</th>
+                        <th class="column3">Date</th>
+                        <th class="column2">Time</th>
+
+                </thead>
+                {% if not appointments %}
+                <tr style="padding: 20px;">
+                    <td rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;font-size:20px">No
+                        appointments available.</td>
+
+                </tr>
+                {% endif %}
+                {%  for result in appointments %}
+                <tbody>
+                    <tr style="padding: 20px;">
+                        <td rowspan="2" class="column1 rowspanned cell">{{ result.Patient_ID.Patient_First_Name }}
+                            {{ result.Patient_ID.Patient_Last_Name }}
+                        </td>
+                        <td rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;">{{ result.day }},
+                            {{ result.date }}</td>
+                        <td rowspan="2" class="column2 rowspanned cell">{{ result.opening_Time }}</td>
+
+                    </tr>
+
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,44 +1,47 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <title>search for doctors</title>
-    </head>
-    <body>
-        <form method="POST" action="{% url 'searchDoctor' %}">
-            {% csrf_token %}
-            {{ form.as_table }}
-            <button type="submit" value="Submit">Submit</button>
-        </form>
-        <br><br><br><br><br><br><br>
-        {%  for result in searchResult %}
-            <fieldset>
-            <table width="50%" align="center">
-                <tr>
-                    <td rowspan="2"><img src="{{ result.Doctor_Picture }}" width="100px" height="100px"></td>
-                    <td>{{ result.DocName }}</td>
-                    <td rowspan="2">Contact: {{ result.Doctor_Phone_Number }}</td>
-                </tr>
-                <tr>
-                    <td>{{ result.Doctor_Qualifications }} {{ result.Doctor_Specialization }}</td>
-                </tr>
-                <tr>
-                    <td rowspan="2"><pre>{{ result.address}}</pre></td>
-                   <td>{{ result.Doctor_Experience }}</td>
-                    <td rowspan="2">
-                        <a href="{% url 'bookAppointment' docID=result.Doctor_ID %}"> Book appointment</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>{{ result.Docrating }}</td>
-                </tr>
-            </table>
-            </fieldset>
-        {% endfor %}
-        {% if message %}
-            {{ message }}
-        {% endif %}
-    </body>
+
+<head>
+    <title>search for doctors</title>
+</head>
+
+<body>
+    <form method="POST" action="{% url 'searchDoctor' %}">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <button type="submit" value="Submit">Submit</button>
+    </form>
+    <br><br><br><br><br><br><br>
+    {%  for result in searchResult %}
+    <fieldset>
+        <table width="50%" align="center">
+            <tr>
+                <td rowspan="2"><img src="{{ result.Doctor_Picture }}" width="100px" height="100px"></td>
+                <td>{{ result.DocName }}</td>
+                <td rowspan="2">Contact: {{ result.Doctor_Phone_Number }}</td>
+            </tr>
+            <tr>
+                <td>{{ result.Doctor_Qualifications }} {{ result.Doctor_Specialization }}</td>
+            </tr>
+            <tr>
+                <td rowspan="2">
+                    <pre>{{ result.address}}</pre>
+                </td>
+                <td>{{ result.Doctor_Experience }}</td>
+                <td rowspan="2">
+                    <a href="{% url 'bookAppointment' docID=result.Doctor_ID %}"> Book appointment</a>
+                </td>
+            </tr>
+            <tr>
+                <td>{{ result.Docrating }}</td>
+            </tr>
+        </table>
+    </fieldset>
+    {% endfor %}
+    {% if message %}
+    {{ message }}
+    {% endif %}
+</body>
 
 </html>
-

@@ -444,9 +444,11 @@ iframe {
     .wrap-login100 {
         padding: 177px 90px 33px 85px;
     }
+
     .login100-pic {
         width: 35%;
     }
+
     .login100-form {
         width: 50%;
     }
@@ -456,9 +458,11 @@ iframe {
     .wrap-login100 {
         padding: 10px 80px 33px 80px;
     }
+
     .login100-pic {
         display: none;
     }
+
     .login100-form {
         width: 100%;
     }

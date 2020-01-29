@@ -147,7 +147,7 @@ html[xmlns] .slides {
 }
 
 .flex-direction-nav .flex-disabled {
-    opacity: .3!important;
+    opacity: .3 !important;
     filter: alpha(opacity=30);
     cursor: default;
 }
@@ -218,6 +218,7 @@ html[xmlns] .slides {
     .flex-control-nav {
         left: 44%;
     }
+
     .flex-viewport {
         padding-bottom: 1.5em;
     }
@@ -233,6 +234,7 @@ html[xmlns] .slides {
     section.slider {
         padding-top: 0%;
     }
+
     .flexslider {
         padding: 0;
     }

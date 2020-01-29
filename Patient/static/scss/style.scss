@@ -9,8 +9,14 @@ Side note: I know that this style of nesting in SASS doesn't result in the most 
 /* Global settings */
 $color-border: #eee;
 $color-label: #aaa;
-$font-default: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$font-bold: 'HelveticaNeue-Medium', 'Helvetica Neue Medium';
+$font-default: 'HelveticaNeue-Light',
+'Helvetica Neue Light',
+'Helvetica Neue',
+Helvetica,
+Arial,
+sans-serif;
+$font-bold: 'HelveticaNeue-Medium',
+'Helvetica Neue Medium';
 
 
 /* Global "table" column settings */
@@ -63,13 +69,18 @@ $font-bold: 'HelveticaNeue-Medium', 'Helvetica Neue Medium';
 
 
 /* Apply clearfix in a few places */
-.shopping-cart, .column-labels, .product, .totals-item {
+.shopping-cart,
+.column-labels,
+.product,
+.totals-item {
   @extend .group;
 }
 
 
 /* Apply dollar signs */
-.product .product-price:before, .product .product-line-price:before, .totals-value:before {
+.product .product-price:before,
+.product .product-line-price:before,
+.totals-value:before {
   content: '$';
 }
 
@@ -102,7 +113,9 @@ label {
     border-bottom: 1px solid $color-border;
   }
 
-  .product-image, .product-details, .product-removal {
+  .product-image,
+  .product-details,
+  .product-removal {
     text-indent: -9999px;
   }
 }

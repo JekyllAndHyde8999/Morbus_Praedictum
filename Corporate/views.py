@@ -190,7 +190,7 @@ def addDoctor(request):
             profile.Doctor_Address = c
             profile.Doctor_Activate = True
             profile.save()
-            return redirect('http://192.168.43.144:8080/company/adddoctor')
+            return redirect('http://192.168.43.144:8080/company/')
         elif not profile_form.is_valid():
             print(profile_form.errors)
         else:

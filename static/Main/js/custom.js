@@ -1,9 +1,8 @@
-
-(function($) {
+(function ($) {
     // 'use strict';
 
     // Main Navigation
-    $( '.hamburger-menu' ).on( 'click', function() {
+    $('.hamburger-menu').on('click', function () {
         $(this).toggleClass('open');
         $('.site-navigation').toggleClass('show');
     });
@@ -47,16 +46,16 @@
         arrowDclass: 'arrow-d'
     });
 
-    $('.accordion-wrap .entry-title').on('click', function() {
+    $('.accordion-wrap .entry-title').on('click', function () {
         $('.accordion-wrap .entry-title').removeClass('active');
         $(this).addClass('active');
     });
 
     // Tabs
-    $(function() {
+    $(function () {
         $('.tab-content:first-child').show();
 
-        $('.tab-nav').bind('click', function(e) {
+        $('.tab-nav').bind('click', function (e) {
             $this = $(this);
             $tabs = $this.parent().parent().next();
             $target = $($this.data("target"));
@@ -78,7 +77,7 @@
         fill: {
             gradient: ["#5386e7", "#43a7f0"]
         }
-    }).on('circle-animation-progress', function(event, progress) {
+    }).on('circle-animation-progress', function (event, progress) {
         $(this).find('strong').html(Math.round(90 * progress) + '<i>%</i>');
     });
 
@@ -90,7 +89,7 @@
         fill: {
             gradient: ["#5386e7", "#43a7f0"]
         }
-    }).on('circle-animation-progress', function(event, progress) {
+    }).on('circle-animation-progress', function (event, progress) {
         $(this).find('strong').html(Math.round(65 * progress) + '<i>%</i>');
     });
 
@@ -102,31 +101,31 @@
         fill: {
             gradient: ["#5386e7", "#43a7f0"]
         }
-    }).on('circle-animation-progress', function(event, progress) {
+    }).on('circle-animation-progress', function (event, progress) {
         $(this).find('strong').html(Math.round(25 * progress) + '<i>%</i>');
     });
 
     $('#loader_4').circleProgress({
         startAngle: -Math.PI / 4 * 2,
-        value: 0.59 ,
+        value: 0.59,
         size: 156,
         thickness: 4,
         fill: {
             gradient: ["#5386e7", "#43a7f0"]
         }
-    }).on('circle-animation-progress', function(event, progress) {
+    }).on('circle-animation-progress', function (event, progress) {
         $(this).find('strong').html(Math.round(59 * progress) + '<i>%</i>');
     });
 
     $('#loader_5').circleProgress({
         startAngle: -Math.PI / 4 * 2,
-        value: 0.83 ,
+        value: 0.83,
         size: 156,
         thickness: 4,
         fill: {
             gradient: ["#5386e7", "#43a7f0"]
         }
-    }).on('circle-animation-progress', function(event, progress) {
+    }).on('circle-animation-progress', function (event, progress) {
         $(this).find('strong').html(Math.round(83 * progress) + '<i>%</i>');
     });
 
@@ -142,18 +141,39 @@
     });
 
     // Bar Filler
-    $('.featured-fund-raised-bar').barfiller({ barColor: '#ff5a00', duration: 1500 });
+    $('.featured-fund-raised-bar').barfiller({
+        barColor: '#ff5a00',
+        duration: 1500
+    });
 
-    $('.fund-raised-bar-1').barfiller({ barColor: '#ff5a00', duration: 1500 });
-    $('.fund-raised-bar-2').barfiller({ barColor: '#ff5a00', duration: 1500 });
-    $('.fund-raised-bar-3').barfiller({ barColor: '#ff5a00', duration: 1500 });
-    $('.fund-raised-bar-4').barfiller({ barColor: '#ff5a00', duration: 1500 });
-    $('.fund-raised-bar-5').barfiller({ barColor: '#ff5a00', duration: 1500 });
-    $('.fund-raised-bar-6').barfiller({ barColor: '#ff5a00', duration: 1500 });
+    $('.fund-raised-bar-1').barfiller({
+        barColor: '#ff5a00',
+        duration: 1500
+    });
+    $('.fund-raised-bar-2').barfiller({
+        barColor: '#ff5a00',
+        duration: 1500
+    });
+    $('.fund-raised-bar-3').barfiller({
+        barColor: '#ff5a00',
+        duration: 1500
+    });
+    $('.fund-raised-bar-4').barfiller({
+        barColor: '#ff5a00',
+        duration: 1500
+    });
+    $('.fund-raised-bar-5').barfiller({
+        barColor: '#ff5a00',
+        duration: 1500
+    });
+    $('.fund-raised-bar-6').barfiller({
+        barColor: '#ff5a00',
+        duration: 1500
+    });
 
     // Load more
-    let $container      = $('.portfolio-container');
-    let $item           = $('.portfolio-item');
+    let $container = $('.portfolio-container');
+    let $item = $('.portfolio-item');
 
     $item.slice(0, 9).addClass('visible');
 

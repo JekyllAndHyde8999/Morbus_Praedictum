@@ -10,17 +10,14 @@
 <script type='text/javascript' src="{% static 'Main/js/custom.js' %}"></script>
 
 <script>
+    $(".btn2").click(function (e) {
+        $(".dropdown-menu").css({
+            position: "absolute",
+            display: "block",
+            left: e.pageX,
+            top: e.pageY
+        });
 
-
-
-
-$(".btn2").click(function (e) {           
-$(".dropdown-menu").css({
-    position:"absolute",
-    display: "block",
-    left: e.pageX,
-    top: e.pageY
-});
-
-return false;
-});</script>
+        return false;
+    });
+</script>

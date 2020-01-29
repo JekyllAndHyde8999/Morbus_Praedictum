@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block head %}
-    
+
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link rel="stylesheet" type="text/css" href="{% static 'Patient/css/new_index.css' %}" >
+<link rel="stylesheet" type="text/css" href="{% static 'Patient/css/new_index.css' %}">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'Doctor/css/main.css' %}">
@@ -14,127 +14,136 @@
 {% block content %}
 
 <div class="container emp-profile">
-           
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="profile-img">
-                            <img src="{{ profile.Patient_Picture.url }}" style="border-radius:50%;" alt=""/>
-                            <br><br>    
-                          
-                    
-                        <a href={% url 'searchDoctor' %}>    <button class="profile-edit-btn" name="btnAddMore">Search Doctors</button></a> 
-                        <br><br>
-                    
-                         <a href={% url 'predict' %}>    <button class="profile-edit-btn" name="btnAddMore">Condition Checkup</button></a> 
-                        
-                    
-                           
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="profile-head">
-                                    <h5>
-                                        {{ profile.Patient_First_Name }} {{ profile.Patient_Last_Name }}
-                                    </h5>
-                                    <h6>
-                                        @{{ profile.user }}
-                                    </h6>
-                                    <br>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                                </li>
-                               
-                            </ul>
-                            
-                            <div>
-                            <ul>
-                                <li>Gender: {% if profile.Patient_Gender == 1 %}
-                                    Male<br>
-                                {% elif profile.Patient_Gender == 2 %}
-                                   Female<br>
-                                {% elif profile.Patient_Gender == 3 %}
-                                    LGBTQ<br>
-                                {% elif profile.Patient_Gender == 4 %}
-                                    Other<br>
-                                {% endif %}</li>
-<br>
-                                <li>Date of Birth: {{ profile.Patient_DOB }}</li>
-                                <br>
-                                <li>Contact No.:  {{ profile.Patient_Phone_Number }}</li>
-                                <br>
-                                <li>Blood Group: {% if profile.Patient_Blood_Group == 1 %}
-                                    A +ve<br>
-                                {% elif profile.Patient_Patient_Blood_Group == 2 %}
-                                   A -ve<br>
-                                {% elif profile.Patient_Patient_Blood_Group == 3 %}
-                                    B +ve<br>
-                                {% elif profile.Patient_Patient_Blood_Group == 4 %}
-                                   B -ve<br>
-                                {% elif profile.Patient_Patient_Blood_Group == 5 %}
-                                    AB +ve<br>
-                                {% elif profile.Patient_Patient_Blood_Group == 6 %}
-                                   AB -ve<br>
-                                {% elif profile.Patient_Patient_Blood_Group == 7 %}
-                                    o +ve<br>
-                                {% elif profile.Patient_Patient_Blood_Group == 8 %}
-                                    O -ve<br>
-                                {% endif %}</li>
 
-                            </ul>
-                            
-                            </div>
-                        </div>
-                    </div>
-                    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-img">
+                <img src="{{ profile.Patient_Picture.url }}" style="border-radius:50%;" alt="">
+                <br><br>
 
-                    <div class="col-md-2">
-                    
-                        <a href={% url 'P_edit_profile' %}>    <button class="profile-edit-btn" name="btnAddMore">Edit profile</button></a> 
-                        
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="profile-work">
-                            
-                        </div>
-                    </div>
 
-                <div class="table100">
-                                <table>
-                                    <thead>
-                                        <tr class="table100-head" id="results">
-            
-                                            <th class="column1">Doctor</th>
-                                            <th class="column3">Appointment Date</th>
-                                            <th class="column2">Time</th>
-                                            
-                                    </thead>
-                                    {% if not appointments %}
-                                            <tr style="padding: 20px;">
-                                                <td  rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;font-size:20px">No appointments available.</td>
-                                               
-                                            </tr>
-                                    {% endif %}
-                                    {%  for result in appointments %}
-                                    <tbody>    
-                                            <tr style="padding: 20px;">
-                                                <td rowspan="2" class="column1 rowspanned cell">{{ result.Doctor_ID.Doctor_First_Name }} {{ result.Doctor_ID.Doctor_Last_Name }}
-                                                </td>
-                                                <td  rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;">{{ result.day }}, {{ result.date }}</td>
-                                                <td rowspan="2" class="column2 rowspanned cell">{{ result.opening_Time }}</td>
-                                  
-                                            </tr>		
-                                                            
-                                    </tbody>
-                                    {% endfor %}
-                                </table>
-                            </div>
+                <a href="{% url 'searchDoctor' %}"> <button class="profile-edit-btn" name="btnAddMore">Search
+                        Doctors</button></a>
+                <br><br>
 
-                    
-                </div>
-                    
+                <a href="{% url 'predict' %}"> <button class="profile-edit-btn" name="btnAddMore"><a
+                            href="{% url 'predict' %}">Condition Checkup</a></button></a>
+
+
+
+            </div>
         </div>
-        {% endblock %}
+        <div class="col-md-6">
+            <div class="profile-head">
+                <h5>
+                    {{ profile.Patient_First_Name }} {{ profile.Patient_Last_Name }}
+                </h5>
+                <h6>
+                    @{{ profile.user }}
+                </h6>
+                <br>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                            aria-controls="home" aria-selected="true">About</a>
+                    </li>
+
+                </ul>
+
+                <div>
+                    <ul>
+                        <li>Gender: {% if profile.Patient_Gender == 1 %}
+                            Male<br>
+                            {% elif profile.Patient_Gender == 2 %}
+                            Female<br>
+                            {% elif profile.Patient_Gender == 3 %}
+                            LGBTQ<br>
+                            {% elif profile.Patient_Gender == 4 %}
+                            Other<br>
+                            {% endif %}</li>
+                        <br>
+                        <li>Date of Birth: {{ profile.Patient_DOB }}</li>
+                        <br>
+                        <li>Contact No.: {{ profile.Patient_Phone_Number }}</li>
+                        <br>
+                        <li>Blood Group: {% if profile.Patient_Blood_Group == 1 %}
+                            A +ve<br>
+                            {% elif profile.Patient_Blood_Group == 2 %}
+                            A -ve<br>
+                            {% elif profile.Patient_Blood_Group == 3 %}
+                            B +ve<br>
+                            {% elif profile.Patient_Blood_Group == 4 %}
+                            B -ve<br>
+                            {% elif profile.Patient_Blood_Group == 5 %}
+                            AB +ve<br>
+                            {% elif profile.Patient_Blood_Group == 6 %}
+                            AB -ve<br>
+                            {% elif profile.Patient_Blood_Group == 7 %}
+                            o +ve<br>
+                            {% elif profile.Patient_Blood_Group == 8 %}
+                            O -ve<br>
+                            {% endif %}</li>
+                        <br> <a href="{% url 'predict' %}"> <button class="profile-edit-btn" name="btnAddMore"><a
+                                    href="{% url 'predict' %}">Condition Checkup</a></button></a>
+                        <br><br>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-2">
+
+            <a href={% url 'P_edit_profile' %}> <button class="profile-edit-btn" name="btnAddMore">Edit
+                    profile</button></a>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-work">
+
+            </div>
+        </div>
+
+        <div class="table100">
+            <table>
+                <thead>
+                    <tr class="table100-head" id="results">
+
+                        <th class="column1">Doctor</th>
+                        <th class="column3">Appointment Date</th>
+                        <th class="column2">Time</th>
+
+                </thead>
+                {% if not appointments %}
+                <tr style="padding: 20px;">
+                    <td rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;font-size:20px">No
+                        appointments available.</td>
+
+                </tr>
+                {% endif %}
+                {%  for result in appointments %}
+                <tbody>
+                    <tr style="padding: 20px;">
+                        <td rowspan="2" class="column1 rowspanned cell">{{ result.Doctor_ID.Doctor_First_Name }}
+                            {{ result.Doctor_ID.Doctor_Last_Name }}
+                        </td>
+                        <td rowspan="2" class="column3 rowspanned cell" style="fo0nt-weight: bold;">{{ result.day }},
+                            {{ result.date }}</td>
+                        <td rowspan="2" class="column2 rowspanned cell">{{ result.opening_Time }}</td>
+
+                    </tr>
+
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+
+
+    </div>
+
+</div>
+{% endblock %}

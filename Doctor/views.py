@@ -290,7 +290,7 @@ def editDoctorSchedule(request):
                                                closeTime=e_closeTime, interval=e_interval).save()
             TimeSlots.objects.filter(Doctor_ID=Doctor.objects.get(user=request.user)).delete()
             CreateTimeSlots(doctor_obj)
-            return redirect('D_profile')
+            return redirect('D_index')
     return render(request, 'Doctor/editSchedule.html', {
         'formset': formset,
         'heading': heading_message,

@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Add Schedule</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
 
 <body>
 
 
-{% load crispy_forms_tags %}
+    {% load crispy_forms_tags %}
 
-<form class="form-horizontal" method="POST" onsubmit="return myValidation(this)" action="{% url 'editSchedule' %}" >
-    {% csrf_token %}
-    {% for fields in DoctorListForm %}
+    <form class="form-horizontal" method="POST" onsubmit="return myValidation(this)" action="{% url 'editSchedule' %}">
+        {% csrf_token %}
+        {% for fields in DoctorListForm %}
         {{ fields }}
-    {% endfor %}
-    {{ formset.management_form }}
-    <fieldset id="fieldset">
-        {% for form in formset %}
+        {% endfor %}
+        {{ formset.management_form }}
+        <fieldset id="fieldset">
+            {% for form in formset %}
             <div id="placeholder">
                 <fieldset id="fieldsets">
                     <div id="template">
@@ -49,27 +51,27 @@
                     </div>
                 </fieldset>
             </div>
-        {% endfor %}
-    </fieldset>
+            {% endfor %}
+        </fieldset>
 
 
-    <div class="row spacer">
-        <div class="col-4 offset-2">
-            <button type="submit" class="btn btn-block btn-primary">Create</button>
+        <div class="row spacer">
+            <div class="col-4 offset-2">
+                <button type="submit" class="btn btn-block btn-primary">Create</button>
+            </div>
         </div>
-    </div>
-</form>
-{% load crispy_forms_tags %}
+    </form>
+    {% load crispy_forms_tags %}
 
 
-<script>
-    function myValidation(forms)
-{
-    if(forms):{
-      alert('form.day');
-      return false;
-   }
-}
-</script>
+    <script>
+        function myValidation(forms) {
+            if (forms): {
+                alert('form.day');
+                return false;
+            }
+        }
+    </script>
 </body>
+
 </html>

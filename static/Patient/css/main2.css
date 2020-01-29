@@ -97,11 +97,13 @@
     .form-row {
         display: block;
     }
+
     .form-row .name,
     .form-row .value {
         display: block;
         width: 100%;
     }
+
     .form-row .name {
         margin-bottom: 7px;
     }
@@ -494,7 +496,7 @@ td.active {
     background-color: #2c6ed5;
 }
 
-input[type="date" i] {
+input[type="date"i] {
     padding: 14px;
 }
 

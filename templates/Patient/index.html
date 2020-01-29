@@ -3,56 +3,59 @@
 
  {% block content %}
 
-<div style="margin-top:90px;">
+ <div style="margin-top:90px;">
 
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <div class="our-departments-wrap">
-                <h2>PROFILE</h2>
-               <h3><a style="text-decoration: none; color: white;" href={% url 'P_symptoms' %}> Condition Checkup </a></h3><br>
-                <h3> <a style="text-decoration: none; color:white" href={% url 'P_edit_profile' %}> Edit Profile </a></h3><br><br>
-
-                
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="our-departments-cont">
-                            <header class="entry-header d-flex flex-wrap align-items-center">
-                                <img src="{{ profile.Patient_Picture.url }}" height="100" width="200" alt="">
-                                
-
-                            
-                               <div class="container" style="float: right;">
-
-                                <h3>Username: @{{ profile.user }}</h3>
-                                
-                                <h3><br>First Name: {{ profile.Patient_First_Name }}</h3>
-                                <h3>Last Name: {{ profile.Patient_Last_Name }}</h3>
-                                
-                                <h3><br>Gender: {% if profile.Patient_Gender == 1 %}
-                                    Male<br>
-                                {% elif profile.Patient_Gender == 2 %}
-                                   Female<br>
-                                {% elif profile.Patient_Gender == 3 %}
-                                    LGBTQ<br>
-                                {% elif profile.Patient_Gender == 4 %}
-                                    Other<br>
-                                {% endif %}
-                                </h3>
-                                <h3><br>Date of Birth: {{ profile.Patient_DOB }}</h3>
-                                <h3><br>Contact No.:  {{ profile.Patient_Phone_Number }}</h3>
-                                
-                               
-                            </div>
-                       
-                                </header>
-                   
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
+     <div class="container">
+         <div class="row">
+             <div class="col-12">
+                 <div class="our-departments-wrap">
+                     <h2>PROFILE</h2>
+                     <h3><a style="text-decoration: none; color: white;" href={% url 'P_symptoms' %}> Condition Checkup
+                         </a></h3><br>
+                     <h3> <a style="text-decoration: none; color:white" href={% url 'P_edit_profile' %}> Edit Profile
+                         </a></h3><br><br>
 
 
-</div>
-{% endblock %}
-</html>
+                     <div class="col-12 col-md-6 col-lg-4">
+                         <div class="our-departments-cont">
+                             <header class="entry-header d-flex flex-wrap align-items-center">
+                                 <img src="{{ profile.Patient_Picture.url }}" height="100" width="200" alt="">
+
+
+
+                                 <div class="container" style="float: right;">
+
+                                     <h3>Username: @{{ profile.user }}</h3>
+
+                                     <h3><br>First Name: {{ profile.Patient_First_Name }}</h3>
+                                     <h3>Last Name: {{ profile.Patient_Last_Name }}</h3>
+
+                                     <h3><br>Gender: {% if profile.Patient_Gender == 1 %}
+                                         Male<br>
+                                         {% elif profile.Patient_Gender == 2 %}
+                                         Female<br>
+                                         {% elif profile.Patient_Gender == 3 %}
+                                         LGBTQ<br>
+                                         {% elif profile.Patient_Gender == 4 %}
+                                         Other<br>
+                                         {% endif %}
+                                     </h3>
+                                     <h3><br>Date of Birth: {{ profile.Patient_DOB }}</h3>
+                                     <h3><br>Contact No.: {{ profile.Patient_Phone_Number }}</h3>
+
+
+                                 </div>
+
+                             </header>
+
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+
+
+     </div>
+     {% endblock %}
+
+     </html>

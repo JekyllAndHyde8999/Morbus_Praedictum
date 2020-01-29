@@ -1,6 +1,6 @@
 {% autoescape off %}
-    Hi {{ user.username }},
-    Please Log In before clicking the link.
-    Please click on the link to give feedback,
-    http://{{ domain }}{% url 'D_feedback' uidb64=uid token=token %}
+Hi {{ user.username }},
+Please Log In before clicking the link.
+Please click on the link to give feedback,
+http://{{ domain }}{% url 'D_feedback' uidb64=uid token=token %}
 {% endautoescape %}

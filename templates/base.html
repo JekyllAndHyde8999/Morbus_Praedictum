@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% block head %}
     {% endblock %}
@@ -15,13 +16,14 @@
 
 
     {% include 'base/css.html'  %}
- 
+
 
 </head>
+
 <body>
     <header class="site-header">
 
-        <!-- .nav-bar -->   
+        <!-- .nav-bar -->
         {% if user.is_authenticated %}
 
         {% include 'base/navbarlogged.html'  %}
@@ -31,7 +33,7 @@
         {% include 'base/navbar.html'  %}
 
         {% endif %}
-   
+
         <!-- .nav-bar -->
         {% block slider %}
 
@@ -39,16 +41,17 @@
 
     </header>
     <div class="homepage-boxes">
-            {% block content %}
+        {% block content %}
 
-            {% endblock %}
+        {% endblock %}
 
-        </div>
-        {% include 'base/footer.html'  %}
+    </div>
+    {% include 'base/footer.html'  %}
 
-   <!-- .site-footer -->
-   {% include 'base/js.html'  %}
+    <!-- .site-footer -->
+    {% include 'base/js.html'  %}
 
 
 </body>
+
 </html>

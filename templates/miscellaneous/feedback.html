@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <title>Feedback</title>
-    </head>
-    <body>
-        <form method="POST" action="{% url 'feedback' %}">
-           {% csrf_token %}
-            <h2>Your Feedback</h2>
-            <br>
-            {{ form.as_p }}
-            <button type="submit" value="submit">Submit</button>
-        </form>
-    </body>
+
+<head>
+    <title>Feedback</title>
+</head>
+
+<body>
+    <form method="POST" action="{% url 'feedback' %}">
+        {% csrf_token %}
+        <h2>Your Feedback</h2>
+        <br>
+        {{ form.as_p }}
+        <button type="submit" value="submit">Submit</button>
+    </form>
+</body>
+
 </html>

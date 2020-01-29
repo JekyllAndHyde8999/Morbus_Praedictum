@@ -18,9 +18,15 @@ GENDER_CHOICES = (
     (4, 'Other')
 )
 
-SPECIALIZATION_CHOICES = ()
+SPECIALIZATION_CHOICES = (('Nephrologist', 'Nephrologist'), ('Psychiatrist', 'Psychiatrist'), ('Anesthesiologist', 'Anesthesiologist'), ('Podiatrist', 'Podiatrist'), ('Gynecologist', 'Gynecologist'), ('Gastroenterologist', 'Gastroenterologist'), ('Allergist', 'Allergist'), ('Sports Medicine Specialist', 'Sports Medicine Specialist'), ('Medical Geneticist', 'Medical Geneticist'), ('Pulmonologist', 'Pulmonologist'), ('Orthopedist', 'Orthopedist'), ('Diabetologist', 'Diabetologist'), ('Oncologist', 'Oncologist'), ('Sleep Specialist', 'Sleep Specialist'), ('Colon Surgeon', 'Colon Surgeon'), ('Emergency Medicine Specialist', 'Emergency Medicine Specialist'), ('Physiatrist', 'Physiatrist'), ('Neurologist', 'Neurologist'), ('General Physician', 'General Physician'), ('Ophthalmologist', 'Ophthalmologist'), ('Neurosurgeon', 'Neurosurgeon'), ('Urologist', 'Urologist'), ('Pediatrician', 'Pediatrician'), ('Preventive Medicine Specialist', 'Preventive Medicine Specialist'), ('Cardiologist', 'Cardiologist'), ('Sleep Medicine Specialist', 'Sleep Medicine Specialist'), ('Critical Care Medicine Specialist', 'Critical Care Medicine Specialist'), ('General Surgeon', 'General Surgeon'), ('Pathologist', 'Pathologist'), ('Rheumatologist', 'Rheumatologist'), ('Palliative Medicine Specialist', 'Palliative Medicine Specialist'), ('Geriatric Medicine Specialist', 'Geriatric Medicine Specialist'), ('Osteopath', 'Osteopath'), ('Colon and Rectal Surgeon', 'Colon and Rectal Surgeon'), ('Family Physician', 'Family Physician'), ('Endocrinologist', 'Endocrinologist'), ('Plastic Surgeon', 'Plastic Surgeon'), ('Radiologist', 'Radiologist'), ('Otolaryngologist', 'Otolaryngologist'), ('Hematologist', 'Hematologist'), ('Dermatologist', 'Dermatologist'), ('Infectious Disease Specialist', 'Infectious Disease Specialist'), ('Obstetricians', 'Obstetricians'))
 
-QUALIFICATION_CHOICES = ()
+QUALIFICATION_CHOICES = (
+    ('MBBS','MBBS'),
+    ('MS','MS'),
+    ('MD','MD'),
+    ('DCH','DCH'),
+    ('BSc','BSc'),
+)
 
 DAYS = (
     ('Monday', 'Monday'),

@@ -48,6 +48,7 @@
 // Credit: HTML5 Boilerplate
 
 @mixin sr-only-focusable {
+
   &:active,
   &:focus {
     position: static;

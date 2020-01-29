@@ -41,7 +41,9 @@ body {
     cursor: pointer;
 }
 
-.login button:hover, .login button:active, .login button:focus {
+.login button:hover,
+.login button:active,
+.login button:focus {
     background: #43A047;
 }
 

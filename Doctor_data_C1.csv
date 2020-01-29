@@ -1,0 +1,5 @@
+Doctor_First_Name,Doctor_Last_Name,Doctor_DOB,Doctor_Email,Doctor_Gender,Doctor_Qualifications,Doctor_Specialization,Doctor_Experience,Doctor_License,Doctor_Activate
+Mohammad,Negley,1946-07-02,mohammadnegley@gmail.com,2,MD,Neurologist,12,4891180830,True
+Paityn,Edwards,1969-08-06,paitynedwards@gmail.com,1,BSc,General Physician,9,1412812550,True
+Paris,Ealy,1939-02-23,parisealy@gmail.com,1,MD,Rheumatologist,5,3019622650,True
+Roy,Vasko,1991-06-09,royvasko@gmail.com,2,MBBS,Physiatrist,10,7516637190,True

@@ -1,12 +1,10 @@
-
-
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
 
 @font-face {
   font-family: OpenSans-Regular;
-  src: url('../fonts/OpenSans/OpenSans-Regular.ttf'); 
+  src: url('../fonts/OpenSans/OpenSans-Regular.ttf');
 }
 
 
@@ -14,49 +12,60 @@
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 * {
-	margin: 0px; 
-	padding: 0px; 
-	box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
-body, html {
-	height: 100%;
-	font-family: sans-serif;
+body,
+html {
+  height: 100%;
+  font-family: sans-serif;
 }
 
 /* ------------------------------------ */
 a {
-	margin: 0px;
-	transition: all 0.4s;
-	-webkit-transition: all 0.4s;
+  margin: 0px;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
 }
 
 a:focus {
-	outline: none !important;
+  outline: none !important;
 }
 
 a:hover {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 /* ------------------------------------ */
-h1,h2,h3,h4,h5,h6 {margin: 0px;}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0px;
+}
 
-p {margin: 0px;}
+p {
+  margin: 0px;
+}
 
-ul, li {
-	margin: 0px;
-	list-style-type: none;
+ul,
+li {
+  margin: 0px;
+  list-style-type: none;
 }
 
 
 /* ------------------------------------ */
 input {
   display: block;
-	outline: none;
-	border: none !important;
+  outline: none;
+  border: none !important;
 }
 
 textarea {
@@ -64,23 +73,24 @@ textarea {
   outline: none;
 }
 
-textarea:focus, input:focus {
+textarea:focus,
+input:focus {
   border-color: transparent !important;
 }
 
 /* ------------------------------------ */
 button {
-	outline: none !important;
-	border: none;
-	background: transparent;
+  outline: none !important;
+  border: none;
+  background: transparent;
 }
 
 button:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 iframe {
-	border: none !important;
+  border: none !important;
 }
 
 
@@ -136,37 +146,51 @@ table {
   margin: 0 auto;
   position: relative;
 }
+
 table * {
   position: relative;
 }
-table td, table th {
+
+table td,
+table th {
   padding-left: 8px;
 }
+
 table thead tr {
   height: 60px;
   background: #36304a;
 }
+
 table tbody tr {
   height: 50px;
 }
+
 table tbody tr:last-child {
   border: 0;
 }
-table td, table th {
+
+table td,
+table th {
   text-align: left;
 }
-table td.l, table th.l {
+
+table td.l,
+table th.l {
   text-align: right;
 }
-table td.c, table th.c {
+
+table td.c,
+table th.c {
   text-align: center;
 }
-table td.r, table th.r {
+
+table td.r,
+table th.r {
   text-align: center;
 }
 
 
-.table100-head th{
+.table100-head th {
   font-family: OpenSans-Regular;
   font-size: 18px;
   color: #fff;
@@ -225,23 +249,32 @@ tbody tr:hover {
   table {
     display: block;
   }
-  table > *, table tr, table td, table th {
+
+  table>*,
+  table tr,
+  table td,
+  table th {
     display: block;
   }
+
   table thead {
     display: none;
   }
+
   table tbody tr {
     height: auto;
     padding: 37px 0;
   }
+
   table tbody tr td {
     padding-left: 40% !important;
     margin-bottom: 24px;
   }
+
   table tbody tr td:last-child {
     margin-bottom: 0;
   }
+
   table tbody tr td:before {
     font-family: OpenSans-Regular;
     font-size: 14px;
@@ -253,21 +286,27 @@ tbody tr:hover {
     left: 30px;
     top: 0;
   }
+
   table tbody tr td:nth-child(1):before {
     content: "Date";
   }
+
   table tbody tr td:nth-child(2):before {
     content: "Order ID";
   }
+
   table tbody tr td:nth-child(3):before {
     content: "Name";
   }
+
   table tbody tr td:nth-child(4):before {
     content: "Price";
   }
+
   table tbody tr td:nth-child(5):before {
     content: "Quantity";
   }
+
   table tbody tr td:nth-child(6):before {
     content: "Total";
   }
